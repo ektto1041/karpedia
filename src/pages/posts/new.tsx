@@ -2,18 +2,21 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import styles from '../styles/posting.module.css';
+import styles from '../../styles/NewPost.module.css';
 
 type Content = string | undefined;
 
-// 지연 로딩을 통해 퍼포먼스 향상
 // TODO: dynamic 학습
 const MDEditor = dynamic(
   () => import("@uiw/react-md-editor"),
   { ssr: false }
 );
+const MDViewer = dynamic(
+  () => import("@uiw/react-markdown-preview"),
+  { ssr: false }
+);
 
-export default function Posting() {
+export default function NewPost() {
   const [value, setValue] = useState("");
 
   const handleChangeContent = (value: Content) => {
@@ -26,6 +29,9 @@ export default function Posting() {
         value={value}
         onChange={handleChangeContent}
       />
+      <div className={styles.viewer} >
+        <MDViewer source={value}></MDViewer>
+      </div>
     </div>
   )
 }
