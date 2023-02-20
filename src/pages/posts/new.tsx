@@ -18,7 +18,7 @@ const MDViewer = dynamic(
 
 export default function NewPost() {
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState("");
+  const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
 
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ export default function NewPost() {
   };
 
   const handleChangeContent = (value: Content) => {
-    setValue(value!);
+    setContent(value!);
   };
 
   const handleChangeTopic = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ export default function NewPost() {
         placeholder="제목을 입력해주세요."
       />
       <MDEditor
-        value={value}
+        value={content}
         onChange={handleChangeContent}
         visiableDragbar={false}
         height={500}
@@ -57,6 +57,7 @@ export default function NewPost() {
           <input
             type='text'
             placeholder="토픽을 입력해주세요."
+            value={topic}
             onChange={handleChangeTopic}
           />
         </div>
@@ -64,7 +65,7 @@ export default function NewPost() {
       </div>
       <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
       <div className={styles.viewer} >
-        <MDViewer source={value}></MDViewer>
+        <MDViewer source={content}></MDViewer>
       </div>
     </div>
   )
