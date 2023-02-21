@@ -58,7 +58,7 @@ export default function NewPost() {
   return (
     <div className={styles.container}>
       <input
-        className={styles.title}
+        className={`${styles.title} ${title || 'warning'}`}
         type='text'
         value={title}
         onChange={handleChangeTitle}
@@ -77,6 +77,7 @@ export default function NewPost() {
             토픽:
           </div>
           <input
+            className={topic || 'warning'}
             type='text'
             placeholder={strings.page.ph.topic}
             value={topic}
