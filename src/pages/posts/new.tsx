@@ -5,7 +5,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import styles from '../../styles/NewPost.module.css';
 import axios from "axios";
 import strings from "@/utils/strings";
-import css, { withWarning } from "@/utils/css";
+import { withWarning } from "@/utils/css";
 
 type Content = string | undefined;
 
