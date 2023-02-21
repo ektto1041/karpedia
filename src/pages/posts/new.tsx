@@ -37,6 +37,11 @@ export default function NewPost() {
   };
 
   const handleSubmit = useCallback(() => {
+    if(!(title && content && topic)) {
+      alert(strings.page.alert.required);
+      return;
+    }
+
     const newPost = {
       title, content, topic,
     };
