@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import styles from '../../styles/NewPost.module.css';
@@ -34,7 +34,7 @@ export default function NewPost() {
     setTopic(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const newPost = {
       title, content, topic,
     };
@@ -44,12 +44,15 @@ export default function NewPost() {
 
       if(result.status === 200) {
         alert('작성이 완료되었습니다.');
+
+        setTitle("");
+        setContent("");
+        setTopic("");
       } else {
         alert('작성에 실패했습니다.');
       }
-      
     })();
-  }
+  }, [title, content, topic]); 
 
   return (
     <div className={styles.container}>
