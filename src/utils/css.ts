@@ -3,5 +3,5 @@ export default function css(...classNames: string[]): string {
 }
 
 export function withWarning(value: string, ...classNames: string[]): string {
-  return `${classNames.join(' ')}${value || ' warning'}`;
+  return `${classNames.join(' ')}${value ? '' : ' warning'}`;
 }

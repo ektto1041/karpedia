@@ -5,6 +5,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import styles from '../../styles/NewPost.module.css';
 import axios from "axios";
 import strings from "@/utils/strings";
+import css, { withWarning } from "@/utils/css";
 
 type Content = string | undefined;
 
@@ -58,7 +59,7 @@ export default function NewPost() {
   return (
     <div className={styles.container}>
       <input
-        className={`${styles.title} ${title || 'warning'}`}
+        className={withWarning(title, styles.title)}
         type='text'
         value={title}
         onChange={handleChangeTitle}
@@ -77,7 +78,7 @@ export default function NewPost() {
             토픽:
           </div>
           <input
-            className={topic || 'warning'}
+            className={withWarning(topic)}
             type='text'
             placeholder={strings.page.ph.topic}
             value={topic}
