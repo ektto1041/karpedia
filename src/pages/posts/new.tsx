@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import styles from '../../styles/NewPost.module.css';
+import axios from "axios";
 
 type Content = string | undefined;
 
@@ -33,6 +34,23 @@ export default function NewPost() {
     setTopic(e.target.value);
   };
 
+  const handleSubmit = () => {
+    const newPost = {
+      title, content, topic,
+    };
+
+    (async () => {
+      const result = await axios.post('http://localhost:3000/api/posts', newPost);
+
+      if(result.status === 200) {
+        alert('작성이 완료되었습니다.');
+      } else {
+        alert('작성에 실패했습니다.');
+      }
+      
+    })();
+  }
+
   return (
     <div className={styles.container}>
       <input
@@ -61,7 +79,7 @@ export default function NewPost() {
             onChange={handleChangeTopic}
           />
         </div>
-        <button className={styles['submit-button']}>작성</button>
+        <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
       </div>
       <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
       <div className={styles.viewer} >
