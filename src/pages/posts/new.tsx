@@ -4,6 +4,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import styles from '../../styles/NewPost.module.css';
 import axios from "axios";
+import strings from "@/utils/strings";
 
 type Content = string | undefined;
 
@@ -43,13 +44,13 @@ export default function NewPost() {
       const result = await axios.post('http://localhost:3000/api/posts', newPost);
 
       if(result.status === 200) {
-        alert('작성이 완료되었습니다.');
+        alert(strings.server.posts.addSuccess);
 
         setTitle("");
         setContent("");
         setTopic("");
       } else {
-        alert('작성에 실패했습니다.');
+        alert(strings.server.posts.addFail);
       }
     })();
   }, [title, content, topic]); 
@@ -61,7 +62,7 @@ export default function NewPost() {
         type='text'
         value={title}
         onChange={handleChangeTitle}
-        placeholder="제목을 입력해주세요."
+        placeholder={strings.page.ph.title}
       />
       <MDEditor
         value={content}
@@ -77,7 +78,7 @@ export default function NewPost() {
           </div>
           <input
             type='text'
-            placeholder="토픽을 입력해주세요."
+            placeholder={strings.page.ph.topic}
             value={topic}
             onChange={handleChangeTopic}
           />

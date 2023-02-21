@@ -26,7 +26,7 @@ export default async function handler(
         res.status(200).json(newPost);
       } catch(e) {
         res.status(400).json({
-          message: strings.err.db.unknown,
+          message: strings.db.err.unknown,
         });
       }
     default:
