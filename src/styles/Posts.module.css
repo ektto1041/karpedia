@@ -33,3 +33,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.container .post-item-box {
+  width: 100%;
+}
