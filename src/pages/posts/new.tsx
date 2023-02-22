@@ -20,9 +20,14 @@ const MDViewer = dynamic(
 );
 
 export default function NewPost() {
+  const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
+
+  const handleChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmoji(e.target.value);
+  }; 
 
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -37,13 +42,13 @@ export default function NewPost() {
   };
 
   const handleSubmit = useCallback(() => {
-    if(!(title && content && topic)) {
+    if(!(emoji && title && content && topic)) {
       alert(strings.page.alert.required);
       return;
     }
 
     const newPost = {
-      title, content, topic,
+      emoji, title, content, topic,
     };
 
     (async () => {
@@ -52,6 +57,7 @@ export default function NewPost() {
       if(result.status === 200) {
         alert(strings.server.posts.addSuccess);
 
+        setEmoji("");
         setTitle("");
         setContent("");
         setTopic("");
@@ -63,6 +69,13 @@ export default function NewPost() {
 
   return (
     <div className={styles.container}>
+      <input
+        className={withWarning(emoji, styles.emoji)}
+        type='text'
+        value={emoji}
+        onChange={handleChangeEmoji}
+        placeholder={'😀'}
+      />
       <input
         className={withWarning(title, styles.title)}
         type='text'

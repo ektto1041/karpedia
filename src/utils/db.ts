@@ -20,12 +20,14 @@ const db = getFirestore(app);
 
 // types
 type PostData = {
+  emoji: string,
   title: string,
   content: string,
   topic: string,
 };
 
 type Post = {
+  emoji: string,
   title: string,
   content: string,
   topic: string,
