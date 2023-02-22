@@ -16,7 +16,7 @@ export default {
   page: {
     ph: { // placeholder
       title: '제목을 입력해주세요.',
-      topic: '토픽을 입력해주세요.',
+      topic: '토픽을 입력해주세요. | 로 토픽 구분이 가능합니다.',
     },
     alert: {
       required: '필수 데이터를 작성해주세요.',

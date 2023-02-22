@@ -45,10 +45,10 @@ export default function NewPost() {
     if(!(emoji && title && content && topic)) {
       alert(strings.page.alert.required);
       return;
-    }
+    }    
 
     const newPost = {
-      emoji, title, content, topic,
+      emoji, title, content, topics: topic.split('|')
     };
 
     (async () => {
