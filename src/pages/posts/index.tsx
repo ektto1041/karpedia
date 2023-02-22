@@ -1,3 +1,4 @@
+import MainInput from '@/components/mainInput';
 import Topic from '@/components/posts/topic';
 import styles from '@/styles/Posts.module.css';
 
@@ -18,6 +19,7 @@ export default function Posts() {
           <Topic>Firestore</Topic>
         </div>
       </div>
+      <MainInput placeholder='검색어를 입력하세요.' />
     </div>
   );
 };
