@@ -31,8 +31,8 @@ type Post = {
   title: string,
   content: string,
   topics: string[],
-  createdAt: string,
-  modifiedAt: string,
+  createdAt: Date,
+  modifiedAt: Date,
 }
 
 type Topic = {

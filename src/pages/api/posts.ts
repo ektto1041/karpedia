@@ -19,8 +19,8 @@ export default async function handler(
         title: newPostData.title,
         content: newPostData.content,
         topics: [], // topic 의 ID 를 배열로 저장
-        createdAt: dayjs().format(),
-        modifiedAt: dayjs().format(),
+        createdAt: dayjs().toDate(),
+        modifiedAt: dayjs().toDate(),
       }
 
       try {
