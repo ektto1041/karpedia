@@ -31,6 +31,8 @@ type Post = {
   title: string,
   content: string,
   topics: string[],
+  viewCount: number,
+  comments: any[],  // TODO: 댓글 collection 계획 전까지는 any[]
   createdAt: Date,
   modifiedAt: Date,
 }

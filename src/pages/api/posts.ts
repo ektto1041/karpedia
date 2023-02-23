@@ -19,6 +19,8 @@ export default async function handler(
         title: newPostData.title,
         content: newPostData.content,
         topics: [], // topic 의 ID 를 배열로 저장
+        viewCount: 0,
+        comments: [],
         createdAt: dayjs().toDate(),
         modifiedAt: dayjs().toDate(),
       }
