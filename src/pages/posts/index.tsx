@@ -1,10 +1,16 @@
 import MainInput from '@/components/MainInput';
 import PostItem from '@/components/posts/PostItem';
-import Topic from '@/components/posts/Topic';
+import TopicList from '@/components/posts/TopicList';
 import styles from '@/styles/Posts.module.css';
 import dayjs from 'dayjs';
 
-export default function Posts() {
+type PostsProps = {
+  topics: string[],
+};
+
+export default function Posts({
+  topics
+}: PostsProps) {
   return (
     <div className={styles.container}>
       <div className={styles['topic-box']}>
@@ -13,12 +19,7 @@ export default function Posts() {
           <button>모두 취소</button>
         </div>
         <div className={styles.content}>
-          <Topic>Javascript & React</Topic>
-          <Topic>React</Topic>
-          <Topic>C</Topic>
-          <Topic>Javascript</Topic>
-          <Topic>Next.js</Topic>
-          <Topic>Firestore</Topic>
+          <TopicList topics={topics} />
         </div>
       </div>
       <MainInput placeholder='검색어를 입력하세요.' />
@@ -31,6 +32,24 @@ export default function Posts() {
   );
 };
 
-// export async function getStaticProps() {
+export async function getStaticProps() {
+  // 임시 데이터
+  const data = [
+    { name: 'Javascript' },
+    { name: 'React' },
+    { name: 'Next' },
+    { name: 'Node' },
+    { name: 'C' },
+    { name: 'Java' },
+    { name: 'Css' },
+    { name: 'HTML' },
+  ];
 
-// };
+  const topics = data.map(topic => topic.name);
+
+  return {
+    props: {
+      topics,
+    }
+  }
+};
