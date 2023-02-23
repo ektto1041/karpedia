@@ -1,6 +1,6 @@
-import MainInput from '@/components/mainInput';
-import PostItem from '@/components/posts/postItem';
-import Topic from '@/components/posts/topic';
+import MainInput from '@/components/MainInput';
+import PostItem from '@/components/posts/PostItem';
+import Topic from '@/components/posts/Topic';
 import styles from '@/styles/Posts.module.css';
 import dayjs from 'dayjs';
 
