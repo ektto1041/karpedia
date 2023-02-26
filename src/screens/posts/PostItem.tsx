@@ -1,4 +1,4 @@
-import styles from '@/styles/PostItem.module.css';
+import styles from './PostItem.module.css';
 import dayjs, { Dayjs } from 'dayjs';
 
 type PostItemProps = {
