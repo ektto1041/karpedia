@@ -10,7 +10,7 @@ export default function TopicList({
   return (
     <>
       {topics.map(topic => (
-        <Topic>{topic}</Topic>
+        <Topic key={topic}>{topic}</Topic>
       ))}
     </>
   );
