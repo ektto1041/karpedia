@@ -5,6 +5,20 @@
   padding: 20px 0;
 }
 
+.emoji {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-bottom: 1px solid #00000000;
+  outline: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all ease .25s;
+  text-align: center;
+}
+
 .title {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -29,7 +43,7 @@
 }
 
 .topic {
-  width: 200px;
+  width: 580px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -44,7 +58,7 @@
 }
 
 .topic input {
-  width: 120px;
+  width: 500px;
   height: 30px;
   line-height: 30px;
   border: 0;

@@ -1,4 +1,4 @@
-import styles from '@/styles/Topic.module.css';
+import styles from './Topic.module.css';
 
 type TopicProps = {
   children: string,

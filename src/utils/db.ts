@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDoc, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,17 +20,25 @@ const db = getFirestore(app);
 
 // types
 type PostData = {
+  emoji: string,
   title: string,
   content: string,
-  topic: string,
+  topics: string[],
 };
 
 type Post = {
+  emoji: string,
   title: string,
   content: string,
-  topic: string,
-  createdAt: string,
-  modifiedAt: string,
+  topics: string[],
+  viewCount: number,
+  comments: any[],  // TODO: 댓글 collection 계획 전까지는 any[]
+  createdAt: Date,
+  modifiedAt: Date,
+}
+
+type Topic = {
+  name: string,
 }
 
 type ErrorRes = {
@@ -40,8 +48,14 @@ type ErrorRes = {
 // Methods about db
 export default {
   addPost: async (newPost: Post) => {
-    await addDoc(collection(db, 'posts'), newPost);
-  }
+    return await addDoc(collection(db, 'posts'), newPost);
+  },
+  getAllTopics: async () => {
+    return await getDocs(collection(db, 'topics'));
+  },
+  addTopic: async (newTopic: Topic) => {
+    return await addDoc(collection(db, 'topics'), newTopic);
+  },
 };
 
 export type { PostData, Post, ErrorRes };

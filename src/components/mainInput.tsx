@@ -1,4 +1,4 @@
-import styles from '@/styles/MainInput.module.css';
+import styles from './MainInput.module.css';
 import Icon from '@mdi/react';
 import { mdiKeyboardReturn } from '@mdi/js';
 
