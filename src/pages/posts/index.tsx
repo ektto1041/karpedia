@@ -11,7 +11,7 @@ export default function Posts({
 };
 
 export async function getStaticProps() {
-  const topics = (await db.getAllTopics()).docs.map(topic => topic.data().name);
+  const topicSet = new Set<string>();
   const postItems = (await db.getAllPosts()).docs.map(postItem => {
     const data = postItem.data() as PostDoc;
     const result: PostItemType = {
@@ -19,8 +19,14 @@ export async function getStaticProps() {
       title: data.title,
       modifiedAt: dayjs(data.modifiedAt.toDate()).format('MMMM D, YYYY'),
     }
+
+    // 시점 이슈 발생할 수 있음!
+    data.topics.forEach(topic => topicSet.add(topic));
+
     return result;
   });
+
+  const topics = Array.from(topicSet);
   
   return {
     props: {
