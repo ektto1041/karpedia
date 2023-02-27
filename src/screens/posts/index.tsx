@@ -10,14 +10,23 @@ export default function PostsScreen({
   postItems,
 }: PostsProps) {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [keyword, setKeyword] = useState<string>("");
 
   // 페이지에 보여지는 포스트들
+  // 검색 키워드가 타이틀에 포함되는 지 검사하고,
   // 현재 선택된 토픽들을 AND 연산으로 검사해 모두 가진 경우만 페이지에 보여줌
   const visiblePostItems = postItems.filter(postItem => {
+    const isSearching = Boolean(keyword.trim());
+    if(isSearching) {
+      const hasKeyword = Boolean(postItem.title.includes(keyword));
+      if(!hasKeyword) return false;
+    }
+    
     for(const topic of selectedTopics) {
       const hasTopic = Boolean(postItem.topics.includes(topic));
       if(!hasTopic) { return false; }
     }
+
     return true;
   });
 
@@ -28,6 +37,10 @@ export default function PostsScreen({
     } else {
       setSelectedTopics([...selectedTopics, topicName]);
     }
+  }
+
+  const handleSearch = (newKeyword: string) => {
+    setKeyword(newKeyword);
   }
 
   return (
@@ -41,7 +54,7 @@ export default function PostsScreen({
           <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={onClickTopic} />
         </div>
       </div>
-      <MainInput placeholder='검색어를 입력하세요.' />
+      <MainInput placeholder='검색어를 입력하세요.' onSubmit={handleSearch} />
       <div className={styles['post-item-box']}>
         <PostList postItems={visiblePostItems} />
       </div>
