@@ -23,6 +23,12 @@
   border: none;
   text-decoration: underline;
   cursor: pointer;
+  background-color: white;
+  transition: all ease 0.25s;
+}
+
+.topic-box .title button:hover {
+  background-color: #eeeeee;
 }
 
 .topic-box .content {
