@@ -39,6 +39,10 @@ export default function PostsScreen({
     }
   }
 
+  const handleClickCancelTopic = () => {
+    setSelectedTopics([]);
+  };
+
   const handleSearch = (newKeyword: string) => {
     setKeyword(newKeyword);
   }
@@ -48,7 +52,7 @@ export default function PostsScreen({
       <div className={styles['topic-box']}>
         <div className={styles.title}>
           Topics
-          <button>모두 취소</button>
+          <button onClick={handleClickCancelTopic}>모두 취소</button>
         </div>
         <div className={styles.content}>
           <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={onClickTopic} />
