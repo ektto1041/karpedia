@@ -29,4 +29,5 @@ export type PostItemType = {
   emoji: string,
   title: string,
   modifiedAt: string,
+  topics: string[],
 }

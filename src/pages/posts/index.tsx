@@ -17,6 +17,7 @@ export async function getStaticProps() {
     const result: PostItemType = {
       emoji: data.emoji,
       title: data.title,
+      topics: data.topics,
       modifiedAt: dayjs(data.modifiedAt.toDate()).format('MMMM D, YYYY'),
     }
 
