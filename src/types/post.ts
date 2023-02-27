@@ -16,10 +16,6 @@ export type PostDoc = {
   modifiedAt: Timestamp,
 }
 
-export type TopicDoc = {
-  name: string,
-}
-
 export type PostItemType = {
   emoji: string,
   title: string,

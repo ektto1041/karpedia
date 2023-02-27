@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, getDocs } from "firebase/firestore";
-import { PostDoc, TopicDoc } from '@/types/post';
+import { PostDoc } from '@/types/post';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -38,12 +38,6 @@ export default {
   },
   addPost: async (newPost: PostDoc) => {
     return await addDoc(collection(db, 'posts'), newPost);
-  },
-  getAllTopics: async () => {
-    return await getDocs(collection(db, 'topics'));
-  },
-  addTopic: async (newTopic: TopicDoc) => {
-    return await addDoc(collection(db, 'topics'), newTopic);
   },
 };
 
