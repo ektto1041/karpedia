@@ -1,4 +1,5 @@
 import css from '@/utils/css';
+import { useCallback } from 'react';
 import styles from './Topic.module.css';
 
 type TopicProps = {
@@ -12,8 +13,15 @@ export default function Topic({
   selected,
   onClick,
 } : TopicProps) {
+  const handleClick = useCallback(() => {
+    onClick(children);
+  }, [onClick, children]);
+
   return (
-    <div className={css(styles.container, selected ? styles.selected : '')} onClick={() => onClick(children)}>
+    <div
+      className={css(styles.container, selected ? styles.selected : '')}
+      onClick={handleClick}
+    >
       {children}
     </div>
   )

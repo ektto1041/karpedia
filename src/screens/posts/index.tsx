@@ -30,7 +30,7 @@ export default function PostsScreen({
     return true;
   });
 
-  const onClickTopic = (topicName: string) => {
+  const handleClickTopic = (topicName: string) => {
     const hasTopic = Boolean(selectedTopics.includes(topicName));
     if(hasTopic) {
       setSelectedTopics(selectedTopics.filter(topic => topic !== topicName));
@@ -55,7 +55,7 @@ export default function PostsScreen({
           <button onClick={handleClickCancelTopic}>모두 취소</button>
         </div>
         <div className={styles.content}>
-          <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={onClickTopic} />
+          <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={handleClickTopic} />
         </div>
       </div>
       <MainInput placeholder='검색어를 입력하세요.' onSubmit={handleSearch} />
