@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
 import { PostDoc } from '@/types/post';
 
 const firebaseConfig = {
@@ -34,7 +34,9 @@ type ErrorRes = {
 // Methods about db
 export default {
   getAllPosts: async () => {
-    return await getDocs(collection(db, 'posts'));
+    const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
+
+    return await getDocs(q);
   },
   addPost: async (newPost: PostDoc) => {
     return await addDoc(collection(db, 'posts'), newPost);
