@@ -1,28 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dayjs from 'dayjs';
-import db, { ErrorRes, Post, PostData } from '@/utils/db';
+import db, { ErrorRes, PostData } from '@/utils/db';
 import strings from '@/utils/strings';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot, Timestamp } from 'firebase/firestore';
+import { PostDoc } from '@/types/post';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Post | ErrorRes>
+  res: NextApiResponse<PostDoc | ErrorRes>
 ) {
   switch(req.method) {
     case 'POST':
       const newPostData: PostData = req.body;
 
-      const newPost: Post = {
+      const newPost: PostDoc = {
         emoji: newPostData.emoji,
         title: newPostData.title,
         content: newPostData.content,
         topics: [], // topic 의 ID 를 배열로 저장
         viewCount: 0,
         comments: [],
-        createdAt: dayjs().toDate(),
-        modifiedAt: dayjs().toDate(),
+        createdAt: Timestamp.now(),
+        modifiedAt: Timestamp.now(),
       }
 
       try {
