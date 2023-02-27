@@ -14,6 +14,7 @@ export default async function handler(
     case 'POST':
       const newPostData: PostData = req.body;
 
+      const now = dayjs().toDate();
       const newPost: Post = {
         emoji: newPostData.emoji,
         title: newPostData.title,
@@ -21,8 +22,8 @@ export default async function handler(
         topics: [], // topic 의 ID 를 배열로 저장
         viewCount: 0,
         comments: [],
-        createdAt: dayjs().toDate(),
-        modifiedAt: dayjs().toDate(),
+        createdAt: now,
+        modifiedAt: now,
       }
 
       try {
@@ -35,12 +36,12 @@ export default async function handler(
         // topic 이 DB에 없으면,  새 topic 을 DB 에 추가하고, 그 id 를 newPost.topics 에 push
         for(const topic of newPostData.topics) {
           const foundTopic = topicsInDB.find(t => t.data().name === topic);
-          const hasTopicInDB = foundTopic?.data.name;
+          const hasTopicInDB = Boolean(foundTopic?.data.name);
           if(!hasTopicInDB) {
             const addedTopic = await db.addTopic({ name: topic });
             newPost.topics.push(addedTopic.id);
           } else {
-            newPost.topics.push(foundTopic.id);
+            newPost.topics.push(foundTopic!.id);
           }
         }
 

@@ -4,7 +4,7 @@ import { PostsProps } from "@/types/post";
 export default function Posts({
   topics
 }: PostsProps) {
-  return <> <PostsScreen topics={topics} /> </>;
+  return <PostsScreen topics={topics} />;
 };
 
 export async function getStaticProps() {
