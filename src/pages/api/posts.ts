@@ -20,7 +20,6 @@ export default async function handler(
         content: newPostData.content,
         topics: newPostData.topics,
         viewCount: 0,
-        comments: [],
         createdAt: Timestamp.now(),
         modifiedAt: Timestamp.now(),
       }
