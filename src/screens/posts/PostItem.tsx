@@ -1,17 +1,15 @@
 import styles from './PostItem.module.css';
-import dayjs, { Dayjs } from 'dayjs';
+import { PostItemType } from '@/types/post';
 
 type PostItemProps = {
-  emoji: string,
-  title: string,
-  createdAt: Dayjs,
+  postItem: PostItemType,
 }
 
 export default function PostItem({
-  emoji,
-  title,
-  createdAt,
+  postItem,
 } : PostItemProps) {
+  const {emoji, title, modifiedAt} = postItem;
+
   return (
     <div className={styles.container}>
       <div className={styles.emoji}>
@@ -21,7 +19,7 @@ export default function PostItem({
         {title}
       </div>
       <div className={styles['created-at']}>
-        {createdAt.format('MMMM D, YYYY')}
+        {modifiedAt}
       </div>
       
       <div className={styles.underline}></div>

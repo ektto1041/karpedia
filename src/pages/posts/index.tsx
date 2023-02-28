@@ -1,30 +1,31 @@
 import PostsScreen from "@/screens/posts";
-import { PostsProps } from "@/types/post";
+import { PostDoc, PostItemType, PostsProps } from "@/types/post";
+import db from "@/utils/db";
+import dayjs from "dayjs";
 
 export default function Posts({
-  topics
+  topics,
+  postItems,
 }: PostsProps) {
-  return <PostsScreen topics={topics} />;
+  return <PostsScreen topics={topics} postItems={postItems} />;
 };
 
 export async function getStaticProps() {
-  // 임시 데이터
-  const data = [
-    { name: 'Javascript' },
-    { name: 'React' },
-    { name: 'Next' },
-    { name: 'Node' },
-    { name: 'C' },
-    { name: 'Java' },
-    { name: 'Css' },
-    { name: 'HTML' },
-  ];
-
-  const topics = data.map(topic => topic.name);
-
+  const topics = (await db.getAllTopics()).docs.map(topic => topic.data().name);
+  const postItems = (await db.getAllPosts()).docs.map(postItem => {
+    const data = postItem.data() as PostDoc;
+    const result: PostItemType = {
+      emoji: data.emoji,
+      title: data.title,
+      modifiedAt: dayjs(data.modifiedAt.toDate()).format('MMMM D, YYYY'),
+    }
+    return result;
+  });
+  
   return {
     props: {
       topics,
+      postItems,
     }
   }
 };
