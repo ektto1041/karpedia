@@ -7,7 +7,7 @@ export default function Posts({
   topics,
   postItems,
 }: PostsProps) {
-  return <> <PostsScreen topics={topics} postItems={postItems} /> </>;
+  return <PostsScreen topics={topics} postItems={postItems} />;
 };
 
 export async function getStaticProps() {

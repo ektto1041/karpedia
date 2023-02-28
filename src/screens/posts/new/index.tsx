@@ -6,6 +6,8 @@ import styles from './NewPost.module.css';
 import axios from "axios";
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
+import { NewPostType } from "@/types/post";
+import { apis } from "@/utils/api";
 
 type Content = string | undefined;
 
@@ -47,12 +49,12 @@ export default function NewPostScreen() {
       return;
     }    
 
-    const newPost = {
+    const newPost: NewPostType = {
       emoji, title, content, topics: topic.split('|')
     };
 
     (async () => {
-      const result = await axios.post('http://localhost:3000/api/posts', newPost);
+      const result = await apis.createPost(newPost);
 
       if(result.status === 200) {
         alert(strings.server.posts.addSuccess);
