@@ -18,17 +18,23 @@ export type PostDoc = {
   content: string,
   topics: string[],
   viewCount: number,
-  comments: any[],  // TODO: 댓글 collection 계획 전까지는 any[]
   createdAt: Timestamp,
   modifiedAt: Timestamp,
 }
 
-export type TopicDoc = {
+export type CommentDoc = {
   name: string,
+  password: string,
+  content: string,
+  reply: string,
+  createdAt: Timestamp,
+  postTitle: string,
+  status: number,
 }
 
 export type PostItemType = {
   emoji: string,
   title: string,
   modifiedAt: string,
+  topics: string[],
 }
