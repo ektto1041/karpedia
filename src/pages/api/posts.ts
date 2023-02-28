@@ -14,14 +14,15 @@ export default async function handler(
     case 'POST':
       const newPostData: PostData = req.body;
 
+      const now = Timestamp.now(),
       const newPost: PostDoc = {
         emoji: newPostData.emoji,
         title: newPostData.title,
         content: newPostData.content,
         topics: newPostData.topics,
         viewCount: 0,
-        createdAt: Timestamp.now(),
-        modifiedAt: Timestamp.now(),
+        createdAt: now,
+        modifiedAt: now,
       }
 
       try {

@@ -5,6 +5,13 @@ export type PostsProps = {
   postItems: PostItemType[],
 };
 
+export type NewPostType = {
+  emoji: string,
+  title: string,
+  content: string,
+  topics: string[],
+};
+
 export type PostDoc = {
   emoji: string,
   title: string,
