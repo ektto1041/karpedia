@@ -14,7 +14,7 @@ export default async function handler(
     case 'POST':
       const newPostData: PostData = req.body;
 
-      const now = Timestamp.now(),
+      const now = Timestamp.now();
       const newPost: PostDoc = {
         emoji: newPostData.emoji,
         title: newPostData.title,
