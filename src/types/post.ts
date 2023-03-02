@@ -1,5 +1,9 @@
 import { Timestamp } from "firebase/firestore";
 
+interface WithId {
+  id: string,
+};
+
 export type PostsProps = {
   topics: string[],
   postItems: PostItemType[],
@@ -32,7 +36,11 @@ export type CommentDoc = {
   status: number,
 }
 
+export interface PostType extends WithId, PostDoc {}
+export interface CommentType extends WithId, CommentDoc {}
+
 export type PostItemType = {
+  id: string,
   emoji: string,
   title: string,
   modifiedAt: string,

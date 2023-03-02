@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
-import { PostDoc } from '@/types/post';
+import { PostDoc, PostType } from '@/types/post';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -34,9 +34,14 @@ type ErrorRes = {
 // Methods about db
 export default {
   getAllPosts: async () => {
+    const result: PostType[] = [];
     const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(queryDocSnapshot => result[result.length] = {...queryDocSnapshot.data() as PostDoc, id: queryDocSnapshot.id});
 
-    return await getDocs(q);
+    console.log(result);
+
+    return result;
   },
   addPost: async (newPost: PostDoc) => {
     return await addDoc(collection(db, 'posts'), newPost);

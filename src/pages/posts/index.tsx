@@ -1,5 +1,5 @@
 import PostsScreen from "@/screens/posts";
-import { PostDoc, PostItemType, PostsProps } from "@/types/post";
+import { PostDoc, PostItemType, PostsProps, PostType } from "@/types/post";
 import db from "@/utils/db";
 import dayjs from "dayjs";
 
@@ -12,9 +12,10 @@ export default function Posts({
 
 export async function getStaticProps() {
   const topicSet = new Set<string>();
-  const postItems = (await db.getAllPosts()).docs.map(postItem => {
-    const data = postItem.data() as PostDoc;
+  const postItems = (await db.getAllPosts()).map(postItem => {
+    const data = postItem as PostType;
     const result: PostItemType = {
+      id: data.id,
       emoji: data.emoji,
       title: data.title,
       topics: data.topics,
