@@ -1,0 +1,11 @@
+.share-button {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #eeeeee;
+}
