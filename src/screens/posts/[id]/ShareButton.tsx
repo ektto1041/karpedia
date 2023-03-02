@@ -5,7 +5,7 @@ import { mdiShareVariant } from '@mdi/js';
 export default function ShareButton() {
   return (
     <button className={styles['share-button']}>
-      <Icon path={mdiShareVariant} size="40px" />
+      <Icon path={mdiShareVariant} size="30px" />
     </button>
   )
 }
