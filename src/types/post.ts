@@ -9,6 +9,10 @@ export type PostsProps = {
   postItems: PostItemType[],
 };
 
+export type PostDetailProps = {
+  post: PostDetailType,
+};
+
 export type NewPostType = {
   emoji: string,
   title: string,
@@ -45,4 +49,15 @@ export type PostItemType = {
   title: string,
   modifiedAt: string,
   topics: string[],
+}
+
+export type PostDetailType = {
+  id: string,
+  emoji: string,
+  title: string,
+  content: string,
+  topics: string[],
+  viewCount: number,
+  createdAt: string,
+  modifiedAt: string,
 }
