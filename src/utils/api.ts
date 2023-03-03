@@ -13,5 +13,5 @@ export const apis = {
    */
   createPost: async (newPost: NewPostType) => {
     return await ax.post('/api/posts', newPost);
-  }
+  },
 }

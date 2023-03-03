@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
@@ -40,6 +40,16 @@ export default {
         createdAt: time.toString(data.createdAt),
         modifiedAt: time.toString(data.modifiedAt),
       };
+    });
+
+    return result;
+  },
+  getTopViewCountPostIds: async () => {
+    const result: string[] = [];
+    const q = query(collection(db, 'posts'), orderBy('viewCount', 'desc'), limit(50));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(queryDocSnapshot => {
+      result[result.length] = queryDocSnapshot.id;
     });
 
     return result;
