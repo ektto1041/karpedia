@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc } from "firebase/firestore";
 import { NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
@@ -27,6 +27,10 @@ type ErrorRes = {
 
 // Methods about db
 export default {
+  /**
+   * DB 에서 모든 Post 를 가져오는 함수
+   * @returns 모든 Post 배열
+   */
   getAllPosts: async () => {
     const result: PostType[] = [];
     const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
@@ -44,6 +48,10 @@ export default {
 
     return result;
   },
+  /**
+   * 포스트 중 조회수가 가장 높은 50개의 id 를 가져오는 함수
+   * @returns 조회수 순으로 정렬된 50개의 포스트의 id
+   */
   getTopViewCountPostIds: async () => {
     const result: string[] = [];
     const q = query(collection(db, 'posts'), orderBy('viewCount', 'desc'), limit(50));
@@ -54,6 +62,32 @@ export default {
 
     return result;
   },
+  /**
+   * id로 포스트를 찾아 가져오는 함수
+   * @param id 찾으려는 포스트의 id
+   * @returns 찾은 포스트
+   */
+  getPostById: async (id: string) => {
+    const foundPost = await getDoc(doc(collection(db, 'posts'), id));
+    const data = foundPost.data() as PostDoc;
+
+    const hasNoData = !Boolean(data);
+    if(hasNoData) return undefined;
+
+    const result: PostType = {
+      ...data,
+      id: foundPost.id,
+      createdAt: time.toString(data.createdAt),
+      modifiedAt: time.toString(data.modifiedAt),
+    };
+
+    return result;
+  },
+  /**
+   * 새 포스트를 저장하는 함수
+   * @param newPostData 새 포스트 저장을 위해 필요한 데이터들
+   * @returns 등록된 포스트
+   */
   addPost: async (newPostData: NewPostType) => {
     const now = time.now();
     const newPost = {

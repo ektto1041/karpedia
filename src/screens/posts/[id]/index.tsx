@@ -6,7 +6,6 @@ import ShareButton from './ShareButton';
 
 export default function PostDetailScreen({
   post,
-  commentList,
 }: PostDetailProps) {
   const {emoji, title, modifiedAt, content, } = post;
 
@@ -30,7 +29,7 @@ export default function PostDetailScreen({
         <div className={styles['button-box']}>
           <ShareButton />
         </div>
-        <CommentBox commentList={commentList} />
+        <CommentBox commentList={[]} />
       </div>
     </div>
   );

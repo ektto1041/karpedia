@@ -7,7 +7,6 @@ export type PostsProps = {
 
 export type PostDetailProps = {
   post: PostType,
-  commentList: CommentType[],
 };
 
 export type NewPostType = {
