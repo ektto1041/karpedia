@@ -1,6 +1,7 @@
 import { PostDetailProps } from '@/types/post';
 import time from '@/utils/time';
 import CommentBox from './CommentBox';
+import ContentBox from './ContentBox';
 import styles from './PostDetail.module.css';
 import ShareButton from './ShareButton';
 
@@ -23,9 +24,7 @@ export default function PostDetailScreen({
         </div>
       </div>
       <div className={styles.body}>
-        <div className={styles.content} >
-          {content}
-        </div>
+        <ContentBox content={content} />
         <div className={styles['button-box']}>
           <ShareButton />
         </div>
