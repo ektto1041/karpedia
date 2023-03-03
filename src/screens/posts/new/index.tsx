@@ -3,7 +3,6 @@ import { ChangeEvent, useCallback, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
-import axios from "axios";
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
 import { NewPostType } from "@/types/post";

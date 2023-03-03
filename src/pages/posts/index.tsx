@@ -1,5 +1,5 @@
 import PostsScreen from "@/screens/posts";
-import { PostDoc, PostItemType, PostsProps, PostType } from "@/types/post";
+import { PostItemType, PostsProps, PostType } from "@/types/post";
 import db from "@/utils/db";
 import dayjs from "dayjs";
 
@@ -19,7 +19,7 @@ export async function getStaticProps() {
       emoji: data.emoji,
       title: data.title,
       topics: data.topics,
-      modifiedAt: dayjs(data.modifiedAt.toDate()).format('MMMM D, YYYY'),
+      modifiedAt: dayjs(data.modifiedAt).format('MMMM D, YYYY'),
     }
 
     // 시점 이슈 발생할 수 있음!
