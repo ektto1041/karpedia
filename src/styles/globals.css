@@ -13,3 +13,7 @@ body {
 .warning {
   background-color: #ff0000a0;
 }
+
+a {
+  text-decoration: none;
+}
