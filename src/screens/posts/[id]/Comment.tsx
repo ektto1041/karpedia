@@ -1,10 +1,10 @@
 import styles from './Comment.module.css';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
-import { CommentItemType } from '@/types/post';
+import { CommentType } from '@/types/post';
 
 type CommentProps = {
-  comment: CommentItemType,
+  comment: CommentType,
 };
 
 export default function Comment({

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
-import { PostDoc, PostType } from '@/types/post';
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, Timestamp } from "firebase/firestore";
+import { NewPostType, PostDoc, PostType } from '@/types/post';
+import dayjs from "dayjs";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,13 +21,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // types
-type PostData = {
-  emoji: string,
-  title: string,
-  content: string,
-  topics: string[],
-};
-
 type ErrorRes = {
   message: string,
 }
@@ -37,15 +31,41 @@ export default {
     const result: PostType[] = [];
     const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(queryDocSnapshot => result[result.length] = {...queryDocSnapshot.data() as PostDoc, id: queryDocSnapshot.id});
+    querySnapshot.forEach(queryDocSnapshot => {
+      const data = queryDocSnapshot.data() as PostDoc;
 
-    console.log(result);
+      result[result.length] = {
+        ...data,
+        id: queryDocSnapshot.id,
+        createdAt: dayjs(data.createdAt.toDate()).format(),
+        modifiedAt: dayjs(data.modifiedAt.toDate()).format(),
+      };
+    });
 
     return result;
   },
-  addPost: async (newPost: PostDoc) => {
-    return await addDoc(collection(db, 'posts'), newPost);
+  addPost: async (newPostData: NewPostType) => {
+    const now = Timestamp.now();
+    const newPost = {
+      emoji: newPostData.emoji,
+      title: newPostData.title,
+      content: newPostData.content,
+      topics: newPostData.topics,
+      viewCount: 0,
+      createdAt: now,
+      modifiedAt: now,
+    }
+
+    const addedPostId = (await addDoc(collection(db, 'posts'), newPost)).id;
+    const addedPost: PostType = {
+      ...newPost,
+      id: addedPostId,
+      createdAt: dayjs(newPost.createdAt.toDate()).format(),
+      modifiedAt: dayjs(newPost.modifiedAt.toDate()).format(),
+    }
+
+    return addedPost;
   },
 };
 
-export type { PostData, ErrorRes };
+export type { ErrorRes };

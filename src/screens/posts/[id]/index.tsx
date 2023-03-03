@@ -1,4 +1,5 @@
 import { PostDetailProps } from '@/types/post';
+import dayjs from 'dayjs';
 import CommentBox from './CommentBox';
 import styles from './PostDetail.module.css';
 import ShareButton from './ShareButton';
@@ -19,7 +20,7 @@ export default function PostDetailScreen({
           {title}
         </div>
         <div className={styles.subtitle} >
-          {modifiedAt}
+          {dayjs(modifiedAt).format('MMMM D, YYYY')}
         </div>
       </div>
       <div className={styles.body}>

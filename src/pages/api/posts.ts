@@ -1,34 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import db, { ErrorRes, PostData } from '@/utils/db';
+import db, { ErrorRes } from '@/utils/db';
 import strings from '@/utils/strings';
 import { DocumentData, QueryDocumentSnapshot, Timestamp } from 'firebase/firestore';
-import { PostDoc } from '@/types/post';
+import { NewPostType, PostDoc, PostType } from '@/types/post';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PostDoc | ErrorRes>
+  res: NextApiResponse<PostType | ErrorRes>
 ) {
   switch(req.method) {
     case 'POST':
-      const newPostData: PostData = req.body;
-
-      const now = Timestamp.now();
-      const newPost: PostDoc = {
-        emoji: newPostData.emoji,
-        title: newPostData.title,
-        content: newPostData.content,
-        topics: newPostData.topics,
-        viewCount: 0,
-        createdAt: now,
-        modifiedAt: now,
-      }
+      const newPost: NewPostType = req.body;
 
       try {
-        await db.addPost(newPost);
+        const addedPost = await db.addPost(newPost);
 
-        res.status(200).json(newPost);
+        res.status(200).json(addedPost);
       } catch(e) {
         res.status(400).json({
           message: strings.db.err.unknown,

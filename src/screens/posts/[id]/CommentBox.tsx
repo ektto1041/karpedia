@@ -1,12 +1,12 @@
 import MainInput from '@/components/MainInput';
-import { CommentItemType } from '@/types/post';
+import { CommentType } from '@/types/post';
 import { Fragment } from 'react';
 import Comment from './Comment';
 import styles from './CommentBox.module.css';
 import Reply from './Reply';
 
 type CommentBoxProps = {
-  commentList: CommentItemType[]
+  commentList: CommentType[]
 };
 
 export default function CommentBox({
