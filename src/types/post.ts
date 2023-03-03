@@ -11,6 +11,7 @@ export type PostsProps = {
 
 export type PostDetailProps = {
   post: PostDetailType,
+  commentList: CommentItemType[],
 };
 
 export type NewPostType = {
@@ -60,4 +61,15 @@ export type PostDetailType = {
   viewCount: number,
   createdAt: string,
   modifiedAt: string,
+}
+
+export type CommentItemType = {
+  id: string,
+  name: string,
+  password: string,
+  content: string,
+  reply: string,
+  createdAt: string,
+  postTitle: string,
+  status: number,
 }
