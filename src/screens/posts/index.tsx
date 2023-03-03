@@ -18,12 +18,12 @@ export default function PostsScreen({
   const visiblePostItems = postItems.filter(postItem => {
     const isSearching = Boolean(keyword.trim());
     if(isSearching) {
-      const hasKeyword = Boolean(postItem.title.includes(keyword));
+      const hasKeyword = postItem.title.includes(keyword);
       if(!hasKeyword) return false;
     }
     
     for(const topic of selectedTopics) {
-      const hasTopic = Boolean(postItem.topics.includes(topic));
+      const hasTopic = postItem.topics.includes(topic);
       if(!hasTopic) { return false; }
     }
 
@@ -31,7 +31,7 @@ export default function PostsScreen({
   });
 
   const handleClickTopic = (topicName: string) => {
-    const hasTopic = Boolean(selectedTopics.includes(topicName));
+    const hasTopic = selectedTopics.includes(topicName);
     if(hasTopic) {
       setSelectedTopics(selectedTopics.filter(topic => topic !== topicName));
     } else {
