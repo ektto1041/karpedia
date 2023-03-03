@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, Timestamp } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "firebase/firestore";
 import { NewPostType, PostDoc, PostType } from '@/types/post';
-import dayjs from "dayjs";
+import time from "./time";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -37,15 +37,15 @@ export default {
       result[result.length] = {
         ...data,
         id: queryDocSnapshot.id,
-        createdAt: dayjs(data.createdAt.toDate()).format(),
-        modifiedAt: dayjs(data.modifiedAt.toDate()).format(),
+        createdAt: time.toString(data.createdAt),
+        modifiedAt: time.toString(data.modifiedAt),
       };
     });
 
     return result;
   },
   addPost: async (newPostData: NewPostType) => {
-    const now = Timestamp.now();
+    const now = time.now();
     const newPost = {
       emoji: newPostData.emoji,
       title: newPostData.title,
@@ -60,8 +60,8 @@ export default {
     const addedPost: PostType = {
       ...newPost,
       id: addedPostId,
-      createdAt: dayjs(newPost.createdAt.toDate()).format(),
-      modifiedAt: dayjs(newPost.modifiedAt.toDate()).format(),
+      createdAt: time.toString(newPost.createdAt),
+      modifiedAt: time.toString(newPost.modifiedAt),
     }
 
     return addedPost;
