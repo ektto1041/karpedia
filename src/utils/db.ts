@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc } from "firebase/firestore";
-import { NewPostType, PostDoc, PostType } from '@/types/post';
+import { CommentDoc, CommentType, NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
 const firebaseConfig = {
@@ -109,6 +109,28 @@ export default {
     }
 
     return addedPost;
+  },
+
+  /**
+   * 한 포스트의 댓글 리스트를 가져오는 함수
+   * @param postId 찾으려는 댓글이 작성되어 있는 포스트의 아이디
+   * @returns 해당 포스트에 작성된 댓글 리스트
+   */
+  getCommentsByPostId: async (postId: string) => {
+    const result: CommentType[] = [];
+    
+    const q = query(collection(db, 'comments'), where('postId', '==', postId));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(queryDocSnapshot => {
+      const data = queryDocSnapshot.data() as CommentDoc;
+      result[result.length] = {
+        ...data,
+        createdAt: time.toString(data.createdAt),
+        id: queryDocSnapshot.id,
+      };
+    });
+
+    return result;
   },
 };
 

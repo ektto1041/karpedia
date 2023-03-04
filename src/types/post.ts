@@ -27,13 +27,12 @@ export type PostDoc = {
 }
 
 export type CommentDoc = {
-  id: string,
   name: string,
   password: string,
   content: string,
   reply: string,
   createdAt: Timestamp,
-  postTitle: string,
+  postId: string,
   status: number,
 }
 
@@ -63,6 +62,6 @@ export type CommentType = {
   content: string,
   reply: string,
   createdAt: string,
-  postTitle: string,
+  postId: string,
   status: number,
 }
