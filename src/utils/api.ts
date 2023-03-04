@@ -1,4 +1,4 @@
-import { NewPostType } from "@/types/post";
+import { CommentType, NewPostType } from "@/types/post";
 import axios from "axios";
 
 const ax = axios.create({
@@ -15,3 +15,5 @@ export const apis = {
     return await ax.post('/api/posts', newPost);
   },
 }
+
+export const fetcher = (url: string) => ax.get(url).then(res => res.data);
