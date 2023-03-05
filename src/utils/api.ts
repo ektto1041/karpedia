@@ -1,4 +1,4 @@
-import { CommentType, NewPostType } from "@/types/post";
+import { CommentType, NewCommentType, NewPostType, PostType } from "@/types/post";
 import axios from "axios";
 
 const ax = axios.create({
@@ -11,8 +11,16 @@ export const apis = {
    * @param newPost 작성할 글의 정보
    * @returns 작성이 완료된 글의 정보
    */
-  createPost: async (newPost: NewPostType) => {
-    return await ax.post('/api/posts', newPost);
+  createPost: (newPost: NewPostType) => {
+    return ax.post('/api/posts', newPost);
+  },
+  /**
+   * 새 댓글을 작성하는 api
+   * @param newComment 작성할 댓글의 정보
+   * @returns 작성이 완료된 댓글의 정보
+   */
+  createComment: (newComment: NewCommentType) => {
+    return ax.post('/api/comments', newComment);
   },
 }
 

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc } from "firebase/firestore";
-import { CommentDoc, CommentType, NewPostType, PostDoc, PostType } from '@/types/post';
+import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
 const firebaseConfig = {
@@ -131,6 +131,28 @@ export default {
     });
 
     return result;
+  },
+  /**
+   * 새 댓글을 저장하는 함수
+   * @param newCommentData 새 댓글 저장을 위해 필요한 데이터들
+   * @returns 등록된 댓글
+   */
+  addComment: async (newCommentData: NewCommentType) => {
+    const newComment: CommentDoc = {
+      ...newCommentData,
+      reply: '',
+      createdAt: time.now(),
+      status: 0,
+    };
+
+    const addedCommentId = (await addDoc(collection(db, 'comments'), newComment)).id;
+    const addedComment: CommentType = {
+      ...newComment,
+      id: addedCommentId,
+      createdAt: time.toString(newComment.createdAt),
+    };
+
+    return addedComment;
   },
 };
 

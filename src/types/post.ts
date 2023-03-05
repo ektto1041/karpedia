@@ -16,6 +16,13 @@ export type NewPostType = {
   topics: string[],
 };
 
+export type NewCommentType = {
+  postId: string,
+  name: string,
+  password: string,
+  content: string,
+};
+
 export type PostDoc = {
   emoji: string,
   title: string,

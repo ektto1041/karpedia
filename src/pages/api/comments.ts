@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import db, { ErrorRes } from '@/utils/db';
 import strings from '@/utils/strings';
-import { CommentType } from '@/types/post';
+import { CommentType, NewCommentType } from '@/types/post';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CommentType[] | ErrorRes>
+  res: NextApiResponse<CommentType[] | CommentType | ErrorRes>
 ) {
   switch(req.method) {
     case 'GET':
@@ -28,6 +28,22 @@ export default async function handler(
           message: strings.db.err.unknown,
         });
       }
+
+      break;
+    case 'POST':
+      const newComment: NewCommentType = req.body;
+
+      try {
+        const addedComment = await db.addComment(newComment);
+
+        res.status(200).json(addedComment);
+      } catch(e) {
+        res.status(400).json({
+          message: strings.db.err.unknown,
+        });
+      }
+
+      break;
     default:
   }
 }
