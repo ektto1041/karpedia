@@ -119,7 +119,7 @@ export default {
   getCommentsByPostId: async (postId: string) => {
     const result: CommentType[] = [];
     
-    const q = query(collection(db, 'comments'), where('postId', '==', postId));
+    const q = query(collection(db, 'comments'), where('postId', '==', postId), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(queryDocSnapshot => {
       const data = queryDocSnapshot.data() as CommentDoc;
