@@ -1,4 +1,5 @@
 import useComment from '@/hooks/useComment';
+import { apis } from '@/utils/api';
 import { Fragment, useCallback } from 'react';
 import Comment from './Comment';
 import styles from './CommentBox.module.css';
@@ -18,16 +19,35 @@ export default function CommentBox({
     mutate();
   }, [mutate, commentList]);
 
+  const deleteComment = async (id: string) => {
+    const result = await apis.deleteComment(id);
+    if(result.status !== 200) {
+      alert('댓글을 삭제할 수 없습니다.');
+    } else {
+      revalidateCommentList();
+    }
+  };
+
+  const handleClickDeleteButton = (id: string, password: string) => {
+    const pw = prompt('비밀번호를 입력해주세요.');
+    const isNull = !Boolean(pw);
+    if(!isNull && (pw === password)) {
+      deleteComment(id);
+    } else {
+      alert('비밀번호가 틀렸습니다.');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <CommentInput placeholder='댓글을 입력하세요.' postId={postId} revalidateCommentList={revalidateCommentList} />
       {commentList.map(comment => Boolean(comment.reply) ? (
         <Fragment key={comment.id}>
-          <Comment comment={comment} />
+          <Comment comment={comment} onClickDeleteButton={handleClickDeleteButton} />
           <Reply content={comment.reply} />
         </Fragment>
       ) : (
-        <Comment key={comment.id} comment={comment} />
+        <Comment key={comment.id} comment={comment} onClickDeleteButton={handleClickDeleteButton} />
       ))}
     </div>
   )

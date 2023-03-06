@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
@@ -119,7 +119,7 @@ export default {
   getCommentsByPostId: async (postId: string) => {
     const result: CommentType[] = [];
     
-    const q = query(collection(db, 'comments'), where('postId', '==', postId), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'comments'), where('status', '==', 0), where('postId', '==', postId), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(queryDocSnapshot => {
       const data = queryDocSnapshot.data() as CommentDoc;
@@ -153,6 +153,15 @@ export default {
     };
 
     return addedComment;
+  },
+  /**
+   * 댓글을 삭제하는 함수
+   * @param commentId 삭제하려는 댓글의 id
+   */
+  deleteComment: async (commentId: string) => {
+    await updateDoc(doc(collection(db, 'comments'), commentId), {
+      status: 1,
+    });
   },
 };
 

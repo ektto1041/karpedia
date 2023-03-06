@@ -1,5 +1,5 @@
 import { CommentType, NewCommentType, NewPostType, PostType } from "@/types/post";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
   baseURL: process.env.SERVER_BASE_URL,
@@ -21,6 +21,13 @@ export const apis = {
    */
   createComment: (newComment: NewCommentType) => {
     return ax.post('/api/comments', newComment);
+  },
+  /**
+   * 댓글을 삭제하는 API
+   * @param commentId 삭제하려는 댓글의 id
+   */
+  deleteComment: (commentId: string): Promise<AxiosResponse<CommentType>> => {
+    return ax.delete(`/api/comments?commentId=${commentId}`);
   },
 }
 

@@ -5,45 +5,63 @@ import { CommentType, NewCommentType } from '@/types/post';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CommentType[] | CommentType | ErrorRes>
+  res: NextApiResponse<CommentType[] | CommentType | undefined | ErrorRes>
 ) {
-  switch(req.method) {
-    case 'GET':
-      const { postId } = req.query;
-      const hasNoPostId = !Boolean(postId);
-      if(hasNoPostId) {
-        res.status(400).json({
-          message: 'Post ID 가 존재하지 않습니다.'
-        });
+  if(req.method === 'GET') {
+    const { postId } = req.query;
+    const hasNoPostId = !Boolean(postId);
+    if(hasNoPostId) {
+      res.status(400).json({
+        message: 'Post ID 가 존재하지 않습니다.'
+      });
 
-        return;
-      }
+      return;
+    }
 
-      try {
-        const commentList = await db.getCommentsByPostId(postId as string);
+    try {
+      const commentList = await db.getCommentsByPostId(postId as string);
 
-        res.status(200).json(commentList);
-      } catch(e) {
-        res.status(400).json({
-          message: strings.db.err.unknown,
-        });
-      }
+      res.status(200).json(commentList);
+    } catch(e) {
+      console.log(e);
+      res.status(400).json({
+        message: strings.db.err.unknown,
+      });
+    }
+  } else if(req.method === 'POST') {
+    const newComment: NewCommentType = req.body;
 
-      break;
-    case 'POST':
-      const newComment: NewCommentType = req.body;
+    try {
+      const addedComment = await db.addComment(newComment);
 
-      try {
-        const addedComment = await db.addComment(newComment);
+      res.status(200).json(addedComment);
+    } catch(e) {
+      res.status(400).json({
+        message: strings.db.err.unknown,
+      });
+    }
+  } else if(req.method === 'DELETE') {
+    const { commentId } = req.query;
+    const hasNoCommentId = !Boolean(commentId);
+    if(hasNoCommentId) {
+      res.status(400).json({
+        message: 'Comment ID 가 존재하지 않습니다.'
+      });
 
-        res.status(200).json(addedComment);
-      } catch(e) {
-        res.status(400).json({
-          message: strings.db.err.unknown,
-        });
-      }
+      return;
+    }
 
-      break;
-    default:
+    try {
+      await db.deleteComment(commentId as string);
+
+      // TODO undefined?
+      res.status(200).json(undefined);
+    } catch(e) {
+      res.status(400).json({
+        message: strings.db.err.unknown,
+      });
+    }
+  } else {
+
   }
 }
