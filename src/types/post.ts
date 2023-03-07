@@ -7,7 +7,6 @@ export type PostsProps = {
 
 export type PostDetailProps = {
   post: PostType,
-  commentList: CommentType[],
 };
 
 export type NewPostType = {
@@ -15,6 +14,13 @@ export type NewPostType = {
   title: string,
   content: string,
   topics: string[],
+};
+
+export type NewCommentType = {
+  postId: string,
+  name: string,
+  password: string,
+  content: string,
 };
 
 export type PostDoc = {
@@ -28,13 +34,12 @@ export type PostDoc = {
 }
 
 export type CommentDoc = {
-  id: string,
   name: string,
   password: string,
   content: string,
   reply: string,
   createdAt: Timestamp,
-  postTitle: string,
+  postId: string,
   status: number,
 }
 
@@ -64,6 +69,6 @@ export type CommentType = {
   content: string,
   reply: string,
   createdAt: string,
-  postTitle: string,
+  postId: string,
   status: number,
 }

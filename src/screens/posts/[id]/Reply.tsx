@@ -1,6 +1,4 @@
 import styles from './Reply.module.css';
-import Icon from '@mdi/react';
-import { mdiClose } from '@mdi/js';
 
 type ReplyProps = {
   content: string,
