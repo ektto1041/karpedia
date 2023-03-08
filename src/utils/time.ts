@@ -11,6 +11,10 @@ const time = {
   toFormat(str: string, format: string = 'MMMM D, YYYY'): string {
     return dayjs(str).format(format);
   },
+  compare(a: string, b: string): number {
+    if(dayjs(a).isAfter(b)) return -1;
+    else return 1;
+  }
 };
 
 export default time;

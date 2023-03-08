@@ -77,20 +77,6 @@ export default {
     return result;
   },
   /**
-   * 포스트 중 조회수가 가장 높은 50개의 id 를 가져오는 함수
-   * @returns 조회수 순으로 정렬된 50개의 포스트의 id
-   */
-  getTopViewCountPostIds: async () => {
-    const result: string[] = [];
-    const q = query(collection(db, 'posts'), orderBy('viewCount', 'desc'), limit(50));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(queryDocSnapshot => {
-      result[result.length] = queryDocSnapshot.id;
-    });
-
-    return result;
-  },
-  /**
    * id로 포스트를 찾아 가져오고 조회 수를 업데이트 하는 함수
    * @param id 찾으려는 포스트의 id
    * @returns 찾은 포스트
