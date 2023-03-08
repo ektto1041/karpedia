@@ -17,6 +17,7 @@ export default function ContentBox({
 }: ContentBoxProps) {
   return (
     <div className={styles.container} >
+      <div className={styles.hidden}>{content}</div>
       <MDViewer source={content}></MDViewer>
     </div>
   )
