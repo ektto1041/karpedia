@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch } from "firebase/firestore";
-import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType } from '@/types/post';
+import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
 const firebaseConfig = {
@@ -38,16 +38,26 @@ export default {
     const result: PostType[] = [];
     const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(queryDocSnapshot => {
-      const data = queryDocSnapshot.data() as PostDoc;
+    for(const postSnapshot of querySnapshot.docs) {
+      const data = postSnapshot.data() as PostDoc;
 
-      result[result.length] = {
+      const post: PostType = {
         ...data,
-        id: queryDocSnapshot.id,
+        id: postSnapshot.id,
+        viewCount: 0,
         createdAt: time.toString(data.createdAt),
         modifiedAt: time.toString(data.modifiedAt),
       };
-    });
+
+      const viewCountQuerySnapshot = (await getDocs(collection(postSnapshot.ref, 'viewCount'))).docs;
+      for(const shardSnapshot of viewCountQuerySnapshot) {
+        const count = (shardSnapshot.data() as ViewCountShardDoc).count;
+
+        post.viewCount += count;
+      }
+
+      result[result.length] = post;
+    }
 
     return result;
   },
@@ -110,7 +120,7 @@ export default {
     // set data without viewCount(subcollection)
     batch.set(addedPost, newPost);
 
-    const viewCountShards = collection(addedPost, 'viewCounts');
+    const viewCountShards = collection(addedPost, 'viewCount');
     for(let i = 0; i < NUM_VIEW_COUNT; i++) {
       const viewCountShard = doc(viewCountShards, i.toString());
       batch.set(viewCountShard, { count: 0 });

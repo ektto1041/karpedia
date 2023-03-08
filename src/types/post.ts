@@ -28,10 +28,14 @@ export type PostDoc = {
   title: string,
   content: string,
   topics: string[],
-  viewCount: number,
+  numViewCount: number,
   createdAt: Timestamp,
   modifiedAt: Timestamp,
 }
+
+export type ViewCountShardDoc = {
+  count: number,
+};
 
 export type CommentDoc = {
   name: string,
