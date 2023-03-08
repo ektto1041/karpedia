@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType } from '@/types/post';
 import time from "./time";
 
@@ -19,6 +19,9 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore
 const db = getFirestore(app);
+
+// 분산 카운터 구현을 위한 shard 개수
+const NUM_VIEW_COUNT = 10;
 
 // types
 type ErrorRes = {
@@ -95,20 +98,35 @@ export default {
       title: newPostData.title,
       content: newPostData.content,
       topics: newPostData.topics,
-      viewCount: 0,
+      numViewCount: NUM_VIEW_COUNT,
       createdAt: now,
       modifiedAt: now,
+    };
+
+    const batch = writeBatch(db);
+
+    // new post doc
+    const addedPost = doc(collection(db, 'posts'));
+    // set data without viewCount(subcollection)
+    batch.set(addedPost, newPost);
+
+    const viewCountShards = collection(addedPost, 'viewCounts');
+    for(let i = 0; i < NUM_VIEW_COUNT; i++) {
+      const viewCountShard = doc(viewCountShards, i.toString());
+      batch.set(viewCountShard, { count: 0 });
     }
 
-    const addedPostId = (await addDoc(collection(db, 'posts'), newPost)).id;
-    const addedPost: PostType = {
+    await batch.commit();
+
+    const result: PostType = {
       ...newPost,
-      id: addedPostId,
+      id: addedPost.id,
+      viewCount: 0,
       createdAt: time.toString(newPost.createdAt),
       modifiedAt: time.toString(newPost.modifiedAt),
     }
 
-    return addedPost;
+    return result;
   },
 
   /**

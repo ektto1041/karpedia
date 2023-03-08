@@ -57,6 +57,7 @@ export type PostType = {
   title: string,
   content: string,
   topics: string[],
+  numViewCount: number,
   viewCount: number,
   createdAt: string,
   modifiedAt: string,
