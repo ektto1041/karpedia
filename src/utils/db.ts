@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
@@ -20,12 +20,34 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore
 const db = getFirestore(app);
 
-// 분산 카운터 구현을 위한 shard 개수
-const NUM_VIEW_COUNT = 10;
-
 // types
 type ErrorRes = {
   message: string,
+}
+
+// 분산 카운터 구현을 위한 shard 개수
+const NUM_VIEW_COUNT = 10;
+
+// 포스트 viewCount 구해주는 함수
+const getViewCount = async (ref: DocumentReference<DocumentData>): Promise<number> => {
+  let result = 0;
+
+  const viewCountQuerySnapshot = await getDocs(collection(ref, 'viewCount'));
+  for(const shardSnapshot of viewCountQuerySnapshot.docs) {
+    result += (shardSnapshot.data() as ViewCountShardDoc).count;
+  }
+
+  return result;
+};
+
+// 포스트 viewCount 증가시켜주는 함수
+const incrementViewCount = async (ref: DocumentReference<DocumentData>): Promise<void> => {
+    // Select a shard of the counter at random
+    const viewCountId = Math.floor(Math.random() * NUM_VIEW_COUNT).toString();
+    const viewCountRef = doc(collection(ref, 'viewCount'), viewCountId);
+
+    // Update count
+    await updateDoc(viewCountRef, { count: increment(1) });
 }
 
 // Methods about db
@@ -44,17 +66,10 @@ export default {
       const post: PostType = {
         ...data,
         id: postSnapshot.id,
-        viewCount: 0,
+        viewCount: await getViewCount(postSnapshot.ref),
         createdAt: time.toString(data.createdAt),
         modifiedAt: time.toString(data.modifiedAt),
       };
-
-      const viewCountQuerySnapshot = (await getDocs(collection(postSnapshot.ref, 'viewCount'))).docs;
-      for(const shardSnapshot of viewCountQuerySnapshot) {
-        const count = (shardSnapshot.data() as ViewCountShardDoc).count;
-
-        post.viewCount += count;
-      }
 
       result[result.length] = post;
     }
@@ -76,23 +91,29 @@ export default {
     return result;
   },
   /**
-   * id로 포스트를 찾아 가져오는 함수
+   * id로 포스트를 찾아 가져오고 조회 수를 업데이트 하는 함수
    * @param id 찾으려는 포스트의 id
    * @returns 찾은 포스트
    */
   getPostById: async (id: string) => {
+    // Post 가져오기
     const foundPost = await getDoc(doc(collection(db, 'posts'), id));
     const data = foundPost.data() as PostDoc;
 
     const hasNoData = !Boolean(data);
+    // TODO 예외 처리
     if(hasNoData) return undefined;
 
     const result: PostType = {
       ...data,
       id: foundPost.id,
+      viewCount: await getViewCount(foundPost.ref),
       createdAt: time.toString(data.createdAt),
       modifiedAt: time.toString(data.modifiedAt),
     };
+
+    // viewCount 증가
+    incrementViewCount(foundPost.ref);
 
     return result;
   },
