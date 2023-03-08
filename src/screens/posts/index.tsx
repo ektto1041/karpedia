@@ -4,7 +4,6 @@ import styles from './Posts.module.css';
 import { PostsProps } from '@/types/post';
 import PostList from './PostList';
 import { useState } from 'react';
-import NavigationBar from '@/components/NavigationBar';
 
 export default function PostsScreen({
   topics,
@@ -50,7 +49,6 @@ export default function PostsScreen({
 
   return (
     <div className={styles.container}>
-      <NavigationBar />
       <div className={styles['topic-box']}>
         <div className={styles.title}>
           Topics

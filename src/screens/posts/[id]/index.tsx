@@ -1,4 +1,3 @@
-import NavigationBar from '@/components/NavigationBar';
 import { PostDetailProps } from '@/types/post';
 import time from '@/utils/time';
 import CommentBox from './CommentBox';
@@ -13,7 +12,6 @@ export default function PostDetailScreen({
 
   return (
     <div className={styles.container}>
-      <NavigationBar />
       <div className={styles.header}>
         <div className={styles['emoji-box']}>
           {emoji}
