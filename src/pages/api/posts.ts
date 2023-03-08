@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import db, { ErrorRes } from '@/utils/db';
 import strings from '@/utils/strings';
-import { DocumentData, QueryDocumentSnapshot, Timestamp } from 'firebase/firestore';
-import { NewPostType, PostDoc, PostType } from '@/types/post';
+import { NewPostType, PostType } from '@/types/post';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

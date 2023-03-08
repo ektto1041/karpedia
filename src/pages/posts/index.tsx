@@ -1,7 +1,7 @@
 import PostsScreen from "@/screens/posts";
 import { PostItemType, PostsProps, PostType } from "@/types/post";
 import db from "@/utils/db";
-import dayjs from "dayjs";
+import time from "@/utils/time";
 
 export default function Posts({
   topics,
@@ -19,7 +19,7 @@ export async function getStaticProps() {
       emoji: data.emoji,
       title: data.title,
       topics: data.topics,
-      modifiedAt: dayjs(data.modifiedAt).format('MMMM D, YYYY'),
+      modifiedAt: time.toFormat(data.modifiedAt),
     }
 
     // 시점 이슈 발생할 수 있음!

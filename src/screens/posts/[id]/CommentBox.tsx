@@ -1,29 +1,53 @@
-import MainInput from '@/components/MainInput';
-import { CommentType } from '@/types/post';
-import { Fragment } from 'react';
+import useComment from '@/hooks/useComment';
+import { apis } from '@/utils/api';
+import { Fragment, useCallback } from 'react';
 import Comment from './Comment';
 import styles from './CommentBox.module.css';
+import CommentInput from './CommentInput';
 import Reply from './Reply';
 
 type CommentBoxProps = {
-  commentList: CommentType[]
+  postId: string,
 };
 
 export default function CommentBox({
-  commentList,
+  postId,
 }: CommentBoxProps) {
-  // 댓글 리스트 가져와서 처리하는 부분부터
+  const { commentList, error, isLoading, mutate } = useComment(postId);
+
+  const revalidateCommentList = useCallback( () => {
+    mutate();
+  }, [mutate, commentList]);
+
+  const deleteComment = async (id: string) => {
+    const result = await apis.deleteComment(id);
+    if(result.status !== 200) {
+      alert('댓글을 삭제할 수 없습니다.');
+    } else {
+      revalidateCommentList();
+    }
+  };
+
+  const handleClickDeleteButton = (id: string, password: string) => {
+    const pw = prompt('비밀번호를 입력해주세요.');
+    const isNull = !Boolean(pw);
+    if(!isNull && (pw === password)) {
+      deleteComment(id);
+    } else {
+      alert('비밀번호가 틀렸습니다.');
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <MainInput placeholder='댓글을 입력하세요.' onSubmit={() => {}} />
+      <CommentInput placeholder='댓글을 입력하세요.' postId={postId} revalidateCommentList={revalidateCommentList} />
       {commentList.map(comment => Boolean(comment.reply) ? (
         <Fragment key={comment.id}>
-          <Comment comment={comment} />
+          <Comment comment={comment} onClickDeleteButton={handleClickDeleteButton} />
           <Reply content={comment.reply} />
         </Fragment>
       ) : (
-        <Comment key={comment.id} comment={comment} />
+        <Comment key={comment.id} comment={comment} onClickDeleteButton={handleClickDeleteButton} />
       ))}
     </div>
   )

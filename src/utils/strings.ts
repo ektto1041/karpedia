@@ -2,7 +2,7 @@ export default {
   // DB 와 통신 중 발생하는 메시지
   db: {
     err: {
-      unknown: 'DB에 문제가 발생했습니다.'
+      unknown: 'DB에 문제가 발생했습니다.',
     },
   },
   // 서버와 통신 중 발생하는 메시지

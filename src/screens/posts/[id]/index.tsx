@@ -1,15 +1,15 @@
 import NavigationBar from '@/components/NavigationBar';
 import { PostDetailProps } from '@/types/post';
-import dayjs from 'dayjs';
+import time from '@/utils/time';
 import CommentBox from './CommentBox';
+import ContentBox from './ContentBox';
 import styles from './PostDetail.module.css';
 import ShareButton from './ShareButton';
 
 export default function PostDetailScreen({
   post,
-  commentList,
 }: PostDetailProps) {
-  const {emoji, title, modifiedAt, content, } = post;
+  const {id, emoji, title, modifiedAt, content, } = post;
 
   return (
     <div className={styles.container}>
@@ -22,17 +22,15 @@ export default function PostDetailScreen({
           {title}
         </div>
         <div className={styles.subtitle} >
-          {dayjs(modifiedAt).format('MMMM D, YYYY')}
+          {time.toFormat(modifiedAt)}
         </div>
       </div>
       <div className={styles.body}>
-        <div className={styles.content} >
-          {content}
-        </div>
+        <ContentBox content={content} />
         <div className={styles['button-box']}>
           <ShareButton />
         </div>
-        <CommentBox commentList={commentList} />
+        <CommentBox postId={id} />
       </div>
     </div>
   );

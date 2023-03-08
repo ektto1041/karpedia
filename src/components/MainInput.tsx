@@ -1,7 +1,7 @@
 import styles from './MainInput.module.css';
 import Icon from '@mdi/react';
 import { mdiKeyboardReturn } from '@mdi/js';
-import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, useState } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 
 type MainInputProps = {
   placeholder: string,
