@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc } from "firebase/firestore";
-import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType } from '@/types/post';
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData } from "firebase/firestore";
+import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
 const firebaseConfig = {
@@ -25,6 +25,31 @@ type ErrorRes = {
   message: string,
 }
 
+// 분산 카운터 구현을 위한 shard 개수
+const NUM_VIEW_COUNT = 10;
+
+// 포스트 viewCount 구해주는 함수
+const getViewCount = async (ref: DocumentReference<DocumentData>): Promise<number> => {
+  let result = 0;
+
+  const viewCountQuerySnapshot = await getDocs(collection(ref, 'viewCount'));
+  for(const shardSnapshot of viewCountQuerySnapshot.docs) {
+    result += (shardSnapshot.data() as ViewCountShardDoc).count;
+  }
+
+  return result;
+};
+
+// 포스트 viewCount 증가시켜주는 함수
+const incrementViewCount = async (ref: DocumentReference<DocumentData>): Promise<void> => {
+    // Select a shard of the counter at random
+    const viewCountId = Math.floor(Math.random() * NUM_VIEW_COUNT).toString();
+    const viewCountRef = doc(collection(ref, 'viewCount'), viewCountId);
+
+    // Update count
+    await updateDoc(viewCountRef, { count: increment(1) });
+}
+
 // Methods about db
 export default {
   /**
@@ -35,51 +60,46 @@ export default {
     const result: PostType[] = [];
     const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(queryDocSnapshot => {
-      const data = queryDocSnapshot.data() as PostDoc;
+    for(const postSnapshot of querySnapshot.docs) {
+      const data = postSnapshot.data() as PostDoc;
 
-      result[result.length] = {
+      const post: PostType = {
         ...data,
-        id: queryDocSnapshot.id,
+        id: postSnapshot.id,
+        viewCount: await getViewCount(postSnapshot.ref),
         createdAt: time.toString(data.createdAt),
         modifiedAt: time.toString(data.modifiedAt),
       };
-    });
+
+      result[result.length] = post;
+    }
 
     return result;
   },
   /**
-   * 포스트 중 조회수가 가장 높은 50개의 id 를 가져오는 함수
-   * @returns 조회수 순으로 정렬된 50개의 포스트의 id
-   */
-  getTopViewCountPostIds: async () => {
-    const result: string[] = [];
-    const q = query(collection(db, 'posts'), orderBy('viewCount', 'desc'), limit(50));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(queryDocSnapshot => {
-      result[result.length] = queryDocSnapshot.id;
-    });
-
-    return result;
-  },
-  /**
-   * id로 포스트를 찾아 가져오는 함수
+   * id로 포스트를 찾아 가져오고 조회 수를 업데이트 하는 함수
    * @param id 찾으려는 포스트의 id
    * @returns 찾은 포스트
    */
   getPostById: async (id: string) => {
+    // Post 가져오기
     const foundPost = await getDoc(doc(collection(db, 'posts'), id));
     const data = foundPost.data() as PostDoc;
 
     const hasNoData = !Boolean(data);
+    // TODO 예외 처리
     if(hasNoData) return undefined;
 
     const result: PostType = {
       ...data,
       id: foundPost.id,
+      viewCount: await getViewCount(foundPost.ref),
       createdAt: time.toString(data.createdAt),
       modifiedAt: time.toString(data.modifiedAt),
     };
+
+    // viewCount 증가
+    incrementViewCount(foundPost.ref);
 
     return result;
   },
@@ -95,20 +115,35 @@ export default {
       title: newPostData.title,
       content: newPostData.content,
       topics: newPostData.topics,
-      viewCount: 0,
+      numViewCount: NUM_VIEW_COUNT,
       createdAt: now,
       modifiedAt: now,
+    };
+
+    const batch = writeBatch(db);
+
+    // new post doc
+    const addedPost = doc(collection(db, 'posts'));
+    // set data without viewCount(subcollection)
+    batch.set(addedPost, newPost);
+
+    const viewCountShards = collection(addedPost, 'viewCount');
+    for(let i = 0; i < NUM_VIEW_COUNT; i++) {
+      const viewCountShard = doc(viewCountShards, i.toString());
+      batch.set(viewCountShard, { count: 0 });
     }
 
-    const addedPostId = (await addDoc(collection(db, 'posts'), newPost)).id;
-    const addedPost: PostType = {
+    await batch.commit();
+
+    const result: PostType = {
       ...newPost,
-      id: addedPostId,
+      id: addedPost.id,
+      viewCount: 0,
       createdAt: time.toString(newPost.createdAt),
       modifiedAt: time.toString(newPost.modifiedAt),
     }
 
-    return addedPost;
+    return result;
   },
 
   /**
