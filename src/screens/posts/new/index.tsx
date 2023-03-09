@@ -7,6 +7,7 @@ import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
 import { NewPostType } from "@/types/post";
 import { apis } from "@/utils/api";
+import { useRouter } from "next/router";
 
 type Content = string | undefined;
 
@@ -21,6 +22,9 @@ const MDViewer = dynamic(
 );
 
 export default function NewPostScreen() {
+  const router = useRouter();
+  const isAdmin = Boolean(router.query.secret === process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY);
+
   const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -70,46 +74,50 @@ export default function NewPostScreen() {
 
   return (
     <div className={styles.container}>
-      <input
-        className={withWarning(emoji, styles.emoji)}
-        type='text'
-        value={emoji}
-        onChange={handleChangeEmoji}
-        placeholder={'😀'}
-      />
-      <input
-        className={withWarning(title, styles.title)}
-        type='text'
-        value={title}
-        onChange={handleChangeTitle}
-        placeholder={strings.page.ph.title}
-      />
-      <MDEditor
-        value={content}
-        onChange={handleChangeContent}
-        visiableDragbar={false}
-        height={500}
-        style={{ marginBottom: '10px' }}
-      />
-      <div className={styles['button-box']}>
-        <div className={styles.topic}>
-          <div className={styles.label}>
-            토픽:
-          </div>
+      {isAdmin ? (
+        <>
           <input
-            className={withWarning(topic)}
+            className={withWarning(emoji, styles.emoji)}
             type='text'
-            placeholder={strings.page.ph.topic}
-            value={topic}
-            onChange={handleChangeTopic}
+            value={emoji}
+            onChange={handleChangeEmoji}
+            placeholder={'😀'}
           />
-        </div>
-        <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
-      </div>
-      <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
-      <div className={styles.viewer} >
-        <MDViewer source={content}></MDViewer>
-      </div>
+          <input
+            className={withWarning(title, styles.title)}
+            type='text'
+            value={title}
+            onChange={handleChangeTitle}
+            placeholder={strings.page.ph.title}
+          />
+          <MDEditor
+            value={content}
+            onChange={handleChangeContent}
+            visiableDragbar={false}
+            height={500}
+            style={{ marginBottom: '10px' }}
+          />
+          <div className={styles['button-box']}>
+            <div className={styles.topic}>
+              <div className={styles.label}>
+                토픽:
+              </div>
+              <input
+                className={withWarning(topic)}
+                type='text'
+                placeholder={strings.page.ph.topic}
+                value={topic}
+                onChange={handleChangeTopic}
+              />
+            </div>
+            <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
+          </div>
+          <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
+          <div className={styles.viewer} >
+            <MDViewer source={content}></MDViewer>
+          </div>
+        </>
+      ) : (<></>)}
     </div>
   )
 }
