@@ -1,11 +1,11 @@
 .container {
   min-width: 50px;
   height: 30px;
-  line-height: 30px;
+  line-height: 27px;
   margin: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  border: 2px solid #111111;
+  border: 1.5px solid #111111;
   color: #111111;
   border-radius: 15px;
   text-align: center;
