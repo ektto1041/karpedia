@@ -1,11 +1,12 @@
 .container {
   width: 700px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 
 .container .header {
   width: 100%;
+  margin-top: 20px;
 }
 
 .container .header .emoji-box {

@@ -1,0 +1,24 @@
+.container {
+  margin: 0 auto;
+  width: 700px;
+  height: 50px;
+  display: flex;
+}
+
+.container a {
+  flex-grow: 1;
+  height: 50px;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #111111;
+  transition: .5s all ease;
+  cursor: pointer;
+  color: #111111
+}
+
+.container a:hover {
+  flex-grow: 2;
+  padding: 0;
+  background-color: #eeeeee;
+}
