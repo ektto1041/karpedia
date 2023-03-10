@@ -7,6 +7,14 @@ const ax = axios.create({
 
 export const apis = {
   /**
+   * /posts 페이지를 revalidate 해주는 api
+   * @returns revalidate 결과
+   */
+  revalidatePosts: () => {
+    return ax.get(`/api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts`);
+  },
+
+  /**
    * 새 글을 작성하는 api
    * @param newPost 작성할 글의 정보
    * @returns 작성이 완료된 글의 정보

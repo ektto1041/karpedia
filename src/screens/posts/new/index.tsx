@@ -66,6 +66,11 @@ export default function NewPostScreen() {
         setTitle("");
         setContent("");
         setTopic("");
+
+        const revalidationResult = await apis.revalidatePosts();
+        if(revalidationResult.status !== 200) {
+          alert('revalidation failed');
+        }
       } else {
         alert(strings.server.posts.addFail);
       }
