@@ -49,6 +49,12 @@ export default function CommentInput({
   }, [revalidateCommentList]);
 
   const handleSubmit = () => {
+    const canSubmit = Boolean(name && password && content);
+    if(!canSubmit) {
+      alert('이름과 비밀번호, 내용을 모두 입력해주세요.');
+      return;
+    }
+
     setDisabled(true);
 
     const newComment: NewCommentType = {
@@ -72,6 +78,7 @@ export default function CommentInput({
         <input
           type='password'
           placeholder='비밀번호'
+          maxLength={6}
           value={password}
           onChange={handleChangePassword}
           disabled={isDisabled}
