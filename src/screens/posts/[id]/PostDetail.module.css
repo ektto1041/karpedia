@@ -1,6 +1,57 @@
+@media (min-width: 0px) {
+  .container {
+    width: 100%;
+  }
+
+  .container .header .emoji-box {
+    height: 75px;
+    font-size: 75px;
+    line-height: 75px;
+  }
+
+  .container .header .title {
+    font-size: 28px;
+    padding-left: 10px;
+  }
+
+  .container .header .subtitle {
+    width: 100%;
+    height: 35px;
+    font-size: 14px;
+    color: #999999;
+    line-height: 35px;
+    padding-left: 10px  ;
+  }
+}
+
+@media (min-width: 700px) {
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+
+  .container .header .emoji-box {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    font-size: 90px;
+    line-height: 100px;
+  }
+
+  .container .header .title {
+    font-size: 36px;
+  }
+
+  .container .header .subtitle {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    color: #999999;
+    line-height: 50px;
+  }
+}
+
 .container {
-  width: 700px;
-  margin: 0 auto;
   padding-bottom: 20px;
 }
 
@@ -11,24 +62,17 @@
 
 .container .header .emoji-box {
   width: 100%;
-  height: 100px;
   text-align: center;
-  font-size: 90px;
-  line-height: 100px;
 }
 
 .container .header .title {
   width: 100%;
-  font-size: 36px;
   font-weight: bold;
 }
 
 .container .header .subtitle {
   width: 100%;
-  height: 50px;
-  font-size: 18px;
   color: #999999;
-  line-height: 50px;
 }
 
 .container .body .button-box {
