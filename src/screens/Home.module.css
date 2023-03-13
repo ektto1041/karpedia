@@ -5,19 +5,71 @@
   font-style: normal;
 }
 
-.container {
-  width: 700px;
-  margin: 0 auto;
+@media (min-width: 0px) {
+  .container {
+    width: 100%;
+  }
+
+  .container .profile-box {
+    height: 300px;
+  }
+
+  .container .profile-box .profile-image-box {
+    height: 200px;
+  }
+
+  .container .profile-box .profile-image-box .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .container .profile-box .name {
+    height: 30px;
+    line-height: 30px;
+    font-size: 25px;
+  }
+
+  .container .content {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+
+  .container .profile-box {
+    height: 400px;
+  }
+
+  .container .profile-box .profile-image-box {
+    height: 250px;
+  }
+
+  .container .profile-box .profile-image-box .profile-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .container .profile-box .name {
+    height: 50px;
+    line-height: 50px;
+    font-size: 40px;
+  }
+
+  .container .content {
+    font-size: 30px;
+  }
 }
 
 .container .profile-box {
   width: 100%;
-  height: 400px;
 }
 
 .container .profile-box .profile-image-box {
   width: 100%;
-  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,8 +77,6 @@
 
 .container .profile-box .profile-image-box .profile-image {
   position: relative;
-  width: 200px;
-  height: 200px;
   border-radius: 100px;
   overflow: hidden;
   transition: all ease .5s;
@@ -34,10 +84,7 @@
 
 .container .profile-box .name {
   width: 100%;
-  height: 50px;
-  line-height: 50px;
   text-align: center;
-  font-size: 40px;
   font-family: 'KCC-eunyoung';
 }
 
@@ -45,9 +92,7 @@
   width: 100%;
   height: 200px;
   line-height: 200px;
-  font-size: 30px;
   text-align: center;
-  /* font-family: 'KCC-eunyoung'; */
 }
 
 .container .profile-box .profile-image-box .profile-image img {
