@@ -1,7 +1,34 @@
+@media (min-width: 0px) {
+  .container {
+    width: 100%;
+  }
+
+  .topic {
+    width: 75%;
+  }
+
+  .topic input {
+    width: 80%;
+  }
+}
+
+@media (min-width: 700px) {
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+
+  .topic {
+    width: 580px;
+  }
+  
+  .topic input {
+    width: 500px;
+  }
+}
+
 .container {
-  width: 700px;
   height: 500px;
-  margin: 0 auto;
   padding: 20px 0;
 }
 
@@ -43,7 +70,6 @@
 }
 
 .topic {
-  width: 580px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -58,7 +84,6 @@
 }
 
 .topic input {
-  width: 500px;
   height: 30px;
   line-height: 30px;
   border: 0;
@@ -89,6 +114,6 @@
 }
 
 .viewer {
-  width: 700px;
+  width: 100%;
   height: 500px;
 }
