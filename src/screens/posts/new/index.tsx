@@ -8,6 +8,7 @@ import { withWarning } from "@/utils/css";
 import { NewPostType } from "@/types/post";
 import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 type Content = string | undefined;
 
@@ -23,7 +24,9 @@ const MDViewer = dynamic(
 
 export default function NewPostScreen() {
   const router = useRouter();
-  const isAdmin = Boolean(router.query.secret === process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY);
+  const session = useSession();
+
+  const isAdmin = Boolean(session.status === 'authenticated');
 
   const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
