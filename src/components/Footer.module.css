@@ -1,0 +1,26 @@
+@media (min-width: 0px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+}
+
+.container {
+  position: relative;
+  height: 100px;
+}
+
+.login-button {
+  position: absolute;
+  right: 0; bottom: 0;
+  background: none;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
