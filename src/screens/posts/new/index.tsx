@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
@@ -26,12 +26,39 @@ export default function NewPostScreen() {
   const router = useRouter();
   const session = useSession();
 
+  // 포스트 업데이트 시 쿼리스트링으로 넘어오는 postId
+  const postId = router.query.postId ? router.query.postId as string : undefined;
+  // 로그인 시 true
   const isAdmin = Boolean(session.status === 'authenticated');
+
+  const [isValidPostId, setValidPostId] = useState(true);
 
   const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
+
+  const getPostById = async () => {
+    console.log(postId);
+    if(postId) {
+      const result = await apis.getPostById(postId);
+
+      if(result.status === 200) {
+        const post = result.data;
+
+        setEmoji(post.emoji);
+        setTitle(post.title);
+        setContent(post.content);
+        setTopic(post.topics.join('|'));
+      } else {
+        setValidPostId(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    getPostById();
+  }, [router]);
 
   const handleChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {
     setEmoji(e.target.value);
@@ -82,7 +109,7 @@ export default function NewPostScreen() {
 
   return (
     <div className={styles.container}>
-      {isAdmin ? (
+      {isAdmin && isValidPostId ? (
         <>
           <input
             className={withWarning(emoji, styles.emoji)}
