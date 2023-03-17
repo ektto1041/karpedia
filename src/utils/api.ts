@@ -23,6 +23,14 @@ export const apis = {
     return ax.post('/api/posts', newPost);
   },
   /**
+   * 글 하나의 정보를 가져오는 api
+   * @param postId 가져올 포스트의 id
+   * @returns 포스트 정보
+   */
+  getPostById: (postId: string): Promise<AxiosResponse<PostType>> => {
+    return ax.get(`/api/posts?postId=${postId}`);
+  },
+  /**
    * 새 댓글을 작성하는 api
    * @param newComment 작성할 댓글의 정보
    * @returns 작성이 완료된 댓글의 정보
