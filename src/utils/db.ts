@@ -81,7 +81,7 @@ export default {
    * @param id 찾으려는 포스트의 id
    * @returns 찾은 포스트
    */
-  getPostById: async (id: string) => {
+  getPostById: async (id: string): Promise<PostType | undefined> => {
     // Post 가져오기
     const foundPost = await getDoc(doc(collection(db, 'posts'), id));
     const data = foundPost.data() as PostDoc;
