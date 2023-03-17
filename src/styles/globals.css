@@ -18,15 +18,14 @@
   margin: 0;
 }
 
-*:not(code span) {
-  font-family: 'NanumSquareNeo-Variable';
+.w-md-editor-text *,
+code * {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 
-/* html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-} */
+* {
+  font-family: 'NanumSquareNeo-Variable';
+}
 
 .warning {
   background-color: #ff0000a0;
@@ -34,4 +33,8 @@ body {
 
 a {
   text-decoration: none;
+}
+
+button {
+  color: #111111
 }
