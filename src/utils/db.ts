@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData, deleteDoc } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
@@ -163,6 +163,15 @@ export default {
     };
 
     await updateDoc(postRef, newPost);
+  },
+  /**
+   * 포스트를 삭제하는 함수
+   * @param postId 삭제하려는 포스트 id
+   */
+  deletePost: async (postId: string): Promise<void> => {
+    const postDoc = doc(collection(db, 'posts'), postId);
+
+    await updateDoc(postDoc, { status: 1 });
   },
 
   /**

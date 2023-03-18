@@ -60,6 +60,24 @@ export default async function handler(
         message: strings.db.err.unknown,
       });
     }
+  } else if(req.method === 'DELETE') {
+    const postId = req.query.postId ? req.query.postId as string : undefined;
+
+    if(postId) {
+      try {
+        await db.deletePost(postId);
+        
+        res.status(200).json(true);
+      } catch(e) {
+        res.status(400).json({
+          message: strings.db.err.unknown,
+        });
+      }
+    } else {
+      res.status(400).json({
+        message: strings.db.err.unknown,
+      });
+    }
   } else {
     res.status(400).json({
       message: '잘못된 api 요청입니다.'
