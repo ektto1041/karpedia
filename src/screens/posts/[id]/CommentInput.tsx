@@ -8,7 +8,7 @@ import { apis } from '@/utils/api';
 type CommentInputProps = {
   placeholder: string,
   postId: string,
-  revalidateCommentList: (newComment: CommentType) => void
+  revalidateCommentList: () => void,
 };
 
 export default function CommentInput({
@@ -37,7 +37,7 @@ export default function CommentInput({
     const result = await apis.createComment(newComment);
   
     if(result.status === 200) {
-      revalidateCommentList(result.data);
+      revalidateCommentList();
 
       setName('');
       setPassword('');

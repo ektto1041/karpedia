@@ -218,6 +218,16 @@ export default {
     return addedComment;
   },
   /**
+   * 댓글 답변을 수정하는 함수
+   * @param commentId 답변을 작성하려는 댓글의 id
+   * @param newReply 답변 내용
+   */
+  updateReply: async (commentId: string, newReply: string) => {
+    const commentRef = doc(collection(db, 'comments'), commentId);
+
+    await updateDoc(commentRef, { reply: newReply });
+  },
+  /**
    * 댓글을 삭제하는 함수
    * @param commentId 삭제하려는 댓글의 id
    */

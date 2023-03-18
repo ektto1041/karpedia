@@ -8,16 +8,18 @@ import Reply from './Reply';
 
 type CommentBoxProps = {
   postId: string,
+  isAdmin: boolean,
 };
 
 export default function CommentBox({
   postId,
+  isAdmin,
 }: CommentBoxProps) {
   const { commentList, error, isLoading, mutate } = useComment(postId);
 
   const revalidateCommentList = useCallback( () => {
     mutate();
-  }, [mutate, commentList]);
+  }, [mutate]);
 
   const deleteComment = async (id: string) => {
     const result = await apis.deleteComment(id);
@@ -43,11 +45,11 @@ export default function CommentBox({
       <CommentInput placeholder='댓글을 입력하세요.' postId={postId} revalidateCommentList={revalidateCommentList} />
       {commentList.map(comment => Boolean(comment.reply) ? (
         <Fragment key={comment.id}>
-          <Comment comment={comment} onClickDeleteButton={handleClickDeleteButton} />
+          <Comment comment={comment} onClickDeleteButton={handleClickDeleteButton} isAdmin={isAdmin} revalidateCommentList={revalidateCommentList} />
           <Reply content={comment.reply} />
         </Fragment>
       ) : (
-        <Comment key={comment.id} comment={comment} onClickDeleteButton={handleClickDeleteButton} />
+        <Comment key={comment.id} comment={comment} onClickDeleteButton={handleClickDeleteButton} isAdmin={isAdmin} revalidateCommentList={revalidateCommentList} />
       ))}
     </div>
   )

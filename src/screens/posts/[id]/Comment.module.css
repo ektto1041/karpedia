@@ -57,3 +57,12 @@
   background-color: #eeeeee;
   user-select: none;
 }
+
+.admin {
+  cursor: pointer;
+  transition: background-color .25s ease;
+}
+
+.admin:hover {
+  background-color: #f1d8ed;
+}
