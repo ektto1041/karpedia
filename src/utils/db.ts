@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData, deleteDoc } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
@@ -58,7 +58,7 @@ export default {
    */
   getAllPosts: async () => {
     const result: PostType[] = [];
-    const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
+    const q = query(collection(db, 'posts'), where('status', '==', 0), orderBy("modifiedAt", "desc"));
     const querySnapshot = await getDocs(q);
     for(const postSnapshot of querySnapshot.docs) {
       const data = postSnapshot.data() as PostDoc;
@@ -81,7 +81,7 @@ export default {
    * @param id 찾으려는 포스트의 id
    * @returns 찾은 포스트
    */
-  getPostById: async (id: string) => {
+  getPostById: async (id: string): Promise<PostType | undefined> => {
     // Post 가져오기
     const foundPost = await getDoc(doc(collection(db, 'posts'), id));
     const data = foundPost.data() as PostDoc;
@@ -110,7 +110,7 @@ export default {
    */
   addPost: async (newPostData: NewPostType) => {
     const now = time.now();
-    const newPost = {
+    const newPost: PostDoc = {
       emoji: newPostData.emoji,
       title: newPostData.title,
       content: newPostData.content,
@@ -118,6 +118,7 @@ export default {
       numViewCount: NUM_VIEW_COUNT,
       createdAt: now,
       modifiedAt: now,
+      status: 0,
     };
 
     const batch = writeBatch(db);
@@ -144,6 +145,33 @@ export default {
     }
 
     return result;
+  },
+  /**
+   * 포스트를 수정하는 함수
+   * @param newPostData 수정할 내용
+   * @param postId 수정할 포스트의 id
+   */
+  updatePost: async (newPostData: NewPostType, postId: string): Promise<void> => {
+    const postRef = doc(collection(db, 'posts'), postId);
+
+    const newPost = {
+      emoji: newPostData.emoji,
+      title: newPostData.title,
+      content: newPostData.content,
+      topics: newPostData.topics,
+      modifiedAt: time.now(),
+    };
+
+    await updateDoc(postRef, newPost);
+  },
+  /**
+   * 포스트를 삭제하는 함수
+   * @param postId 삭제하려는 포스트 id
+   */
+  deletePost: async (postId: string): Promise<void> => {
+    const postDoc = doc(collection(db, 'posts'), postId);
+
+    await updateDoc(postDoc, { status: 1 });
   },
 
   /**
