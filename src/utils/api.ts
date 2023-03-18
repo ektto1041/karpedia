@@ -23,6 +23,15 @@ export const apis = {
     return ax.post('/api/posts', newPost);
   },
   /**
+   * 글을 수정하는 api
+   * @param newPost 작성할 글의 정보
+   * @param postId 수정할 글의 id
+   * @returns 수정이 완료된 글의 정보
+   */
+  updatePost: (newPost: NewPostType, postId: string) => {
+    return ax.put(`/api/posts?postId=${postId}`, newPost);
+  },
+  /**
    * 글 하나의 정보를 가져오는 api
    * @param postId 가져올 포스트의 id
    * @returns 포스트 정보

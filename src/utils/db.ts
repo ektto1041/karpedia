@@ -145,6 +145,24 @@ export default {
 
     return result;
   },
+  /**
+   * 포스트를 수정하는 함수
+   * @param newPostData 수정할 내용
+   * @param postId 수정할 포스트의 id
+   */
+  updatePost: async (newPostData: NewPostType, postId: string): Promise<void> => {
+    const postRef = doc(collection(db, 'posts'), postId);
+
+    const newPost = {
+      emoji: newPostData.emoji,
+      title: newPostData.title,
+      content: newPostData.content,
+      topics: newPostData.topics,
+      modifiedAt: time.now(),
+    };
+
+    await updateDoc(postRef, newPost);
+  },
 
   /**
    * 한 포스트의 댓글 리스트를 가져오는 함수

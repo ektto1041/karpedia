@@ -39,7 +39,6 @@ export default function NewPostScreen() {
   const [topic, setTopic] = useState("");
 
   const getPostById = async () => {
-    console.log(postId);
     if(postId) {
       const result = await apis.getPostById(postId);
 
@@ -87,7 +86,9 @@ export default function NewPostScreen() {
     };
 
     (async () => {
-      const result = await apis.createPost(newPost);
+      const result = postId ?
+        await apis.updatePost(newPost, postId) :
+        await apis.createPost(newPost);
 
       if(result.status === 200) {
         alert(strings.server.posts.addSuccess);

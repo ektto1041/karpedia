@@ -7,7 +7,7 @@ import { NewPostType, PostType } from '@/types/post';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PostType | ErrorRes>
+  res: NextApiResponse<PostType | boolean | ErrorRes>
 ) {
   if(req.method === 'GET') {
     const postId = req.query.postId ? req.query.postId as string : undefined;
@@ -37,6 +37,25 @@ export default async function handler(
 
       res.status(200).json(addedPost);
     } catch(e) {
+      res.status(400).json({
+        message: strings.db.err.unknown,
+      });
+    }
+  } else if(req.method === 'PUT') {
+    const postId = req.query.postId ? req.query.postId as string : undefined;
+    const newPost: NewPostType = req.body;
+
+    if(postId) {
+      try {
+        await db.updatePost(newPost, postId);
+        
+        res.status(200).json(true);
+      } catch(e) {
+        res.status(400).json({
+          message: strings.db.err.unknown,
+        });
+      }
+    } else {
       res.status(400).json({
         message: strings.db.err.unknown,
       });
