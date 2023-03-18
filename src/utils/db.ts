@@ -58,7 +58,7 @@ export default {
    */
   getAllPosts: async () => {
     const result: PostType[] = [];
-    const q = query(collection(db, 'posts'), orderBy("modifiedAt", "desc"));
+    const q = query(collection(db, 'posts'), where('status', '==', 0), orderBy("modifiedAt", "desc"));
     const querySnapshot = await getDocs(q);
     for(const postSnapshot of querySnapshot.docs) {
       const data = postSnapshot.data() as PostDoc;
@@ -110,7 +110,7 @@ export default {
    */
   addPost: async (newPostData: NewPostType) => {
     const now = time.now();
-    const newPost = {
+    const newPost: PostDoc = {
       emoji: newPostData.emoji,
       title: newPostData.title,
       content: newPostData.content,
@@ -118,6 +118,7 @@ export default {
       numViewCount: NUM_VIEW_COUNT,
       createdAt: now,
       modifiedAt: now,
+      status: 0,
     };
 
     const batch = writeBatch(db);

@@ -31,6 +31,7 @@ export type PostDoc = {
   numViewCount: number,
   createdAt: Timestamp,
   modifiedAt: Timestamp,
+  status: number,
 }
 
 export type ViewCountShardDoc = {
@@ -65,6 +66,7 @@ export type PostType = {
   viewCount: number,
   createdAt: string,
   modifiedAt: string,
+  status: number,
 }
 
 export type CommentType = {
