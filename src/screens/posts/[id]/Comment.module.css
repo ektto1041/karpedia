@@ -1,41 +1,27 @@
 @media (min-width: 0px) {
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
   .container .header {
-    margin-left: 10px;
+    width: 80%;
+    margin-left: calc(3% + 10px);
     font-size: 16px;
-  }
-
-  .container .header .delete-button {
-    right: 20%;
   }
 
   .container .content {
     width: 80%;
+    margin-left: 3%;
     font-size: 16px;
   }
 }
 
 @media (min-width: 700px) {
-  .container {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-
   .container .header {
-    margin-left: 10px;
+    width: 540px;
+    margin-left: 35px;
     font-size: 18px;
-  }
-
-  .container .header .delete-button {
-    right: 130px;
   }
 
   .container .content {
     width: 550px;
+    margin-left: 25px;
     font-size: 18px;
   }
 }
@@ -46,7 +32,6 @@
 }
 
 .container .header {
-  width: 100%;
   position: relative;
   height: 40px;
   display: flex;
@@ -56,6 +41,7 @@
 
 .container .header .delete-button {
   position: absolute;
+  right: 5%;
   bottom: 0;
   width: 15px;
   height: 15px;
@@ -70,4 +56,13 @@
   padding: 15px;
   background-color: #eeeeee;
   user-select: none;
+}
+
+.admin {
+  cursor: pointer;
+  transition: background-color .25s ease;
+}
+
+.admin:hover {
+  background-color: #f1d8ed;
 }

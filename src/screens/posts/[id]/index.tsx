@@ -64,7 +64,7 @@ export default function PostDetailScreen({
         <div className={styles['button-box']}>
           <ShareButton />
         </div>
-        <CommentBox postId={id} />
+        <CommentBox postId={id} isAdmin={isAdmin} />
       </div>
     </div>
   );

@@ -58,6 +58,14 @@ export const apis = {
     return ax.post('/api/comments', newComment);
   },
   /**
+   * 댓글 답변을 수정하는 api
+   * @param commentId 답변을 수정하려는 댓글의 id
+   * @param newReply 답변 내용
+   */
+  updateReply: (commentId: string, newReply: string) => {
+    return ax.put(`/api/replies?commentId=${commentId}`, { newReply });
+  },
+  /**
    * 댓글을 삭제하는 API
    * @param commentId 삭제하려는 댓글의 id
    */
