@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import CareerItem from './CareerItem';
 import styles from './Home.module.css';
+import ProfileInfo from './ProfileInfo';
 
 export default function HomeScreen() {
   return (
@@ -12,8 +13,16 @@ export default function HomeScreen() {
           </div>
         </div>
         <div className={styles.name}>박상연</div>
+        <div className={styles.description}>
+          96년생, 아주대학교 미디어학과 졸업<br />
+          역사에 이름을 남길,<br />
+          프로그래밍이 재미있는,<br />
+          모나지 않은,<br />
+        </div>
+        <ProfileInfo />
       </div>
       <div className={styles.content}>
+        <h1>프로젝트들</h1>
         <div className={styles['item-container']} >
           <CareerItem
             bgImg='/chimtooview.png'
