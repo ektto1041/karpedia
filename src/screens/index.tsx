@@ -26,6 +26,7 @@ export default function HomeScreen() {
         <div className={styles['item-container']} >
           <CareerItem
             bgImg='/chimtooview.png'
+            href='https://github.com/ektto1041/Chimtooview'
             color='chimtooview'
             title="침투뷰 CHIMTOOVIEW"
             subTitle='Youtube 채널 통계 확인 사이트'
@@ -42,6 +43,7 @@ export default function HomeScreen() {
           />
           <CareerItem
             bgImg='/gigs.png'
+            href='https://github.com/signalman/gigs'
             color='gigs'
             title="gigs"
             subTitle='공연장 대여 중개 플랫폼'
@@ -59,6 +61,7 @@ export default function HomeScreen() {
           />
           <CareerItem
             bgImg='/karpedia.png'
+            href='https://github.com/ektto1041/karpedia'
             color='karpedia'
             title="Karpedia"
             subTitle='블로그 & 포트폴리오'
