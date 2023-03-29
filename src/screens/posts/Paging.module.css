@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-container {
+  display: flex;
+  height: 25px;
+  gap: 10px;
+}
+
+.page {
+  min-width: 25px;
+  height: 25px;
+  border: 1px solid #111111;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 25px;
+  font-size: 12px;
+  padding: 0 5px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #ffffff;
+  transition: background-color .25s ease;
+}
+
+.page:hover {
+  background-color: #eeeeee;
+}
