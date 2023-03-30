@@ -3,58 +3,60 @@ import TopicList from '@/screens/posts/TopicList';
 import styles from './Posts.module.css';
 import { PostsProps } from '@/types/post';
 import PostList from './PostList';
-import { useEffect, useMemo, useState } from 'react';
 import Paging from './Paging';
+import { useRouter } from 'next/router';
 
 export default function PostsScreen({
   topics,
   postItems,
 }: PostsProps) {
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [keyword, setKeyword] = useState<string>("");
-  const [isScrollFetching, setScrollFetching] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
-
-  // 페이지에 보여지는 포스트들
-  // 검색 키워드가 타이틀에 포함되는 지 검사하고,
-  // 현재 선택된 토픽들을 AND 연산으로 검사해 모두 가진 경우만 페이지에 보여줌
-  const allPostItems = useMemo(() => {
-    return postItems.filter(postItem => {
-      const isSearching = Boolean(keyword.trim());
-      if(isSearching) {
-        const hasKeyword = postItem.title.includes(keyword);
-        if(!hasKeyword) return false;
-      }
-      
-      for(const topic of selectedTopics) {
-        const hasTopic = postItem.topics.includes(topic);
-        if(!hasTopic) { return false; }
-      }
-  
-      return true;
-    });
-  }, [postItems, keyword, selectedTopics]);
-  const visiblePostItems = allPostItems;
+  const router = useRouter();
+  const qTopics = router.query.topics ? (router.query.topics as string).split(',') : [];
 
   const handleClickTopic = (topicName: string) => {
-    const hasTopic = selectedTopics.includes(topicName);
+    const newQuery = {...router.query};
+
+    const hasTopic = qTopics.includes(topicName);
     if(hasTopic) {
-      setSelectedTopics(selectedTopics.filter(topic => topic !== topicName));
+      if(qTopics.length === 1) delete newQuery.topics;
+      else newQuery.topics = qTopics.filter(topic => topic != topicName).join(',');
+      router.push({
+        pathname: '/posts',
+        query: newQuery,
+      });
     } else {
-      setSelectedTopics([...selectedTopics, topicName]);
+      newQuery.topics = [...qTopics, topicName].join(',');
+
+      router.push({
+        pathname: '/posts',
+        query: newQuery,
+      });
     }
-    setPage(0);
-  }
+  };
 
   const handleClickCancelTopic = () => {
-    setSelectedTopics([]);
-    setPage(0);
+    const newQuery = {...router.query};
+    if(newQuery.topics) delete newQuery.topics;
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
   };
 
   const handleSearch = (newKeyword: string) => {
-    setKeyword(newKeyword);
-    setPage(0);
-  }
+    const newQuery = {...router.query};
+    if(newKeyword) {
+      newQuery.keyword = newKeyword;
+    } else {
+      if(newQuery.keyword) delete newQuery.keyword;
+    }
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -64,12 +66,12 @@ export default function PostsScreen({
           <button onClick={handleClickCancelTopic}>모두 취소</button>
         </div>
         <div className={styles.content}>
-          <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={handleClickTopic} />
+          <TopicList topics={topics} selectedTopics={qTopics} onClickTopic={handleClickTopic} />
         </div>
       </div>
       <MainInput placeholder='검색어를 입력하세요.' onSubmit={handleSearch} />
       <div className={styles['post-item-box']}>
-        <PostList postItems={visiblePostItems} />
+        <PostList postItems={postItems} />
       </div>
       <Paging />
     </div>
