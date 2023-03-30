@@ -8,24 +8,27 @@ import { useRouter } from 'next/router';
 
 export default function PostsScreen({
   topics,
+  selectedTopics,
   postItems,
+  page,
+  maxPage,
 }: PostsProps) {
   const router = useRouter();
-  const qTopics = router.query.topics ? (router.query.topics as string).split(',') : [];
 
   const handleClickTopic = (topicName: string) => {
     const newQuery = {...router.query};
+    delete newQuery.page;
 
-    const hasTopic = qTopics.includes(topicName);
+    const hasTopic = selectedTopics.includes(topicName);
     if(hasTopic) {
-      if(qTopics.length === 1) delete newQuery.topics;
-      else newQuery.topics = qTopics.filter(topic => topic != topicName).join(',');
+      if(selectedTopics.length === 1) delete newQuery.topics;
+      else newQuery.topics = selectedTopics.filter(topic => topic != topicName).join(',');
       router.push({
         pathname: '/posts',
         query: newQuery,
       });
     } else {
-      newQuery.topics = [...qTopics, topicName].join(',');
+      newQuery.topics = [...selectedTopics, topicName].join(',');
 
       router.push({
         pathname: '/posts',
@@ -37,6 +40,7 @@ export default function PostsScreen({
   const handleClickCancelTopic = () => {
     const newQuery = {...router.query};
     if(newQuery.topics) delete newQuery.topics;
+    delete newQuery.page;
 
     router.push({
       pathname: '/posts',
@@ -46,10 +50,29 @@ export default function PostsScreen({
 
   const handleSearch = (newKeyword: string) => {
     const newQuery = {...router.query};
+    delete newQuery.page;
+
     if(newKeyword) {
       newQuery.keyword = newKeyword;
     } else {
       if(newQuery.keyword) delete newQuery.keyword;
+    }
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
+  };
+
+  const handleClickPage = (page: string) => {
+    const newQuery = {...router.query};
+
+    if(page === '<<') {
+
+    } else if(page === '>>') {
+
+    } else {
+      newQuery.page = page;
     }
 
     router.push({
@@ -66,14 +89,14 @@ export default function PostsScreen({
           <button onClick={handleClickCancelTopic}>모두 취소</button>
         </div>
         <div className={styles.content}>
-          <TopicList topics={topics} selectedTopics={qTopics} onClickTopic={handleClickTopic} />
+          <TopicList topics={topics} selectedTopics={selectedTopics} onClickTopic={handleClickTopic} />
         </div>
       </div>
       <MainInput placeholder='검색어를 입력하세요.' onSubmit={handleSearch} />
       <div className={styles['post-item-box']}>
         <PostList postItems={postItems} />
       </div>
-      <Paging />
+      {maxPage > -1 ? (<Paging page={page} maxPage={maxPage} onClickPage={handleClickPage} />) : (<></>)}
     </div>
   );
 };

@@ -23,10 +23,17 @@
   padding: 0 5px;
   cursor: pointer;
   user-select: none;
+  color: #111111;
   background-color: #ffffff;
   transition: background-color .25s ease;
 }
 
+.current-page {
+  background-color: #111111;
+  color: #ffffff;
+}
+
 .page:hover {
   background-color: #eeeeee;
+  color: #111111;
 }

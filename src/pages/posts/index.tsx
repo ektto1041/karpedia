@@ -4,13 +4,16 @@ import db from "@/utils/db";
 import time from "@/utils/time";
 import { GetServerSidePropsContext } from "next";
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 10;
 
 export default function Posts({
   topics,
+  selectedTopics,
   postItems,
+  page,
+  maxPage,
 }: PostsProps) {
-  return <PostsScreen topics={topics} postItems={postItems} />;
+  return <PostsScreen topics={topics} selectedTopics={selectedTopics} postItems={postItems} page={page} maxPage={maxPage} />;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -48,11 +51,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     return true;
   });
+
+  // maxPage 계산
+  const postItemCount = filteredPostItems.length;
+  const maxPage = postItemCount / PAGE_SIZE - (postItemCount % PAGE_SIZE == 0 ? 1 : 0);
   
   return {
     props: {
       topics: Array.from(topicSet),
+      selectedTopics: topics,
       postItems: filteredPostItems.slice(page * PAGE_SIZE, (page+1) * PAGE_SIZE),
+      page,
+      maxPage,
     }
   }
 };
