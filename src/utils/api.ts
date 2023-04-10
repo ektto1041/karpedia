@@ -1,5 +1,5 @@
 import { CommentType, NewCommentType, NewPostType, PostType } from "@/types/post";
-import axios, { AxiosResponse } from "axios";
+import axios, { Axios, AxiosResponse } from "axios";
 import { ErrorRes } from "./db";
 
 const ax = axios.create({
@@ -11,8 +11,11 @@ export const apis = {
    * /posts 페이지를 revalidate 해주는 api
    * @returns revalidate 결과
    */
-  revalidatePosts: () => {
-    return ax.get(`/api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts`);
+  // revalidatePosts: () => {
+  //   return ax.get(`/api/revalidate?secret=${}&page=posts`);
+  // },
+  revalidatePost: (postId: string) => {
+    return ax.get(`/api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
   },
 
   /**
@@ -20,7 +23,7 @@ export const apis = {
    * @param newPost 작성할 글의 정보
    * @returns 작성이 완료된 글의 정보
    */
-  createPost: (newPost: NewPostType) => {
+  createPost: (newPost: NewPostType): Promise<AxiosResponse<PostType>> => {
     return ax.post('/api/posts', newPost);
   },
   /**

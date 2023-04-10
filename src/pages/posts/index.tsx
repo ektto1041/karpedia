@@ -54,7 +54,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // maxPage 계산
   const postItemCount = filteredPostItems.length;
-  const maxPage = postItemCount / PAGE_SIZE - (postItemCount % PAGE_SIZE == 0 ? 1 : 0);
+  const maxPage = Math.floor(postItemCount / PAGE_SIZE) - (postItemCount % PAGE_SIZE == 0 ? 1 : 0);
   
   return {
     props: {
