@@ -87,6 +87,21 @@
   margin: 0 auto;
   box-shadow: 4px 4px #111111;
   font-size: 16px;
+  line-height: 20px;
+}
+
+.description .email {
+  color: #111111;
+  background-color: #ffff0080;
+}
+
+.description .phone-number {
+  background-color: #ff000080;
+}
+
+.description .github {
+  color: #111111;
+  background-color: #00ff0080;
 }
 
 .container .content {

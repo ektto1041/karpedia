@@ -15,11 +15,14 @@ export default function HomeScreen() {
         <div className={styles.name}>박상연</div>
         <div className={styles.description}>
           96년생, 아주대학교 미디어학과 졸업<br />
-          역사에 이름을 남길,<br />
-          프로그래밍이 재미있는,<br />
-          모나지 않은,<br />
+          <br />
+          누구나 사용할 수 있는<br />
+          소프트웨어를 만드는 게 꿈입니다.
+          <a className={styles.email} target='_blank' href='mailto:dhkdwk1041@gmail.com'>dhkdwk1041@gmail.com</a><br />
+          <span className={styles['phone-number']}>010-2879-5282</span><br />
+          <a className={styles.github} target='_blank' href='http://github.com/ektto1041'>Github</a><br />
         </div>
-        <ProfileInfo />
+        {/* <ProfileInfo /> */}
       </div>
       <div className={styles.content}>
         <h1>프로젝트들</h1>
