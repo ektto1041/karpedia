@@ -29,7 +29,7 @@ export default function PostDetailScreen({
     if(result.status === 200) {
       alert("삭제 성공!");
 
-      const revalidationResult = await apis.revalidatePosts();
+      const revalidationResult = await apis.revalidatePost(id);
       if(revalidationResult.status !== 200) {
         alert('revalidation failed');
       }

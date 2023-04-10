@@ -3,49 +3,83 @@ import TopicList from '@/screens/posts/TopicList';
 import styles from './Posts.module.css';
 import { PostsProps } from '@/types/post';
 import PostList from './PostList';
-import { useState } from 'react';
+import Paging from './Paging';
+import { useRouter } from 'next/router';
 
 export default function PostsScreen({
   topics,
+  selectedTopics,
   postItems,
+  page,
+  maxPage,
 }: PostsProps) {
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [keyword, setKeyword] = useState<string>("");
-
-  // 페이지에 보여지는 포스트들
-  // 검색 키워드가 타이틀에 포함되는 지 검사하고,
-  // 현재 선택된 토픽들을 AND 연산으로 검사해 모두 가진 경우만 페이지에 보여줌
-  const visiblePostItems = postItems.filter(postItem => {
-    const isSearching = Boolean(keyword.trim());
-    if(isSearching) {
-      const hasKeyword = postItem.title.includes(keyword);
-      if(!hasKeyword) return false;
-    }
-    
-    for(const topic of selectedTopics) {
-      const hasTopic = postItem.topics.includes(topic);
-      if(!hasTopic) { return false; }
-    }
-
-    return true;
-  });
+  const router = useRouter();
 
   const handleClickTopic = (topicName: string) => {
+    const newQuery = {...router.query};
+    delete newQuery.page;
+
     const hasTopic = selectedTopics.includes(topicName);
     if(hasTopic) {
-      setSelectedTopics(selectedTopics.filter(topic => topic !== topicName));
+      if(selectedTopics.length === 1) delete newQuery.topics;
+      else newQuery.topics = selectedTopics.filter(topic => topic != topicName).join(',');
+      router.push({
+        pathname: '/posts',
+        query: newQuery,
+      });
     } else {
-      setSelectedTopics([...selectedTopics, topicName]);
+      newQuery.topics = [...selectedTopics, topicName].join(',');
+
+      router.push({
+        pathname: '/posts',
+        query: newQuery,
+      });
     }
-  }
+  };
 
   const handleClickCancelTopic = () => {
-    setSelectedTopics([]);
+    const newQuery = {...router.query};
+    if(newQuery.topics) delete newQuery.topics;
+    delete newQuery.page;
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
   };
 
   const handleSearch = (newKeyword: string) => {
-    setKeyword(newKeyword);
-  }
+    const newQuery = {...router.query};
+    delete newQuery.page;
+
+    if(newKeyword) {
+      newQuery.keyword = newKeyword;
+    } else {
+      if(newQuery.keyword) delete newQuery.keyword;
+    }
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
+  };
+
+  const handleClickPage = (page: string) => {
+    const newQuery = {...router.query};
+
+    if(page === '<<') {
+
+    } else if(page === '>>') {
+
+    } else {
+      newQuery.page = page;
+    }
+
+    router.push({
+      pathname: '/posts',
+      query: newQuery,
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -60,8 +94,9 @@ export default function PostsScreen({
       </div>
       <MainInput placeholder='검색어를 입력하세요.' onSubmit={handleSearch} />
       <div className={styles['post-item-box']}>
-        <PostList postItems={visiblePostItems} />
+        <PostList postItems={postItems} />
       </div>
+      {maxPage > -1 ? (<Paging page={page} maxPage={maxPage} onClickPage={handleClickPage} />) : (<></>)}
     </div>
   );
 };

@@ -2,7 +2,10 @@ import { Timestamp } from "firebase/firestore";
 
 export type PostsProps = {
   topics: string[],
+  selectedTopics: string[],
   postItems: PostItemType[],
+  page: number,
+  maxPage: number,
 };
 
 export type PostDetailProps = {
