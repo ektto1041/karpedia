@@ -5,7 +5,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
-import { NewPostType } from "@/types/post";
+import { NewPostType, PostType } from "@/types/post";
 import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -89,6 +89,8 @@ export default function NewPostScreen() {
       const result = postId ?
         await apis.updatePost(newPost, postId) :
         await apis.createPost(newPost);
+      
+      const pId = postId || (result.data as PostType).id;
 
       if(result.status === 200) {
         alert(strings.server.posts.addSuccess);
@@ -98,7 +100,7 @@ export default function NewPostScreen() {
         setContent("");
         setTopic("");
 
-        const revalidationResult = await apis.revalidatePosts();
+        const revalidationResult = await apis.revalidatePost(pId);
         if(revalidationResult.status !== 200) {
           alert('revalidation failed');
         }

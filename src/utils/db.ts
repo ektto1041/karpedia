@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, addDoc, collection, getDocs, query, orderBy, limit, where, getDoc, doc, updateDoc, setDoc, writeBatch, increment, DocumentReference, DocumentData, deleteDoc } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, orderBy, where, getDoc, doc, updateDoc, writeBatch, increment, DocumentReference, DocumentData } from "firebase/firestore";
 import { CommentDoc, CommentType, NewCommentType, NewPostType, PostDoc, PostType, ViewCountShardDoc } from '@/types/post';
 import time from "./time";
 
