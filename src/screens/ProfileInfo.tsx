@@ -10,7 +10,7 @@ export default function ProfileInfo() {
       <div className={styles.item}>
         <div className={styles.name}>Github</div>
         <div className={styles.content}>
-          <a href='https://github.com/ektto1041' target="_blank">github.com/ektto1041</a>
+          <a href='https://github.com/ektto1041'>github.com/ektto1041</a>
         </div>
       </div>
     </div>
