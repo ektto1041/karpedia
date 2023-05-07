@@ -7,7 +7,7 @@ import CommentInput from './CommentInput';
 import Reply from './Reply';
 
 type CommentBoxProps = {
-  postId: string,
+  postId: number,
   isAdmin: boolean,
 };
 

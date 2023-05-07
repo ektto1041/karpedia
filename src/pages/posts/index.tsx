@@ -1,10 +1,8 @@
 import PostsScreen from "@/screens/posts";
-import { PostItemType, PostsProps, PostType } from "@/types/post";
-import db from "@/utils/db";
+import { PostItemDto, PostsProps, PostsEntity, TopicsEntity, PostsPaging } from "@/types/post";
+import { apis } from "@/utils/api";
 import time from "@/utils/time";
 import { GetServerSidePropsContext } from "next";
-
-const PAGE_SIZE = 10;
 
 export default function Posts({
   topics,
@@ -17,51 +15,24 @@ export default function Posts({
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const page: number = context.query.page ? parseInt(context.query.page as string) : 0;
-  const keyword: string = context.query.keyword ? context.query.keyword as string : '';
-  const topics: string[] = context.query.topics ? (context.query.topics as string).split(',') : [];
+  const paging: PostsPaging = {
+    page: context.query.page ? parseInt(context.query.page as string) : 0,
+    keyword: context.query.keyword ? context.query.keyword as string : '',
+    topics: context.query.topics ? (context.query.topics as string).split(',') : [],
+  };
   
-  // DB 상의 모든 데이터를 가져옴
-  const topicSet = new Set<string>();
-  const postItems = (await db.getAllPosts()).map(postItem => {
-    const data = postItem as PostType;
-    const result: PostItemType = {
-      id: data.id,
-      emoji: data.emoji,
-      title: data.title,
-      topics: data.topics,
-      modifiedAt: time.toFormat(data.modifiedAt),
-    }
+  // 모든 토픽을 가져옴
+  const topics: TopicsEntity[] = (await apis.getAllTopics()).data;
 
-    // 시점 이슈 발생할 수 있음!
-    data.topics.forEach(topic => topicSet.add(topic));
-
-    return result;
-  });
-
-  // keyword, topics 로 필터링
-  const filteredPostItems = postItems.filter(postItem => {
-    const hasKeyword = postItem.title.includes(keyword);
-    if(!hasKeyword) return false;
-
-    for(const topic of topics) {
-      const hasTopic = postItem.topics.includes(topic);
-      if(!hasTopic) return false;
-    }
-
-    return true;
-  });
-
-  // maxPage 계산
-  const postItemCount = filteredPostItems.length;
-  const maxPage = Math.floor(postItemCount / PAGE_SIZE) - (postItemCount % PAGE_SIZE == 0 ? 1 : 0);
+  // 포스트들을 페이징해서 가져옴
+  const {data, maxPage} = (await apis.getAllPostPaging(paging)).data;
   
   return {
     props: {
-      topics: Array.from(topicSet),
-      selectedTopics: topics,
-      postItems: filteredPostItems.slice(page * PAGE_SIZE, (page+1) * PAGE_SIZE),
-      page,
+      topics: topics.map(t => t.name),
+      selectedTopics: paging.topics,
+      postItems: data,
+      page: paging.page,
       maxPage,
     }
   }

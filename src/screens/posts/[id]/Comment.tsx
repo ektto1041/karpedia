@@ -1,13 +1,13 @@
 import styles from './Comment.module.css';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
-import { CommentType } from '@/types/post';
+import { CommentsEntity } from '@/types/post';
 import { MouseEventHandler, useCallback } from 'react';
 import css from '@/utils/css';
 import { apis } from '@/utils/api';
 
 type CommentProps = {
-  comment: CommentType,
+  comment: CommentsEntity,
   onClickDeleteButton: (id: string, password: string) => void,
   isAdmin: boolean,
   revalidateCommentList: () => void,

@@ -1,9 +1,8 @@
-import { CommentType, NewCommentType, NewPostType, PostType } from "@/types/post";
-import axios, { Axios, AxiosResponse } from "axios";
-import { ErrorRes } from "./db";
+import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsEntity, PostsPaging, TopicsEntity } from "@/types/post";
+import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
-  baseURL: process.env.SERVER_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
 });
 
 export const apis = {
@@ -14,8 +13,8 @@ export const apis = {
   // revalidatePosts: () => {
   //   return ax.get(`/api/revalidate?secret=${}&page=posts`);
   // },
-  revalidatePost: (postId: string) => {
-    return ax.get(`/api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
+  revalidatePost: (postId: number) => {
+    return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
   },
 
   /**
@@ -23,8 +22,8 @@ export const apis = {
    * @param newPost 작성할 글의 정보
    * @returns 작성이 완료된 글의 정보
    */
-  createPost: (newPost: NewPostType): Promise<AxiosResponse<PostType>> => {
-    return ax.post('/api/posts', newPost);
+  createPost: (newPost: CreatePostDto): Promise<AxiosResponse<PostsEntity>> => {
+    return ax.post('/posts', newPost);
   },
   /**
    * 글을 수정하는 api
@@ -32,33 +31,53 @@ export const apis = {
    * @param postId 수정할 글의 id
    * @returns 수정이 완료된 글의 정보
    */
-  updatePost: (newPost: NewPostType, postId: string): Promise<AxiosResponse<boolean>> => {
-    return ax.put(`/api/posts?postId=${postId}`, newPost);
+  updatePost: (newPost: CreatePostDto, postId: number): Promise<AxiosResponse<PostsEntity>> => {
+    return ax.put(`/posts/${postId}`, newPost);
   },
   /**
    * 글을 삭제하는 API
    * @param postId 삭제하려는 포스트의 id
+   * TODO: 반환형 정의
    */
-  deletePost: (postId: string): Promise<AxiosResponse<boolean | ErrorRes>> => {
-    return ax.delete(`/api/posts?postId=${postId}`);
+  deletePost: (postId: number): Promise<AxiosResponse<any>> => {
+    return ax.delete(`/posts/${postId}`);
   },
-  
+  /**
+   * 모든 글을 가져오는 api
+   */
+  getAllPost: (): Promise<AxiosResponse<PostsEntity[]>> => {
+    return ax.get(`/posts`);
+  },
+
+  getAllPostPaging: ({page, keyword, topics}: PostsPaging): Promise<AxiosResponse<PostItemResDto>> => {
+    return ax.get(`/posts/paging?page=${page}${keyword ? `&keyword=${keyword}` : ''}${topics.length > 0 ? `&topics=${topics.join(',')}` : ''}`);
+  },
   /**
    * 글 하나의 정보를 가져오는 api
    * @param postId 가져올 포스트의 id
    * @returns 포스트 정보
    */
-  getPostById: (postId: string): Promise<AxiosResponse<PostType>> => {
-    return ax.get(`/api/posts?postId=${postId}`);
+  getPostById: (postId: number): Promise<AxiosResponse<PostsEntity>> => {
+    return ax.get(`/posts/${postId}`);
+  },
+  viewPost: (postId: number): Promise<AxiosResponse<void>> => {
+    return ax.put(`/posts/view/${postId}`);
   },
 
+  /**
+   * 글 하나에 속한 모든 댓글을 가져오는 api
+   * @param postId 댓글이 포함되어 있는 포스트의 id
+   */
+  getCommentsByPostId: (postId: number): Promise<AxiosResponse<CommentsEntity[]>> => {
+    return ax.get(`/comments/posts/${postId}`);
+  },
   /**
    * 새 댓글을 작성하는 api
    * @param newComment 작성할 댓글의 정보
    * @returns 작성이 완료된 댓글의 정보
    */
-  createComment: (newComment: NewCommentType) => {
-    return ax.post('/api/comments', newComment);
+  createComment: (newComment: CreateCommentsDto) => {
+    return ax.post('/comments', newComment);
   },
   /**
    * 댓글 답변을 수정하는 api
@@ -66,15 +85,22 @@ export const apis = {
    * @param newReply 답변 내용
    */
   updateReply: (commentId: string, newReply: string) => {
-    return ax.put(`/api/replies?commentId=${commentId}`, { newReply });
+    return ax.put(`/comments/reply/${commentId}`, { reply: newReply });
   },
   /**
    * 댓글을 삭제하는 API
    * @param commentId 삭제하려는 댓글의 id
    */
-  deleteComment: (commentId: string): Promise<AxiosResponse<CommentType>> => {
-    return ax.delete(`/api/comments?commentId=${commentId}`);
+  deleteComment: (commentId: string): Promise<AxiosResponse<CommentsEntity>> => {
+    return ax.delete(`/comments/${commentId}`);
   },
+  
+  /**
+   * 모든 토픽들을 가져오는 API
+   */
+  getAllTopics: (): Promise<AxiosResponse<TopicsEntity[]>> => {
+    return ax.get('/topics');
+  }
 }
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);

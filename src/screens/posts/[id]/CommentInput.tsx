@@ -2,12 +2,12 @@ import styles from './CommentInput.module.css';
 import Icon from '@mdi/react';
 import { mdiKeyboardReturn } from '@mdi/js';
 import { ChangeEventHandler, useCallback, useState } from 'react';
-import { CommentType, NewCommentType } from '@/types/post';
+import { CommentsEntity, CreateCommentsDto } from '@/types/post';
 import { apis } from '@/utils/api';
 
 type CommentInputProps = {
   placeholder: string,
-  postId: string,
+  postId: number,
   revalidateCommentList: () => void,
 };
 
@@ -33,7 +33,7 @@ export default function CommentInput({
     setContent(e.target.value);
   };
 
-  const addComment = useCallback(async (newComment: NewCommentType) => {
+  const addComment = useCallback(async (newComment: CreateCommentsDto) => {
     const result = await apis.createComment(newComment);
   
     if(result.status === 200) {
@@ -57,7 +57,7 @@ export default function CommentInput({
 
     setDisabled(true);
 
-    const newComment: NewCommentType = {
+    const newComment: CreateCommentsDto = {
       postId, name, password, content,
     };
 

@@ -1,5 +1,8 @@
-import { ErrorRes } from '@/utils/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+type ErrorRes = {
+  message: string;
+};
 
 export default async function handler(
   req: NextApiRequest,

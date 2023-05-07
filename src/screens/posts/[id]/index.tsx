@@ -1,10 +1,9 @@
 import { PostDetailProps } from '@/types/post';
 import { apis } from '@/utils/api';
-import { ErrorRes } from '@/utils/db';
 import time from '@/utils/time';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import CommentBox from './CommentBox';
 import ContentBox from './ContentBox';
 import styles from './PostDetail.module.css';
@@ -18,6 +17,18 @@ export default function PostDetailScreen({
   const router = useRouter();
   const session = useSession();
   const isAdmin = Boolean(session.status === 'authenticated');
+
+  // 조회 수 처리
+  useEffect(() => {
+    const viewPost = async () => {
+      const result = await apis.viewPost(id);
+
+      if(!(result.status >= 200 && result.status < 300)) {
+        alert('조회 수 처리에 문제가 발생했습니다.');
+      }
+    };
+    viewPost();
+  }, []);
 
   const handleClickUpdateButton = useCallback(() => {
     router.push(`/posts/new?postId=${id}`);
@@ -36,7 +47,7 @@ export default function PostDetailScreen({
 
       router.push('/posts');     
     } else {
-      alert('삭제 실패:' + (result.data as ErrorRes).message);
+      alert('삭제 실패');
     }
   }, [router, id]);
 

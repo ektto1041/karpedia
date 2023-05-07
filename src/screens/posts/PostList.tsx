@@ -1,4 +1,4 @@
-import { PostItemType } from "@/types/post";
+import { PostItemDto } from "@/types/post";
 import styles from './PostList.module.css';
 import PostItem from "./PostItem";
 import Icon from '@mdi/react';
@@ -8,12 +8,13 @@ import { useCallback } from "react";
 import Link from "next/link";
 
 type PostListProps = {
-  postItems: PostItemType[],
+  postItems: PostItemDto[],
 };
 
 export default function PostList({
   postItems,
 }: PostListProps) {
+  console.log(postItems);
   const session = useSession();
   const isAdmin = Boolean(session.status === 'authenticated');
 
@@ -27,7 +28,7 @@ export default function PostList({
         </div>
       ) : (<></>)}
       {postItems.map(postItem => (
-        <PostItem key={postItem.title} postItem={postItem} />
+        <PostItem key={postItem.id} postItem={postItem} />
       ))}
     </>
   );
