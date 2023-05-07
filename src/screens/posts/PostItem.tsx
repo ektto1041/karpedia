@@ -1,5 +1,6 @@
 import styles from './PostItem.module.css';
 import { PostItemDto } from '@/types/post';
+import time from '@/utils/time';
 import Link from 'next/link';
 
 type PostItemProps = {
@@ -21,7 +22,7 @@ export default function PostItem({
           {title}
         </div>
         <div className={styles['created-at']}>
-          {modifiedAt}
+          {time.toFormat(modifiedAt)}
         </div>
         
         <div className={styles.underline}></div>
