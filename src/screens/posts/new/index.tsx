@@ -5,7 +5,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
-import { NewPostType, PostType } from "@/types/post";
+import { CreatePostDto, PostsEntity } from "@/types/post";
 import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -27,7 +27,7 @@ export default function NewPostScreen() {
   const session = useSession();
 
   // 포스트 업데이트 시 쿼리스트링으로 넘어오는 postId
-  const postId = router.query.postId ? router.query.postId as string : undefined;
+  const postId = router.query.postId ? Number(router.query.postId as string) : undefined;
   // 로그인 시 true
   const isAdmin = Boolean(session.status === 'authenticated');
 
@@ -45,10 +45,12 @@ export default function NewPostScreen() {
       if(result.status === 200) {
         const post = result.data;
 
+        console.log(post);
+
         setEmoji(post.emoji);
         setTitle(post.title);
         setContent(post.content);
-        setTopic(post.topics.join('|'));
+        setTopic(post.topics.map(t => t.name).join('|'));
       } else {
         setValidPostId(false);
       }
@@ -81,7 +83,7 @@ export default function NewPostScreen() {
       return;
     }    
 
-    const newPost: NewPostType = {
+    const newPost: CreatePostDto = {
       emoji, title, content, topics: topic.split('|')
     };
 
@@ -90,9 +92,11 @@ export default function NewPostScreen() {
         await apis.updatePost(newPost, postId) :
         await apis.createPost(newPost);
       
-      const pId = postId || (result.data as PostType).id;
+      const pId = postId || result.data.id;
 
-      if(result.status === 200) {
+      console.log(result.data);
+
+      if(result.status >= 200 && result.status < 300) {
         alert(strings.server.posts.addSuccess);
 
         setEmoji("");

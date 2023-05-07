@@ -1,9 +1,9 @@
 import styles from './PostItem.module.css';
-import { PostItemType } from '@/types/post';
+import { PostItemDto } from '@/types/post';
 import Link from 'next/link';
 
 type PostItemProps = {
-  postItem: PostItemType,
+  postItem: PostItemDto,
 }
 
 export default function PostItem({

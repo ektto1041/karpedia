@@ -3,24 +3,24 @@ import { Timestamp } from "firebase/firestore";
 export type PostsProps = {
   topics: string[],
   selectedTopics: string[],
-  postItems: PostItemType[],
+  postItems: PostItemDto[],
   page: number,
   maxPage: number,
 };
 
 export type PostDetailProps = {
-  post: PostType,
+  post: PostsEntity,
 };
 
-export type NewPostType = {
+export type CreatePostDto = {
   emoji: string,
   title: string,
   content: string,
   topics: string[],
 };
 
-export type NewCommentType = {
-  postId: string,
+export type CreateCommentsDto = {
+  postId: number,
   name: string,
   password: string,
   content: string,
@@ -51,20 +51,31 @@ export type CommentDoc = {
   status: number,
 }
 
-export type PostItemType = {
-  id: string,
+export type PostItemDto = {
+  id: number,
   emoji: string,
   title: string,
+  viewCount: number,
+  createdAt: string,
   modifiedAt: string,
-  topics: string[],
+  topics: TopicsEntity[],
 }
 
-export type PostType = {
-  id: string,
+export type PostItemResDto = {
+  data: PostItemDto[];
+  maxPage: number;
+};
+
+/**
+ * Entities
+ */
+export type PostsEntity = {
+  id: number,
   emoji: string,
   title: string,
   content: string,
-  topics: string[],
+  topics: TopicsEntity[],
+  comments: CommentsEntity[],
   numViewCount: number,
   viewCount: number,
   createdAt: string,
@@ -72,8 +83,8 @@ export type PostType = {
   status: number,
 }
 
-export type CommentType = {
-  id: string,
+export type CommentsEntity = {
+  id: number,
   name: string,
   password: string,
   content: string,
@@ -82,3 +93,14 @@ export type CommentType = {
   postId: string,
   status: number,
 }
+
+export type TopicsEntity = {
+  id: number,
+  name: string,
+};
+
+export type PostsPaging = {
+  page: number,
+  keyword: string,
+  topics: string[],
+};
