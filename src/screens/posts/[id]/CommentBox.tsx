@@ -21,7 +21,7 @@ export default function CommentBox({
     mutate();
   }, [mutate]);
 
-  const deleteComment = async (id: string) => {
+  const deleteComment = async (id: number) => {
     const result = await apis.deleteComment(id);
     if(result.status !== 200) {
       alert('댓글을 삭제할 수 없습니다.');
@@ -30,7 +30,7 @@ export default function CommentBox({
     }
   };
 
-  const handleClickDeleteButton = (id: string, password: string) => {
+  const handleClickDeleteButton = (id: number, password: string) => {
     const pw = prompt('비밀번호를 입력해주세요.');
     const isNull = !Boolean(pw);
     if(!isNull && (pw === password)) {

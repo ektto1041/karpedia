@@ -35,7 +35,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = parseInt(context.params!.id as string)
-  const post = (await apis.getPostById(id, false)).data;
+  const post = (await apis.getPostById(id)).data;
 
   const hasNoData = !Boolean(post);
   if(hasNoData) {

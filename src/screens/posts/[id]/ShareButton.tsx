@@ -8,7 +8,7 @@ export default function ShareButton() {
   const router = useRouter();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = async () => {
-    await navigator.clipboard.writeText(`http://localhost:3000${router.asPath}`);
+    await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}${router.asPath}`);
 
     alert('해당 글의 주소가 클립보드에 복사되었습니다.');
   };

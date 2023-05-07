@@ -8,7 +8,7 @@ import { apis } from '@/utils/api';
 
 type CommentProps = {
   comment: CommentsEntity,
-  onClickDeleteButton: (id: string, password: string) => void,
+  onClickDeleteButton: (id: number, password: string) => void,
   isAdmin: boolean,
   revalidateCommentList: () => void,
 };

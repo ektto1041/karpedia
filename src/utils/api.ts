@@ -84,14 +84,14 @@ export const apis = {
    * @param commentId 답변을 수정하려는 댓글의 id
    * @param newReply 답변 내용
    */
-  updateReply: (commentId: string, newReply: string) => {
+  updateReply: (commentId: number, newReply: string) => {
     return ax.put(`/comments/reply/${commentId}`, { reply: newReply });
   },
   /**
    * 댓글을 삭제하는 API
    * @param commentId 삭제하려는 댓글의 id
    */
-  deleteComment: (commentId: string): Promise<AxiosResponse<CommentsEntity>> => {
+  deleteComment: (commentId: number): Promise<AxiosResponse<CommentsEntity>> => {
     return ax.delete(`/comments/${commentId}`);
   },
   
