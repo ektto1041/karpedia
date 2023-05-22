@@ -15,6 +15,7 @@
     "@tiptap/extension-document": "^2.0.3",
     "@tiptap/extension-heading": "^2.0.3",
     "@tiptap/extension-paragraph": "^2.0.3",
+    "@tiptap/extension-strike": "^2.0.3",
     "@tiptap/extension-text": "^2.0.3",
     "@tiptap/extension-text-align": "^2.0.3",
     "@tiptap/extension-underline": "^2.0.3",
