@@ -9,9 +9,10 @@ import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiForma
 import { mdiFormatUnderline, mdiFormatStrikethrough, mdiFormatItalic } from '@mdi/js';
 import { mdiLinkVariant, mdiImage } from '@mdi/js';
 import { mdiFormatListNumbered } from '@mdi/js';
+import { mdiAlphaABoxOutline, mdiAlphaABox } from '@mdi/js';
 import { mdiMinus } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useCallback, useMemo } from 'react';
+import { use, useCallback, useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import Strike from '@tiptap/extension-strike';
@@ -21,9 +22,14 @@ import Link from '@tiptap/extension-link';
 import Italic from '@tiptap/extension-italic';
 import Image from '@tiptap/extension-image';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import History from '@tiptap/extension-history';
+import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
 
 type Menu = {
   icon: string;
+  color?: string;
   onClick: () => void;
 };
 
@@ -49,6 +55,13 @@ export default function MyEditor() {
       Italic,
       Image,
       HorizontalRule,
+      History,
+      //Highlight,
+      TextStyle,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
     ],
     content: '<p>hello</p>',
   }) as Editor;
@@ -63,6 +76,14 @@ export default function MyEditor() {
     const url = prompt('URL 을 입력해주세요.');
     if(url === null) return;
     editor.commands.setImage({ src: url });
+  }, [editor]);
+
+  const setColor = useCallback((color: string) => {
+    editor.commands.setColor(color);
+  }, [editor]);
+
+  const setHighlight = useCallback((color: string) => {
+    editor.commands.setHighlight({ color });
   }, [editor]);
 
   const menuList: (Menu | null)[][] = useMemo(() => [
@@ -86,6 +107,17 @@ export default function MyEditor() {
       { icon: mdiLinkVariant, onClick: () => setLink(), },
       { icon: mdiImage, onClick: () => setImage(), },
     ],
+    [ 
+      { icon: mdiAlphaABoxOutline, color: '#111111', onClick: () => setColor('#111111'), },
+      { icon: mdiAlphaABoxOutline, color: 'red', onClick: () => setColor('red'), },
+      { icon: mdiAlphaABoxOutline, color: 'blue', onClick: () => setColor('blue'), },
+      { icon: mdiAlphaABoxOutline, color: 'green', onClick: () => setColor('green'), },
+      null,
+      { icon: mdiAlphaABox, color: '#111111', onClick: () => setHighlight('white'), },
+      { icon: mdiAlphaABox, color: 'red', onClick: () => setHighlight('red'), },
+      { icon: mdiAlphaABox, color: 'blue', onClick: () => setHighlight('blue'), },
+      { icon: mdiAlphaABox, color: 'green', onClick: () => setHighlight('green'), },
+    ],
     [
       { icon: mdiFormatListNumbered, onClick: () => editor.commands.toggleOrderedList(), },
       null,
@@ -102,7 +134,7 @@ export default function MyEditor() {
               menu !== null ?
               (
                 <div key={j} className={styles['menu-item']} onClick={menu.onClick} >
-                  <Icon path={menu.icon} size='100%' />
+                  <Icon path={menu.icon} size='100%' color={menu.color || '#111111'} />
                 </div>
               ) : (
                 <div key={j} className={styles['menu-div']} />
