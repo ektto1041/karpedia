@@ -6,9 +6,10 @@ import Paragraph from '@tiptap/extension-paragraph';
 import Heading from '@tiptap/extension-heading';
 import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6 } from '@mdi/js';
 import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
-import { mdiFormatUnderline, mdiFormatStrikethrough } from '@mdi/js';
-import { mdiLinkVariant } from '@mdi/js';
+import { mdiFormatUnderline, mdiFormatStrikethrough, mdiFormatItalic } from '@mdi/js';
+import { mdiLinkVariant, mdiImage } from '@mdi/js';
 import { mdiFormatListNumbered } from '@mdi/js';
+import { mdiMinus } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useCallback, useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
@@ -17,6 +18,9 @@ import Strike from '@tiptap/extension-strike';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import Link from '@tiptap/extension-link';
+import Italic from '@tiptap/extension-italic';
+import Image from '@tiptap/extension-image';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
 
 type Menu = {
   icon: string;
@@ -42,6 +46,9 @@ export default function MyEditor() {
           rel: 'noopener noreferrer',
         }
       }),
+      Italic,
+      Image,
+      HorizontalRule,
     ],
     content: '<p>hello</p>',
   }) as Editor;
@@ -50,6 +57,12 @@ export default function MyEditor() {
     const url = prompt('URL 을 입력해주세요.');
     if(url === null) return;
     editor.commands.setLink({ href: url });
+  }, [editor]);
+
+  const setImage = useCallback(() => {
+    const url = prompt('URL 을 입력해주세요.');
+    if(url === null) return;
+    editor.commands.setImage({ src: url });
   }, [editor]);
 
   const menuList: (Menu | null)[][] = useMemo(() => [
@@ -68,12 +81,15 @@ export default function MyEditor() {
       null,
       { icon: mdiFormatUnderline, onClick: () => editor.commands.toggleUnderline(), },
       { icon: mdiFormatStrikethrough, onClick: () => editor.commands.toggleStrike(), },
+      { icon: mdiFormatItalic, onClick: () => editor.commands.toggleItalic(), },
       null,
       { icon: mdiLinkVariant, onClick: () => setLink(), },
-      
+      { icon: mdiImage, onClick: () => setImage(), },
     ],
     [
       { icon: mdiFormatListNumbered, onClick: () => editor.commands.toggleOrderedList(), },
+      null,
+      { icon: mdiMinus, onClick: () => editor.commands.setHorizontalRule(), },
     ]
   ], [editor]);
 
