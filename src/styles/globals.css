@@ -56,3 +56,7 @@ margin-bottom: 5px;
 .ProseMirror ul,ol {
   padding: 0 1rem;
 }
+
+.ProseMirror a {
+  text-decoration: underline;
+}

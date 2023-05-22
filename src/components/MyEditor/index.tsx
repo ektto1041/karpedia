@@ -7,14 +7,16 @@ import Heading from '@tiptap/extension-heading';
 import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6 } from '@mdi/js';
 import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
 import { mdiFormatUnderline, mdiFormatStrikethrough } from '@mdi/js';
+import { mdiLinkVariant } from '@mdi/js';
 import { mdiFormatListNumbered } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import Strike from '@tiptap/extension-strike';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
+import Link from '@tiptap/extension-link';
 
 type Menu = {
   icon: string;
@@ -35,9 +37,20 @@ export default function MyEditor() {
       Strike,
       OrderedList,
       ListItem,
+      Link.configure({
+        HTMLAttributes: {
+          rel: 'noopener noreferrer',
+        }
+      }),
     ],
     content: '<p>hello</p>',
   }) as Editor;
+
+  const setLink = useCallback(() => {
+    const url = prompt('URL 을 입력해주세요.');
+    if(url === null) return;
+    editor.commands.setLink({ href: url });
+  }, [editor]);
 
   const menuList: (Menu | null)[][] = useMemo(() => [
     [
@@ -55,6 +68,9 @@ export default function MyEditor() {
       null,
       { icon: mdiFormatUnderline, onClick: () => editor.commands.toggleUnderline(), },
       { icon: mdiFormatStrikethrough, onClick: () => editor.commands.toggleStrike(), },
+      null,
+      { icon: mdiLinkVariant, onClick: () => setLink(), },
+      
     ],
     [
       { icon: mdiFormatListNumbered, onClick: () => editor.commands.toggleOrderedList(), },
