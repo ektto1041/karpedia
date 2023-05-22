@@ -6,9 +6,11 @@ import Paragraph from '@tiptap/extension-paragraph';
 import Heading from '@tiptap/extension-heading';
 import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6 } from '@mdi/js';
 import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
+import { mdiFormatUnderline } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
+import Underline from '@tiptap/extension-underline';
 
 type Menu = {
   icon: string;
@@ -25,6 +27,7 @@ export default function MyEditor() {
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      Underline,
     ],
     content: '<p>hello</p>',
   }) as Editor;
@@ -43,6 +46,7 @@ export default function MyEditor() {
       { icon: mdiFormatHeader5, onClick: () => editor.chain().toggleHeading({ level: 5}).run(), },
       { icon: mdiFormatHeader6, onClick: () => editor.chain().toggleHeading({ level: 6}).run(), },
       null,
+      { icon: mdiFormatUnderline, onClick: () => editor.chain().toggleUnderline().run(), },
     ],
   ], [editor]);
 
