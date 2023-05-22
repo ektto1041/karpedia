@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  min-height: 500px;
+}
+
+.menu-bar {
+  width: 100%;
+}
+
+.menu-line {
+  width: 100%;
+  height: 25px;
+  background-color: #eeeeee;
+  display: flex;
+}
+
+.menu-item {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #dddddd;
+}
+
+.menu-item:active {
+  background-color: #cccccc;
+}

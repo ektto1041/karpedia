@@ -1,7 +1,5 @@
 import dynamic from "next/dynamic";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
@@ -9,18 +7,11 @@ import { CreatePostDto, PostsEntity } from "@/types/post";
 import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import MyEditor from "@/components/MyEditor/";
 
 type Content = string | undefined;
 
 // TODO: dynamic 학습
-const MDEditor = dynamic(
-  () => import("@uiw/react-md-editor"),
-  { ssr: false }
-);
-const MDViewer = dynamic(
-  () => import("@uiw/react-markdown-preview"),
-  { ssr: false }
-);
 
 export default function NewPostScreen() {
   const router = useRouter();
@@ -132,13 +123,7 @@ export default function NewPostScreen() {
             onChange={handleChangeTitle}
             placeholder={strings.page.ph.title}
           />
-          <MDEditor
-            value={content}
-            onChange={handleChangeContent}
-            visiableDragbar={false}
-            height={500}
-            style={{ marginBottom: '10px' }}
-          />
+          <MyEditor />
           <div className={styles['button-box']}>
             <div className={styles.topic}>
               <div className={styles.label}>
@@ -155,9 +140,9 @@ export default function NewPostScreen() {
             <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
           </div>
           <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
-          <div className={styles.viewer} >
+          {/* <div className={styles.viewer} >
             <MDViewer source={content}></MDViewer>
-          </div>
+          </div> */}
         </>
       ) : (<></>)}
     </div>

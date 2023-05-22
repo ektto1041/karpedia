@@ -38,3 +38,8 @@ a {
 button {
   color: #111111
 }
+
+/* PM */
+.ProseMirror {
+  min-height: 500px;
+}
