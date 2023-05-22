@@ -42,4 +42,13 @@ button {
 /* PM */
 .ProseMirror {
   min-height: 500px;
+  padding: 5px;
+}
+
+.ProseMirror p {
+margin-bottom: 5px;
+}
+
+.ProseMirror h1,h2,h3,h4,h5,h6 {
+  text-indent: 10px;
 }

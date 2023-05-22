@@ -4,9 +4,11 @@ import Text from '@tiptap/extension-text';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Heading from '@tiptap/extension-heading';
-import { mdiFormatHeader1, mdiFormatHeader2 } from '@mdi/js';
+import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6 } from '@mdi/js';
+import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useMemo } from 'react';
+import TextAlign from '@tiptap/extension-text-align';
 
 type Menu = {
   icon: string;
@@ -20,14 +22,27 @@ export default function MyEditor() {
       Paragraph,
       Text,
       Heading,    // H1, H2, ...
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
     ],
     content: '<p>hello</p>',
   }) as Editor;
 
-  const menuList: Menu[][] = useMemo(() => [
+  const menuList: (Menu | null)[][] = useMemo(() => [
     [
+      { icon: mdiFormatAlignLeft, onClick: () => editor.chain().setTextAlign('left').run(), },
+      { icon: mdiFormatAlignCenter, onClick: () => editor.chain().setTextAlign('center').run(), },
+      { icon: mdiFormatAlignRight, onClick: () => editor.chain().setTextAlign('right').run(), },
+      { icon: mdiFormatAlignJustify, onClick: () => editor.chain().setTextAlign('justify').run(), },
+      null,
       { icon: mdiFormatHeader1, onClick: () => editor.chain().toggleHeading({ level: 1}).run(), },
       { icon: mdiFormatHeader2, onClick: () => editor.chain().toggleHeading({ level: 2}).run(), },
+      { icon: mdiFormatHeader3, onClick: () => editor.chain().toggleHeading({ level: 3}).run(), },
+      { icon: mdiFormatHeader4, onClick: () => editor.chain().toggleHeading({ level: 4}).run(), },
+      { icon: mdiFormatHeader5, onClick: () => editor.chain().toggleHeading({ level: 5}).run(), },
+      { icon: mdiFormatHeader6, onClick: () => editor.chain().toggleHeading({ level: 6}).run(), },
+      null,
     ],
   ], [editor]);
 
@@ -37,9 +52,14 @@ export default function MyEditor() {
         {menuList.map((menuLine, i) => (
           <div key={i} className={styles['menu-line']} >
             {menuLine.map((menu, j) => (
-              <div key={j} className={styles['menu-item']} onClick={menu.onClick} >
-                <Icon path={menu.icon} size='100%' />
-              </div>
+              menu !== null ?
+              (
+                <div key={j} className={styles['menu-item']} onClick={menu.onClick} >
+                  <Icon path={menu.icon} size='100%' />
+                </div>
+              ) : (
+                <div key={j} className={styles['menu-div']} />
+              )
             ))}
           </div>
         ))}
