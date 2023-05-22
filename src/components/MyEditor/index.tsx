@@ -11,6 +11,7 @@ import { mdiLinkVariant, mdiImage } from '@mdi/js';
 import { mdiFormatListNumbered } from '@mdi/js';
 import { mdiAlphaABoxOutline, mdiAlphaABox } from '@mdi/js';
 import { mdiMinus } from '@mdi/js';
+import { mdiCodeBraces, mdiCodeBracesBox } from '@mdi/js';
 import Icon from '@mdi/react';
 import { use, useCallback, useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
@@ -26,6 +27,8 @@ import History from '@tiptap/extension-history';
 import TextStyle from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
+import Code from '@tiptap/extension-code';
+import CodeBlock from '@tiptap/extension-code-block';
 
 type Menu = {
   icon: string;
@@ -62,6 +65,8 @@ export default function MyEditor() {
       Highlight.configure({
         multicolor: true,
       }),
+      Code,
+      CodeBlock,
     ],
     content: '<p>hello</p>',
   }) as Editor;
@@ -103,6 +108,8 @@ export default function MyEditor() {
       { icon: mdiFormatUnderline, onClick: () => editor.commands.toggleUnderline(), },
       { icon: mdiFormatStrikethrough, onClick: () => editor.commands.toggleStrike(), },
       { icon: mdiFormatItalic, onClick: () => editor.commands.toggleItalic(), },
+      { icon: mdiCodeBraces, onClick: () => editor.commands.toggleCode(), },
+      { icon: mdiCodeBracesBox, onClick: () => editor.commands.toggleCodeBlock(), },
       null,
       { icon: mdiLinkVariant, onClick: () => setLink(), },
       { icon: mdiImage, onClick: () => setImage(), },
@@ -123,7 +130,7 @@ export default function MyEditor() {
       null,
       { icon: mdiMinus, onClick: () => editor.commands.setHorizontalRule(), },
     ]
-  ], [editor]);
+  ], [editor, setLink, setImage, setColor, setHighlight]);
 
   return (
     <div className={styles.container} >
