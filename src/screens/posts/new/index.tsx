@@ -1,7 +1,4 @@
-import dynamic from "next/dynamic";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 import styles from './NewPost.module.css';
 import strings from "@/utils/strings";
 import { withWarning } from "@/utils/css";
@@ -9,18 +6,9 @@ import { CreatePostDto, PostsEntity } from "@/types/post";
 import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-
-type Content = string | undefined;
+import MyEditor from "@/components/MyEditor/";
 
 // TODO: dynamic 학습
-const MDEditor = dynamic(
-  () => import("@uiw/react-md-editor"),
-  { ssr: false }
-);
-const MDViewer = dynamic(
-  () => import("@uiw/react-markdown-preview"),
-  { ssr: false }
-);
 
 export default function NewPostScreen() {
   const router = useRouter();
@@ -31,7 +19,7 @@ export default function NewPostScreen() {
   // 로그인 시 true
   const isAdmin = Boolean(session.status === 'authenticated');
 
-  const [isValidPostId, setValidPostId] = useState(true);
+  const [isValidPostId, setValidPostId] = useState(false);
 
   const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
@@ -51,12 +39,15 @@ export default function NewPostScreen() {
         setTitle(post.title);
         setContent(post.content);
         setTopic(post.topics.map(t => t.name).join('|'));
+        setValidPostId(true);
       } else {
         setValidPostId(false);
       }
     }
+    setValidPostId(true);
   }
 
+  // postId 가 URL 에 포함되어 있으면 포스트 정보를 가져옴
   useEffect(() => {
     getPostById();
   }, [router]);
@@ -69,8 +60,8 @@ export default function NewPostScreen() {
     setTitle(e.target.value);
   };
 
-  const handleChangeContent = (value: Content) => {
-    setContent(value!);
+  const handleChangeContent = (value: string) => {
+    setContent(value);
   };
 
   const handleChangeTopic = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,8 +84,6 @@ export default function NewPostScreen() {
         await apis.createPost(newPost);
       
       const pId = postId || result.data.id;
-
-      console.log(result.data);
 
       if(result.status >= 200 && result.status < 300) {
         alert(strings.server.posts.addSuccess);
@@ -132,13 +121,7 @@ export default function NewPostScreen() {
             onChange={handleChangeTitle}
             placeholder={strings.page.ph.title}
           />
-          <MDEditor
-            value={content}
-            onChange={handleChangeContent}
-            visiableDragbar={false}
-            height={500}
-            style={{ marginBottom: '10px' }}
-          />
+          <MyEditor onChangeContent={handleChangeContent} defaultContent={postId ? content : '<p></p>'} editable={true} />
           <div className={styles['button-box']}>
             <div className={styles.topic}>
               <div className={styles.label}>
@@ -155,9 +138,6 @@ export default function NewPostScreen() {
             <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
           </div>
           <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
-          <div className={styles.viewer} >
-            <MDViewer source={content}></MDViewer>
-          </div>
         </>
       ) : (<></>)}
     </div>
