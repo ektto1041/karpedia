@@ -154,23 +154,24 @@ export default function MyEditor({
 
   return (
     <div className={styles.container} >
-      <div className={styles['menu-bar']} >
-        {menuList.map((menuLine, i) => (
-          <div key={i} className={styles['menu-line']} >
-            {menuLine.map((menu, j) => (
-              menu !== null ?
-              (
-                <div key={j} className={styles['menu-item']} onClick={menu.onClick} >
-                  <Icon path={menu.icon} size='100%' color={menu.color || '#111111'} />
-                </div>
-              ) : (
-                <div key={j} className={styles['menu-div']} />
-              )
-            ))}
-          </div>
-        ))}
-      </div>
-      
+      {editable && (
+        <div className={styles['menu-bar']} >
+          {menuList.map((menuLine, i) => (
+            <div key={i} className={styles['menu-line']} >
+              {menuLine.map((menu, j) => (
+                menu !== null ?
+                (
+                  <div key={j} className={styles['menu-item']} onClick={menu.onClick} >
+                    <Icon path={menu.icon} size='100%' color={menu.color || '#111111'} />
+                  </div>
+                ) : (
+                  <div key={j} className={styles['menu-div']} />
+                )
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
       <EditorContent editor={editor} />
     </div>
     

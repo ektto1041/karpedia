@@ -6,25 +6,21 @@
 }
 
 @font-face {
-  font-family: 'NanumSquareNeo-Variable';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+  font-family: 'D2Coding';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/D2Coding.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+}
+
+:root {
+  font-size: 16px;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-.w-md-editor-text *,
-code * {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-}
-
-* {
-  /* font-family: 'NanumSquareNeo-Variable'; */
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .warning {
@@ -46,15 +42,28 @@ button {
 }
 
 .ProseMirror p {
-margin-bottom: 5px;
+  line-height: 1.75rem;
+  margin: 1px 0;
 }
 
 .ProseMirror h1,h2,h3,h4,h5,h6 {
   text-indent: 10px;
+  margin-top: 1rem;
+  margin-bottom: .25rem;
 }
 
 .ProseMirror ul,ol {
   padding: 0 1rem;
+  padding-left: 1.5rem;
+  margin: .2rem 0;
+}
+
+.ProseMirror li {
+  text-indent: 5px;
+}
+
+.ProseMirror li::marker {
+  margin-left: 20px;
 }
 
 .ProseMirror a {
@@ -79,15 +88,15 @@ margin-bottom: 5px;
   background: #2e3840;
   border-radius: 0.5rem;
   color: #f9dbbb;
-  font-family: "JetBrainsMono", monospace;
+  font-family: "D2Coding", monospace;
   padding: 0.75rem 1rem;
 }
 
 .ProseMirror pre code {
   background: none;
   color: inherit;
-  font-size: 0.8rem;
   padding: 0;
+  font-family: "D2Coding";
 }
 
 .ProseMirror blockquote {
