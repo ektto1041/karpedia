@@ -4,13 +4,12 @@ import Text from '@tiptap/extension-text';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Heading from '@tiptap/extension-heading';
-import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6 } from '@mdi/js';
-import { mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
-import { mdiFormatUnderline, mdiFormatStrikethrough, mdiFormatItalic } from '@mdi/js';
+import { mdiFormatHeader1, mdiFormatHeader2, mdiFormatHeader3, mdiFormatHeader4, mdiFormatHeader5, mdiFormatHeader6, mdiFormatAlignLeft, mdiFormatAlignRight, mdiFormatAlignCenter, mdiFormatAlignJustify } from '@mdi/js';
+import { mdiFormatUnderline, mdiFormatStrikethrough, mdiFormatItalic, mdiFormatBold } from '@mdi/js';
 import { mdiLinkVariant, mdiImage } from '@mdi/js';
-import { mdiFormatListNumbered } from '@mdi/js';
+import { mdiFormatListNumbered, mdiFormatListBulleted } from '@mdi/js';
 import { mdiAlphaABoxOutline, mdiAlphaABox } from '@mdi/js';
-import { mdiMinus } from '@mdi/js';
+import { mdiMinus, mdiFormatQuoteOpen } from '@mdi/js';
 import { mdiCodeBraces, mdiCodeBracesBox } from '@mdi/js';
 import Icon from '@mdi/react';
 import { use, useCallback, useMemo } from 'react';
@@ -29,6 +28,9 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Code from '@tiptap/extension-code';
 import CodeBlock from '@tiptap/extension-code-block';
+import Bold from '@tiptap/extension-bold';
+import BulletList from '@tiptap/extension-bullet-list';
+import Blockquote from '@tiptap/extension-blockquote';
 
 type Menu = {
   icon: string;
@@ -36,7 +38,13 @@ type Menu = {
   onClick: () => void;
 };
 
-export default function MyEditor() {
+type MyEditorProps = {
+  onChangeContent: (value: string) => void;
+};
+
+export default function MyEditor({
+  onChangeContent,
+}: MyEditorProps) {
   const editor = useEditor({
     extensions: [
       Document,   // 필수
@@ -67,7 +75,11 @@ export default function MyEditor() {
       }),
       Code,
       CodeBlock,
+      Bold,
+      BulletList,
+      Blockquote,
     ],
+    onUpdate: (p) => onChangeContent(p.editor.getHTML()),
     content: '<p>hello</p>',
   }) as Editor;
 
@@ -105,6 +117,7 @@ export default function MyEditor() {
       { icon: mdiFormatHeader5, onClick: () => editor.chain().toggleHeading({ level: 5}).run(), },
       { icon: mdiFormatHeader6, onClick: () => editor.chain().toggleHeading({ level: 6}).run(), },
       null,
+      { icon: mdiFormatBold, onClick: () => editor.commands.toggleBold(), },
       { icon: mdiFormatUnderline, onClick: () => editor.commands.toggleUnderline(), },
       { icon: mdiFormatStrikethrough, onClick: () => editor.commands.toggleStrike(), },
       { icon: mdiFormatItalic, onClick: () => editor.commands.toggleItalic(), },
@@ -127,8 +140,10 @@ export default function MyEditor() {
     ],
     [
       { icon: mdiFormatListNumbered, onClick: () => editor.commands.toggleOrderedList(), },
+      { icon: mdiFormatListBulleted, onClick: () => editor.commands.toggleBulletList(), },
       null,
       { icon: mdiMinus, onClick: () => editor.commands.setHorizontalRule(), },
+      { icon: mdiFormatQuoteOpen, onClick: () => editor.commands.toggleBlockquote(), },
     ]
   ], [editor, setLink, setImage, setColor, setHighlight]);
 

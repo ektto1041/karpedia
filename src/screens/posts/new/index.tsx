@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import styles from './NewPost.module.css';
 import strings from "@/utils/strings";
@@ -8,8 +7,6 @@ import { apis } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import MyEditor from "@/components/MyEditor/";
-
-type Content = string | undefined;
 
 // TODO: dynamic 학습
 
@@ -60,8 +57,8 @@ export default function NewPostScreen() {
     setTitle(e.target.value);
   };
 
-  const handleChangeContent = (value: Content) => {
-    setContent(value!);
+  const handleChangeContent = (value: string) => {
+    setContent(value);
   };
 
   const handleChangeTopic = (e: ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +120,7 @@ export default function NewPostScreen() {
             onChange={handleChangeTitle}
             placeholder={strings.page.ph.title}
           />
-          <MyEditor />
+          <MyEditor onChangeContent={handleChangeContent} />
           <div className={styles['button-box']}>
             <div className={styles.topic}>
               <div className={styles.label}>
@@ -140,9 +137,6 @@ export default function NewPostScreen() {
             <button className={styles['submit-button']} onClick={handleSubmit}>작성</button>
           </div>
           <div style={{ marginTop: '50px' }}>{'<< 미리보기 >>'}</div>
-          {/* <div className={styles.viewer} >
-            <MDViewer source={content}></MDViewer>
-          </div> */}
         </>
       ) : (<></>)}
     </div>
