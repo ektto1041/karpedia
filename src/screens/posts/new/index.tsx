@@ -19,7 +19,7 @@ export default function NewPostScreen() {
   // 로그인 시 true
   const isAdmin = Boolean(session.status === 'authenticated');
 
-  const [isValidPostId, setValidPostId] = useState(true);
+  const [isValidPostId, setValidPostId] = useState(false);
 
   const [emoji, setEmoji] = useState("");
   const [title, setTitle] = useState("");
@@ -39,12 +39,15 @@ export default function NewPostScreen() {
         setTitle(post.title);
         setContent(post.content);
         setTopic(post.topics.map(t => t.name).join('|'));
+        setValidPostId(true);
       } else {
         setValidPostId(false);
       }
     }
+    setValidPostId(true);
   }
 
+  // postId 가 URL 에 포함되어 있으면 포스트 정보를 가져옴
   useEffect(() => {
     getPostById();
   }, [router]);
@@ -82,8 +85,6 @@ export default function NewPostScreen() {
       
       const pId = postId || result.data.id;
 
-      console.log(result.data);
-
       if(result.status >= 200 && result.status < 300) {
         alert(strings.server.posts.addSuccess);
 
@@ -120,7 +121,7 @@ export default function NewPostScreen() {
             onChange={handleChangeTitle}
             placeholder={strings.page.ph.title}
           />
-          <MyEditor onChangeContent={handleChangeContent} />
+          <MyEditor onChangeContent={handleChangeContent} defaultContent={postId ? content : '<p></p>'} editable={true} />
           <div className={styles['button-box']}>
             <div className={styles.topic}>
               <div className={styles.label}>

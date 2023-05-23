@@ -40,10 +40,14 @@ type Menu = {
 
 type MyEditorProps = {
   onChangeContent: (value: string) => void;
+  defaultContent: string;
+  editable: boolean;
 };
 
 export default function MyEditor({
   onChangeContent,
+  defaultContent,
+  editable,
 }: MyEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -80,7 +84,8 @@ export default function MyEditor({
       Blockquote,
     ],
     onUpdate: (p) => onChangeContent(p.editor.getHTML()),
-    content: '<p>hello</p>',
+    content: defaultContent,
+    editable,
   }) as Editor;
 
   const setLink = useCallback(() => {
