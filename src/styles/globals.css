@@ -37,7 +37,7 @@ button {
 
 /* PM */
 .ProseMirror {
-  height: 500px;
+  min-height: 500px;
   padding: 5px;
   overflow-y: scroll;
 }
