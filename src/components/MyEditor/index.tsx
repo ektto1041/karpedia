@@ -12,7 +12,7 @@ import { mdiAlphaABoxOutline, mdiAlphaABox } from '@mdi/js';
 import { mdiMinus, mdiFormatQuoteOpen } from '@mdi/js';
 import { mdiCodeBraces, mdiCodeBracesBox } from '@mdi/js';
 import Icon from '@mdi/react';
-import { use, useCallback, useMemo } from 'react';
+import { use, useCallback, useEffect, useMemo, useState } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import Strike from '@tiptap/extension-strike';
@@ -173,6 +173,7 @@ export default function MyEditor({
         </div>
       )}
       <EditorContent editor={editor} />
+      
     </div>
     
   );

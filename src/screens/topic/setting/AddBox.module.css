@@ -1,0 +1,9 @@
+.container {
+  position: absolute;
+  top: 0; right: 0;
+  width: 64px;
+  height: 64px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--sub);
+}

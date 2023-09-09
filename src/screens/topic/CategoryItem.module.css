@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+}
+
+.category-name {
+  width: 100%;
+  text-indent: 4rem;
+  font-size: 2rem;
+  font-weight: bold; 
+  color: var(--main-red);
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
