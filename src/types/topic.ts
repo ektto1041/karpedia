@@ -9,15 +9,15 @@ export type NewCategoriesDto = {
   name: string;
 };
 
-export type TopicsDto = {
-  id: number;
+export type NewTopicsDto = {
   name: string;
   description: string;
 };
 
-export type NewTopicsDto = {
+export type TopicsDto = {
+  id: number;
   name: string;
-  description?: string;
+  description: string;
 };
 
 export type TopicsWithCategoriesDto = {

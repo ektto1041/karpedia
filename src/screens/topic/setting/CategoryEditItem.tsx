@@ -26,6 +26,9 @@ export default function CategoryEditItem({
   const [newTopicName, setNewTopicName] = useState<string>('');
   const [newTopicDescription, setNewTopicDescription] = useState<string>('');
 
+  const updatedCategory: CategoriesDto = { id, name: categoryName };
+  const newTopic: NewTopicsDto = { name: newTopicName, description: newTopicDescription };
+
   const onChangeCategoryName = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
     setCategoryName(e.target.value);
   }, []);
@@ -51,9 +54,9 @@ export default function CategoryEditItem({
       <div className={styles['new-topic']} >
         <input type='text' placeholder='새 토픽 이름을 입력하세요.' value={newTopicName} onChange={onChangeNewTopicName} />
         <input type='text' placeholder='새 토픽 설명을 입력하세요.' value={newTopicDescription} onChange={onChangeNewTopicDescription} />
-        <AddBox onClickCreate={onClickCreateTopic} data={{ name: newTopicName, description: newTopicDescription }} />
+        <AddBox onClickCreate={onClickCreateTopic} data={newTopic} />
       </div>
-      <EditBox onClickUpdate={onClickUpdateCategory} onClickDelete={onClickDeleteCategory} data={{id, name: categoryName}} />
+      <EditBox onClickUpdate={onClickUpdateCategory} onClickDelete={onClickDeleteCategory} data={updatedCategory} />
     </div>
   )
 }

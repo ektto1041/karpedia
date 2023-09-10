@@ -2,18 +2,19 @@ import styles from './EditBox.module.css';
 import Icon from '@mdi/react';
 import { mdiPencilCircle } from '@mdi/js';
 import { mdiDeleteCircle } from '@mdi/js';
+import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsDto } from '@/types/topic';
 
-type EditBoxProps = {
-  onClickUpdate: (data: {id: number, name: string, description?: string}) => void;
+type EditBoxProps<T> = {
+  onClickUpdate: (data: T) => void;
   onClickDelete: (id: number) => void;
-  data: {id: number, name: string, description?: string};
+  data: T;
 };
 
-export default function EditBox({
+export default function EditBox<T extends CategoriesDto | TopicsDto>({
   onClickUpdate,
   onClickDelete,
   data,
-}: EditBoxProps) {
+}: EditBoxProps<T>) {
 
   return (
     <div className={styles.container}>

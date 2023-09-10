@@ -10,7 +10,9 @@ export default function TopicSettingScreen() {
   const router = useRouter();
 
   const [categories, setCategories] = useState<TopicsByCategory[]>([]);
-  const [newCategoryName, setNewCategoryName] = useState<string>('');
+  const [newCategoryName, setNewCategoryName] = useState('');
+
+  const newCategory: NewCategoriesDto = { name: newCategoryName };
 
   useEffect(() => {
     getAllTopics();
@@ -70,7 +72,7 @@ export default function TopicSettingScreen() {
       ))}
       <div className={styles['new-category']} >
         <input type='text' className={styles['new-category']} placeholder='새 카테고리 이름을 입력하세요.' value={newCategoryName} onChange={onChangeNewCategoryName} />
-        <AddBox onClickCreate={OnClickCreateCategory} data={{ name: newCategoryName }} />
+        <AddBox onClickCreate={OnClickCreateCategory} data={newCategory} />
       </div>
     </div>
   );
