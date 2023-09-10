@@ -64,7 +64,6 @@ export default function TopicSettingScreen() {
       {categories.map(category => (
         <CategoryEditItem
           category={category}
-          onClickCreateCategory={OnClickCreateCategory}
           onClickUpdateCategory={onClickUpdateCategory}
           onClickDeleteCategory={onClickDeleteCategory}
           onClickCreateTopic={OnClickCreateTopic}

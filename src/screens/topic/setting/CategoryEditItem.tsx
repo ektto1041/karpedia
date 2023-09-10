@@ -7,7 +7,6 @@ import { ChangeEventHandler, useCallback, useState } from 'react';
 
 type CategoryEditItemProps = {
   category: TopicsByCategory;
-  onClickCreateCategory: (data: NewCategoriesDto) => void;
   onClickUpdateCategory: (data: CategoriesDto) => void;
   onClickDeleteCategory: (categoryId: number) => void;
   onClickCreateTopic: (data: NewTopicsDto) => void;
@@ -15,7 +14,6 @@ type CategoryEditItemProps = {
 
 export default function CategoryEditItem({
   category,
-  onClickCreateCategory,
   onClickUpdateCategory,
   onClickDeleteCategory,
   onClickCreateTopic,
@@ -27,7 +25,7 @@ export default function CategoryEditItem({
   const [newTopicDescription, setNewTopicDescription] = useState<string>('');
 
   const updatedCategory: CategoriesDto = { id, name: categoryName };
-  const newTopic: NewTopicsDto = { name: newTopicName, description: newTopicDescription };
+  const newTopic: NewTopicsDto = { categoriesId: id, name: newTopicName, description: newTopicDescription };
 
   const onChangeCategoryName = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
     setCategoryName(e.target.value);

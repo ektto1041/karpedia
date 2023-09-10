@@ -10,6 +10,7 @@ export type NewCategoriesDto = {
 };
 
 export type NewTopicsDto = {
+  categoriesId: number;
   name: string;
   description: string;
 };
