@@ -49,7 +49,7 @@ button {
 
 /* PM */
 .ProseMirror {
-  min-height: 500px;
+  min-height: 728px;
   padding: 5px;
   overflow-y: scroll;
 }

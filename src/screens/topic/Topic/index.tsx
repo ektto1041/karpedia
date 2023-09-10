@@ -54,7 +54,7 @@ export default function TopicScreen({
 
   return (
     <div className={styles.container}>
-      <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} />
+      <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
       <Content post={post} />
     </div>
   );
