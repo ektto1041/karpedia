@@ -5,6 +5,8 @@ import Content from './Content';
 import styles from './Topic.module.css';
 import { ChaptersWithPostsDto, TopicProps, TopicsWithChaptersDto } from "@/types/topic";
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
+import { useEffect, useState } from 'react';
 
 const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
@@ -32,10 +34,15 @@ export default function TopicScreen({
   chapterId,
   postId,
 }: TopicProps) {
-  const {id, name, description, chaptersList} = topic
+  const {id, name, description, chaptersList, users} = topic
   const post = findPost(topic, chapterId, postId);
+  const [isOwner, setOwner] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    setOwner(getCookie('uid') === String(users.id));
+  }, []);
 
   const onClickChapter = (chapterId: number) => {
     router.push(`/topic/${topic.id}/${chapterId}`);
@@ -47,7 +54,7 @@ export default function TopicScreen({
 
   return (
     <div className={styles.container}>
-      <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} />
+      <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} />
       <Content post={post} />
     </div>
   );

@@ -88,17 +88,6 @@ export default function MyEditor({
     editable,
   }, [defaultContent]) as Editor;
 
-  
-  // useEffect(() => {
-  //   if(!editor) return;
-
-  //   console.log(editor?.getText(), defaultContent);
-
-  //   editor.setOptions({ content: defaultContent });
-
-  //   editor.contentComponent?.forceUpdate();
-  // }, [editor, defaultContent]);
-
   const setLink = useCallback(() => {
     const url = prompt('URL 을 입력해주세요.');
     if(url === null) return;

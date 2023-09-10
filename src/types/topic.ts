@@ -1,4 +1,5 @@
 import { PostsDto } from "./post";
+import { PublicUsersDto } from "./user";
 
 export type CategoriesDto = {
   id: number;
@@ -45,7 +46,8 @@ export type TopicsWithChaptersDto = {
   name: string;
   description: string;
   chaptersList: ChaptersWithPostsDto[];
-}
+  users: PublicUsersDto;
+};
 
 export type TopicsByCategory = {
   topics: TopicsWithCategoriesDto[];
@@ -70,12 +72,6 @@ export type CategoryItemProps = {
 
 export type TopicItemProps = {
   topic: TopicsWithCategoriesDto;
-};
-
-export type ChapterListProps = {
-  chapterList: ChaptersWithPostsDto[];
-  onClickChapter: (chapterId: number) => void;
-  onClickPost: (postId: number) => void;
 };
 
 export type ChapterItemProps = {
