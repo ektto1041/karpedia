@@ -10,7 +10,7 @@ export default function PostList({
   return (
     <div className={styles.container}>
       {postList?.map(post => (
-        <PostItem post={post} onClickPost={onClickPost} />
+        <PostItem key={post.id} post={post} onClickPost={onClickPost} />
       ))}
     </div>
   );

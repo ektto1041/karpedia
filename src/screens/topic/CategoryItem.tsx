@@ -13,7 +13,7 @@ export default function CategoryItem({
       </div>
       <div className={styles.content}>
         {topics.map(t => (
-          <TopicItem topic={t}/>
+          <TopicItem key={t.id} topic={t}/>
         ))}
       </div>
     </div>

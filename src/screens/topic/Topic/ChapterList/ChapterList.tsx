@@ -23,7 +23,7 @@ export default function ChapterList({
   return (
     <div className={styles.container} >
       {chapterList?.map(chapter => (
-        <ChapterItem chapter={chapter} onClickChapter={onClickChapter} onClickPost={onClickPost}/>
+        <ChapterItem key={chapter.id} chapter={chapter} onClickChapter={onClickChapter} onClickPost={onClickPost}/>
       ))}
       {isOwner && (<ChapterOptions topicId={topicId} />)}
     </div>

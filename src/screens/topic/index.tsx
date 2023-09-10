@@ -13,7 +13,7 @@ export default function TopicsScreen({
       <div className={styles.content}>
         {categoriesWithTopics.map(c => {
           if(c.topics.length === 0) return (<></>);
-          else return (<CategoryItem name={c.name} topics={c.topics} />)
+          else return (<CategoryItem key={c.id} name={c.name} topics={c.topics} />)
         })}
       </div>
     </div>

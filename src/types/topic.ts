@@ -34,6 +34,11 @@ export type TopicsWithCategoriesResDto = {
   topics: TopicsWithCategoriesDto[],
 }
 
+export type ChapterTitle = {
+  id: number;
+  title: string;
+}
+
 export type ChaptersWithPostsDto = {
   id: number;
   title: string;
