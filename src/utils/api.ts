@@ -1,5 +1,5 @@
 import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsEntity, PostsPaging, TopicsEntity } from "@/types/post";
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
+import { CategoriesDto, ChaptersDto, NewCategoriesDto, NewChaptersDto, NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
 import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -169,6 +169,14 @@ export const apis = {
   // 카테고리를 삭제하는 API
   deleteCategory: (categoryId: number) => {
     return ax.delete(`/categories/${categoryId}`);
+  },
+
+  /**
+   * Chapters
+   */
+  // 챕터를 추가하는 API
+  createChapter: (newChapter: NewChaptersDto): Promise<AxiosResponse<ChaptersDto>> => {
+    return ax.post(`/chapters`, newChapter);
   },
 }
 

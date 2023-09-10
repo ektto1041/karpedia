@@ -39,6 +39,10 @@ export default function NewPostScreen() {
     setSelectedType(type);
   }, []);
 
+  const onClickBackToType = useCallback(() => {
+    setSelectedType(null);
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={css(styles.content, selectedType ? styles.clicked : '')}>
@@ -46,7 +50,7 @@ export default function NewPostScreen() {
           <TypeSlide onClickType={onClickType} />
         </div>
         <div className={styles['slide-post']}>
-          {chapters && (<PostSlide chapters={chapters} />)}
+          {chapters && (<PostSlide selectedType={selectedType} chapters={chapters} onClickBackToType={onClickBackToType} topicId={topicId} />)}
         </div>
       </div>
     </div>
