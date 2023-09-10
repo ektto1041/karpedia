@@ -76,7 +76,7 @@ export default function TopicSettingScreen() {
   return (
     <div className={styles.container}>
       {categories.map(category => (
-        <CategoryEditItem
+        <CategoryEditItem key={category.id}
           category={category}
           onClickUpdateCategory={onClickUpdateCategory}
           onClickDeleteCategory={onClickDeleteCategory}

@@ -49,7 +49,7 @@ export default function CategoryEditItem({
       {topics.length > 0 && (
         <div className={styles['topic-list']}>
           {topics.map(topic => (
-            <TopicEditItem
+            <TopicEditItem key={topic.id}
               topic={topic}
               onClickUpdateTopic={onClickUpdateTopic}
               onClickDeleteTopic={onClickDeleteTopic}
