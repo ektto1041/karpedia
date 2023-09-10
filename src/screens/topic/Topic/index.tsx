@@ -38,13 +38,11 @@ export default function TopicScreen({
   const router = useRouter();
 
   const onClickChapter = (chapterId: number) => {
-    // router.push(`/topic/${topic.id}/${chapterId}`);
-    location.href = `/topic/${topic.id}/${chapterId}`;
+    router.push(`/topic/${topic.id}/${chapterId}`);
   };
 
   const onClickPost = (postId: number) => {
-    // router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
-    location.href = `/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`;
+    router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
   };
 
   return (
