@@ -1,4 +1,4 @@
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory } from '@/types/topic';
+import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory, TopicsDto } from '@/types/topic';
 import styles from './CategoryEditItem.module.css';
 import EditBox from './EditBox';
 import TopicEditItem from './TopicEditItem';
@@ -10,6 +10,8 @@ type CategoryEditItemProps = {
   onClickUpdateCategory: (data: CategoriesDto) => void;
   onClickDeleteCategory: (categoryId: number) => void;
   onClickCreateTopic: (data: NewTopicsDto) => void;
+  onClickUpdateTopic: (data: TopicsDto) => void;
+  onClickDeleteTopic: (topicId: number) => void;
 };
 
 export default function CategoryEditItem({
@@ -17,6 +19,8 @@ export default function CategoryEditItem({
   onClickUpdateCategory,
   onClickDeleteCategory,
   onClickCreateTopic,
+  onClickUpdateTopic,
+  onClickDeleteTopic,
 }: CategoryEditItemProps) {
   const {id, name, topics} = category;
 
@@ -45,7 +49,11 @@ export default function CategoryEditItem({
       {topics.length > 0 && (
         <div className={styles['topic-list']}>
           {topics.map(topic => (
-            <TopicEditItem topic={topic} />
+            <TopicEditItem
+              topic={topic}
+              onClickUpdateTopic={onClickUpdateTopic}
+              onClickDeleteTopic={onClickDeleteTopic}
+            />
           ))}
         </div>
       )}

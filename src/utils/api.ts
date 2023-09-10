@@ -133,9 +133,7 @@ export const apis = {
     return ax.get(`/topics/${topicId}`);
   },
 
-  /**
-   * 모든 토픽의 모든 챕터와 글을 가져오는 API
-   */
+  // 모든 토픽의 모든 챕터와 글을 가져오는 API
   getAllTopic: () => {
     return ax.get(`/topics/posts`);
   },
@@ -143,6 +141,16 @@ export const apis = {
   // 토픽을 추가하는 API
   createTopic: (topic: NewTopicsDto) => {
     return ax.post(`/topics`, topic);
+  },
+
+  // 토픽의 이름과 설명을 수정하는 API
+  updateTopic: (topic: TopicsDto) => {
+    return ax.put(`/topics`, topic);
+  },
+
+  // 토픽을 삭제하는 API
+  deleteTopic: (topicId: number) => {
+    return ax.delete(`/topics/${topicId}`);
   },
 
   /**
@@ -153,16 +161,12 @@ export const apis = {
     return ax.post(`/categories`, category);
   },
 
-  /**
-   * 카테고리의 이름을 수정하는 API
-   */
+  // 카테고리의 이름을 수정하는 API
   updateCategory: (category: CategoriesDto) => {
     return ax.put(`/categories`, category);
   },
 
-  /**
-   * 카테고리를 삭제하는 API
-   */
+  // 카테고리를 삭제하는 API
   deleteCategory: (categoryId: number) => {
     return ax.delete(`/categories/${categoryId}`);
   },

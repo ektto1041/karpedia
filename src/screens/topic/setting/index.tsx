@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import styles from './TopicSetting.module.css';
 import { apis } from '@/utils/api';
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory } from '@/types/topic';
+import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory, TopicsDto } from '@/types/topic';
 import CategoryEditItem from './CategoryEditItem';
 import AddBox from './AddBox';
 import { useRouter } from 'next/router';
@@ -55,6 +55,20 @@ export default function TopicSettingScreen() {
     }
   }, []);
 
+  const onClickUpdateTopic = useCallback(async (data: TopicsDto) => {
+    const response = await apis.updateTopic(data);
+    if(response.status === 200) {
+      router.reload();
+    }
+  }, []);
+
+  const onClickDeleteTopic = useCallback(async (topicId: number) => {
+    const response = await apis.deleteTopic(topicId);
+    if(response.status === 200) {
+      router.reload();
+    }
+  }, []);
+
   const onChangeNewCategoryName = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
     setNewCategoryName(e.target.value);
   }, []);
@@ -67,6 +81,8 @@ export default function TopicSettingScreen() {
           onClickUpdateCategory={onClickUpdateCategory}
           onClickDeleteCategory={onClickDeleteCategory}
           onClickCreateTopic={OnClickCreateTopic}
+          onClickUpdateTopic={onClickUpdateTopic}
+          onClickDeleteTopic={onClickDeleteTopic}
         />
       ))}
       <div className={styles['new-category']} >
