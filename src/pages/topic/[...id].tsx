@@ -55,7 +55,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     chapter.postsList.sort((a, b) => a.title < b.title ? -1 : 1);
   });
 
-  const chapterId: number = ids[1] ? parseInt(ids[1]) : topic.chaptersList[0].id; 
+  const chapterId: number = ids[1] ? parseInt(ids[1]) : (topic.chaptersList[0]?.id || -1); 
   const postId: number = ids[2] ? parseInt(ids[2]) : -1;
   
   const hasNoData = !Boolean(topic);

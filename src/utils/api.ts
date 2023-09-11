@@ -1,4 +1,4 @@
-import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsEntity, PostsPaging, TopicsEntity } from "@/types/post";
+import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsDto, PostsEntity, PostsPaging, TopicsEntity, newPostsDto } from "@/types/post";
 import { CategoriesDto, ChaptersDto, NewCategoriesDto, NewChaptersDto, NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
 import axios, { AxiosResponse } from "axios";
 
@@ -27,14 +27,6 @@ export const apis = {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
   },
 
-  /**
-   * 새 글을 작성하는 api
-   * @param newPost 작성할 글의 정보
-   * @returns 작성이 완료된 글의 정보
-   */
-  createPost: (newPost: CreatePostDto): Promise<AxiosResponse<PostsEntity>> => {
-    return ax.post('/posts', newPost);
-  },
   /**
    * 글을 수정하는 api
    * @param newPost 작성할 글의 정보
@@ -178,6 +170,14 @@ export const apis = {
   createChapter: (newChapter: NewChaptersDto): Promise<AxiosResponse<ChaptersDto>> => {
     return ax.post(`/chapters`, newChapter);
   },
-}
+
+  /**
+   * Posts
+   */
+  // 포스트를 추가하는 API
+  createPost: (newPost: newPostsDto): Promise<AxiosResponse<PostsDto>> => {
+    return ax.post(`/posts`, newPost);
+  },
+};
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);

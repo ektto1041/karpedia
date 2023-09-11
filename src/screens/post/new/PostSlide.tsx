@@ -3,11 +3,12 @@ import Icon from '@mdi/react';
 import { mdiKeyboardBackspace } from '@mdi/js';
 import MyEditor from '@/components/MyEditor';
 import { ChangeEventHandler, useCallback, useState } from 'react';
-import Dropdown from './DropDown';
 import { ChapterTitle, NewChaptersDto } from '@/types/topic';
 import { PostType } from '.';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
+import { newPostsDto } from '@/types/post';
+import Dropdown from './Dropdown';
 
 type PostSlideProps = {
   chapters: ChapterTitle[];
@@ -24,12 +25,12 @@ export default function PostSlide({
 }: PostSlideProps) {
   const router = useRouter();
 
-  const [categoryIdx, setCategoryIdx] = useState(0);
+  const [chapterIdx, setChapterIdx] = useState(0);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   const onChangeCategory = useCallback((value: number) => {
-    setCategoryIdx(value);
+    setChapterIdx(value);
   }, []);
 
   const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -50,7 +51,12 @@ export default function PostSlide({
       }
 
     } else if(selectedType === 'post') {
+      const newPost: newPostsDto = { chapterId: chapters[chapterIdx].id, title, content };
 
+      const response = await apis.createPost(newPost);
+      if(response.status < 300) {
+        router.push('/');
+      }
     }
   }, [selectedType, topicId, title, content]);
 
@@ -65,7 +71,7 @@ export default function PostSlide({
         </div>
       </div>
 
-      {selectedType === 'post' && (<Dropdown data={chapters} value={categoryIdx} onChange={onChangeCategory} />)} 
+      {selectedType === 'post' && (<Dropdown data={chapters} value={chapterIdx} onChange={onChangeCategory} />)} 
       <input className={styles.title} type='text' placeholder='제목을 입력하세요.' value={title} onChange={onChangeTitle} />
       <div className={styles.content}>
         <MyEditor onChangeContent={onChangeContent} defaultContent={'<p></p>'} editable={true} />

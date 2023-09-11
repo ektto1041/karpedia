@@ -35,7 +35,7 @@ export default function TopicScreen({
   postId,
 }: TopicProps) {
   const {id, name, description, chaptersList, users} = topic
-  const post = findPost(topic, chapterId, postId);
+  const post = chapterId !== -1 ? findPost(topic, chapterId, postId) : null;
   const [isOwner, setOwner] = useState(false);
 
   const router = useRouter();
@@ -54,8 +54,12 @@ export default function TopicScreen({
 
   return (
     <div className={styles.container}>
-      <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
-      <Content post={post} />
+      { post && (
+        <>
+          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+          <Content post={post} />  
+        </>
+      ) }
     </div>
   );
 };

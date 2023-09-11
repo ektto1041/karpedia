@@ -118,6 +118,12 @@ export type PostsDto = {
   modifiedAt: string;
 };
 
+export type newPostsDto = {
+  title: string;
+  content: string;
+  chapterId: number;
+};
+
 export type PostListProps = {
   postList: PostsDto[];
   onClickPost: (postId: number) => void;
