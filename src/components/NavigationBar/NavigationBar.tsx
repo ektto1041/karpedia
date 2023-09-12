@@ -38,22 +38,22 @@ export default function NavigationBar() {
 
   // 모바일에서 페이지 이동했을 때 모바일 메뉴 리스트를 종료해주는 역할
   useEffect(() => {
-    onClickMenu();
+    onClickMenu(false);
   }, [router]);
 
   const onClickProfile = () => {
     apis.testat();
   };
 
-  const onClickMenu = useCallback(() => {
-    setMenuClicked(!isMenuClicked);
+  const onClickMenu = useCallback((clicked: boolean) => {
+    setMenuClicked(clicked);
 
-    if(!isMenuClicked) {
+    if(clicked) {
       document.body.classList.add('small');
     } else {
       document.body.classList.remove('small');
     }
-  }, [isMenuClicked]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -88,7 +88,7 @@ export default function NavigationBar() {
             )}
           </div>
           <div className={css(styles.content, styles.mobile)}>
-            <div className={styles['icon-button']} onClick={onClickMenu}>
+            <div className={styles['icon-button']} onClick={() => onClickMenu(!isMenuClicked)}>
               {!isMenuClicked ? (<Icon path={mdiMenu} />) : (<Icon path={mdiClose} /> )}
             </div>
             <div className={styles['icon-button']}>

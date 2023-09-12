@@ -27,47 +27,64 @@ export default function TopicSettingScreen() {
     setCategories(categoriesWithTopics);
   };
 
+  const revalidateTopic = useCallback(async (callback: () => void) => {
+    await apis.revalidateTopic();
+    callback();
+  }, []) ;
+
   const OnClickCreateCategory = useCallback(async (data: NewCategoriesDto) => {
     const response = await apis.createCategory(data);
     if(response.status >= 200 && response.status < 300) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const onClickUpdateCategory = useCallback(async (data: CategoriesDto) => {
     const response = await apis.updateCategory(data);
     if(response.status === 200) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const onClickDeleteCategory = useCallback(async (categoryId: number) => {
     const response = await apis.deleteCategory(categoryId);
     if(response.status === 200) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);
     if(response.status >= 200 && response.status < 300) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const onClickUpdateTopic = useCallback(async (data: TopicsDto) => {
     const response = await apis.updateTopic(data);
     if(response.status === 200) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const onClickDeleteTopic = useCallback(async (topicId: number) => {
     const response = await apis.deleteTopic(topicId);
     if(response.status === 200) {
-      router.reload();
+      revalidateTopic(() => {
+        router.reload();
+      })
     }
-  }, []);
+  }, [router]);
 
   const onChangeNewCategoryName = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
     setNewCategoryName(e.target.value);

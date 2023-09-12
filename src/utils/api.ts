@@ -27,6 +27,10 @@ export const apis = {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
   },
 
+  revalidateTopic: () => {
+    return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=topic`);
+  },
+
   /**
    * 글을 수정하는 api
    * @param newPost 작성할 글의 정보
