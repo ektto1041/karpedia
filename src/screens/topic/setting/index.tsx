@@ -62,7 +62,10 @@ export default function TopicSettingScreen() {
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);
     if(response.status >= 200 && response.status < 300) {
-      revalidateTopic(() => {
+      const topicId = response.data.id;
+      revalidateTopic(async () => {        
+        await apis.revalidateTopicAfterCreate(topicId);
+
         router.reload();
       })
     }
