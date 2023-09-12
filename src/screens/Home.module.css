@@ -75,6 +75,10 @@
   transition: all ease .5s;
 }
 
+.container img {
+  z-index: 0;
+}
+
 .container .profile-box .name {
   width: 100%;
   text-align: center;

@@ -21,12 +21,17 @@
   --white-gray: #eeeeee;
   --background-white: #fcfcfc;
   --white: #ffffff;
+  --white-oa0: #ffffffa0;
   --sub: #FFB07F;
   --main-red-o22: #f3156022;
 }
 
 body {
   background-color: var(--background-white);
+}
+
+body.small {
+  overflow-y: hidden;
 }
 
 * {
