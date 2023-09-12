@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+}
+
+.account {
+  width: 100%;
+  border-bottom: 2px solid var(--white-gray);
+}
+
+.menu-list {
+  width: 100%;
+}

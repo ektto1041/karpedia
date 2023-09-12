@@ -1,17 +1,9 @@
-import dynamic from 'next/dynamic';
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 import styles from './ContentBox.module.css';
 import MyEditor from '@/components/MyEditor';
 
 type ContentBoxProps = {
   content: string,
 };
-
-const MDViewer = dynamic(
-  () => import("@uiw/react-markdown-preview"),
-  { ssr: false }
-);
 
 export default function ContentBox({
   content,
@@ -20,7 +12,6 @@ export default function ContentBox({
     <div className={styles.container} >
       <div className={styles.hidden}>{content}</div>
       <MyEditor editable={false} defaultContent={content} onChangeContent={() => {}} />
-      {/* <MDViewer source={content}></MDViewer> */}
     </div>
   )
 };

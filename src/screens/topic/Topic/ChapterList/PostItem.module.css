@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  color: var(--gray);
+  font-size: 1.2rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: all ease .25s;
+}
+
+.container:hover {
+  color: var(--black);
+}

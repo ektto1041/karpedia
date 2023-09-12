@@ -1,11 +1,21 @@
-import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsEntity, PostsPaging, TopicsEntity } from "@/types/post";
+import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsDto, PostsEntity, PostsPaging, TopicsEntity, newPostsDto } from "@/types/post";
+import { CategoriesDto, ChaptersDto, NewCategoriesDto, NewChaptersDto, NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
 import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
+  withCredentials: true,
 });
 
 export const apis = {
+  testat: () => {
+    return ax.get('/auths/testat');
+  },
+
+  googleLogin: (): Promise<AxiosResponse<any>> => {
+    return ax.get(`/auths/google`, { headers: {"Cache-control": "no-cache"}});
+  },
+
   /**
    * /posts 페이지를 revalidate 해주는 api
    * @returns revalidate 결과
@@ -17,14 +27,6 @@ export const apis = {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=posts/${postId}`);
   },
 
-  /**
-   * 새 글을 작성하는 api
-   * @param newPost 작성할 글의 정보
-   * @returns 작성이 완료된 글의 정보
-   */
-  createPost: (newPost: CreatePostDto): Promise<AxiosResponse<PostsEntity>> => {
-    return ax.post('/posts', newPost);
-  },
   /**
    * 글을 수정하는 api
    * @param newPost 작성할 글의 정보
@@ -98,9 +100,84 @@ export const apis = {
   /**
    * 모든 토픽들을 가져오는 API
    */
-  getAllTopics: (): Promise<AxiosResponse<TopicsEntity[]>> => {
+  getAllTopics: (): Promise<AxiosResponse<TopicsDto[]>> => {
     return ax.get('/topics');
-  }
-}
+  },
+
+  /**
+   * 모든 토픽들을 카테고리로 분류해서 가져오는 API
+   */
+  getAllTopicsWithCategories: (): Promise<AxiosResponse<TopicsWithCategoriesResDto>> => {
+    return ax.get('/topics/categories');
+  },
+
+  /**
+   * 모든 토픽들을 카테고리로 분류해서 가져오는 API ( 토픽 관리용 어드민 체크 )
+   */
+  getAllTopicsWithCategoriesForSetting: (): Promise<AxiosResponse<TopicsWithCategoriesResDto>> => {
+    return ax.get('/topics/setting');
+  },
+
+  /**
+   * 한 토픽의 모든 챕터와 글을 가져오는 API
+   */
+  getTopic: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersDto>> => {
+    return ax.get(`/topics/${topicId}`);
+  },
+
+  // 모든 토픽의 모든 챕터와 글을 가져오는 API
+  getAllTopic: () => {
+    return ax.get(`/topics/posts`);
+  },
+
+  // 토픽을 추가하는 API
+  createTopic: (topic: NewTopicsDto) => {
+    return ax.post(`/topics`, topic);
+  },
+
+  // 토픽의 이름과 설명을 수정하는 API
+  updateTopic: (topic: TopicsDto) => {
+    return ax.put(`/topics`, topic);
+  },
+
+  // 토픽을 삭제하는 API
+  deleteTopic: (topicId: number) => {
+    return ax.delete(`/topics/${topicId}`);
+  },
+
+  /**
+   * Categories
+   */
+  // 카테고리를 추가하는 API
+  createCategory: (category: NewCategoriesDto) => {
+    return ax.post(`/categories`, category);
+  },
+
+  // 카테고리의 이름을 수정하는 API
+  updateCategory: (category: CategoriesDto) => {
+    return ax.put(`/categories`, category);
+  },
+
+  // 카테고리를 삭제하는 API
+  deleteCategory: (categoryId: number) => {
+    return ax.delete(`/categories/${categoryId}`);
+  },
+
+  /**
+   * Chapters
+   */
+  // 챕터를 추가하는 API
+  createChapter: (newChapter: NewChaptersDto): Promise<AxiosResponse<ChaptersDto>> => {
+    return ax.post(`/chapters`, newChapter);
+  },
+
+  /**
+   * Posts
+   */
+  // 포스트를 추가하는 API
+  createPost: (newPost: newPostsDto): Promise<AxiosResponse<PostsDto>> => {
+    return ax.post(`/posts`, newPost);
+  },
+};
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);

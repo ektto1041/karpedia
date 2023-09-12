@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.topic-name {
+  text-indent: 2.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--black);
+  border-bottom: 0;
+}
+
+.topic-description {
+  text-indent: 2.5rem;
+  font-size: 1.375rem;
+  font-weight: normal;
+  color: var(--gray);
+  border-top: 0;
+}

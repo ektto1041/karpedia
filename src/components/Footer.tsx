@@ -2,13 +2,13 @@ import { signIn, useSession } from 'next-auth/react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
-  const session = useSession();
+  // const session = useSession();
 
   const handleClickLogin = () => {
-    if(session.status === 'authenticated') alert('이미 로그인되어 있습니다.');
-    else {
-      signIn();
-    }
+    // if(session.status === 'authenticated') alert('이미 로그인되어 있습니다.');
+    // else {
+    //   signIn();
+    // }
   };
 
   return (

@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { ChaptersWithPostsDto } from "./topic";
 
 export type PostsProps = {
   topics: string[],
@@ -97,10 +98,42 @@ export type CommentsEntity = {
 export type TopicsEntity = {
   id: number,
   name: string,
+  description: string
 };
 
 export type PostsPaging = {
   page: number,
   keyword: string,
   topics: string[],
+};
+
+// new
+export type PostsDto = {
+  id: number;
+  title: string;
+  content: string;
+  status: number;
+  viewCount: number;
+  createdAt: string;
+  modifiedAt: string;
+};
+
+export type newPostsDto = {
+  title: string;
+  content: string;
+  chapterId: number;
+};
+
+export type PostListProps = {
+  postList: PostsDto[];
+  onClickPost: (postId: number) => void;
+};
+
+export type PostItemProps = {
+  post: PostsDto;
+  onClickPost: (postId: number) => void;
+};
+
+export type ContentProps = {
+  post: PostsDto | ChaptersWithPostsDto;
 };

@@ -14,6 +14,24 @@
 
 :root {
   font-size: 16px;
+  --main-red: #f31560;
+  --black: #111111;
+  --gray: #7f7f7f;
+  --light-gray: #7f7f7f80;
+  --white-gray: #eeeeee;
+  --background-white: #fcfcfc;
+  --white: #ffffff;
+  --white-oa0: #ffffffa0;
+  --sub: #FFB07F;
+  --main-red-o22: #f3156022;
+}
+
+body {
+  background-color: var(--background-white);
+}
+
+body.small {
+  overflow-y: hidden;
 }
 
 * {
@@ -37,7 +55,7 @@ button {
 
 /* PM */
 .ProseMirror {
-  min-height: 500px;
+  min-height: 728px;
   padding: 5px;
   overflow-y: scroll;
 }

@@ -1,0 +1,33 @@
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.container>input {
+  text-indent: 2rem;
+  font-size: 2rem;
+  font-weight: bold; 
+  color: var(--main-red);
+}
+
+.new-topic {
+  width: 100%;
+  position: relative;
+}
+
+.new-topic input {
+  text-indent: 2.5rem;
+  font-size: 1.375rem;
+  color: var(--sub);
+  background-color: var(--main-red-o22);
+}
+
+.new-topic input:nth-child(1) {
+  border-bottom: 0;
+  font-weight: bold;
+}
+
+.new-topic input:nth-child(2) {
+  border-top: 0;
+  font-weight: normal;
+}

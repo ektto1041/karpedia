@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  margin-top: 64px;
+  height: 32px;
+  align-items: center;
+  color: var(--gray);
+  display: flex;
+  user-select: none;
+  cursor: pointer;
+  transition: all ease .25s;
+}
+
+.container:hover {
+  color: var(--black);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+}
