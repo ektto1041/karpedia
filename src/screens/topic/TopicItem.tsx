@@ -1,7 +1,11 @@
-import { TopicItemProps } from '@/types/topic';
+import { TopicsWithCategoriesDto } from '@/types/topic';
 import styles from './TopicItem.module.css';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
+
+type TopicItemProps = {
+  topic: TopicsWithCategoriesDto;
+};
 
 export default function TopicItem({
   topic,

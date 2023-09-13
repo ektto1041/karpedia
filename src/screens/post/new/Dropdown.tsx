@@ -1,8 +1,8 @@
 import styles from './Dropdown.module.css';
 import Icon from '@mdi/react';
 import { mdiTriangleSmallDown } from '@mdi/js';
-import { ChapterTitle } from '@/types/topic';
 import { useCallback, useState } from 'react';
+import { ChapterTitle } from '@/types/chapter';
 
 type DropdownProps<T> = {
   data: T[];

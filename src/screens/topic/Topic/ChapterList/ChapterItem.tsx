@@ -1,6 +1,12 @@
-import { ChapterItemProps } from '@/types/topic';
+import { ChaptersWithPostsDto } from '@/types/chapter';
 import styles from './ChapterItem.module.css';
 import PostList from './PostList';
+
+type ChapterItemProps = {
+  chapter: ChaptersWithPostsDto;
+  onClickChapter: (chapterId: number) => void;
+  onClickPost: (postId: number) => void;
+};
 
 export default function ChapterItem({
   chapter,

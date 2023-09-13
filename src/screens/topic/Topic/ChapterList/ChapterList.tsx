@@ -1,8 +1,7 @@
-import { ChaptersWithPostsDto } from '@/types/topic';
 import styles from './ChapterList.module.css';
 import ChapterItem from './ChapterItem';
-import { useRouter } from 'next/router';
 import ChapterOptions from './ChapterOptions';
+import { ChaptersWithPostsDto } from '@/types/chapter';
 
 
 export type ChapterListProps = {

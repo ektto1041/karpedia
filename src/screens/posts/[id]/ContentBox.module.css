@@ -1,9 +1,0 @@
-.container {
-  width: 100%;
-  padding: 10px;
-}
-
-.container .hidden {
-  height: 0px;
-  visibility: hidden;
-}

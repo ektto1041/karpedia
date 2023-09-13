@@ -1,13 +1,11 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
-// import { SessionProvider } from "next-auth/react"
 import Footer from '@/components/Footer';
 import NavigationBar from '@/components/NavigationBar/NavigationBar';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    // <SessionProvider>
     <>
       <Head>
         <title>Karpedia</title>
@@ -18,8 +16,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <NavigationBar />
       <Component {...pageProps} />
       <Footer />
-    {/* </SessionProvider> */}
     </>
-
   );
 }

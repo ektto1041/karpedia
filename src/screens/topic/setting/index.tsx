@@ -1,10 +1,11 @@
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import styles from './TopicSetting.module.css';
 import { apis } from '@/utils/api';
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory, TopicsDto } from '@/types/topic';
+import { NewTopicsDto, TopicsDto } from '@/types/topic';
 import CategoryEditItem from './CategoryEditItem';
 import AddBox from './AddBox';
 import { useRouter } from 'next/router';
+import { CategoriesDto, NewCategoriesDto, TopicsByCategory } from '@/types/category';
 
 export default function TopicSettingScreen() {
   const router = useRouter();

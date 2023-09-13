@@ -1,14 +1,6 @@
-import { PostsDto } from "./post";
+import { CategoriesDto } from "./category";
+import { ChaptersWithPostsDto } from "./chapter";
 import { PublicUsersDto } from "./user";
-
-export type CategoriesDto = {
-  id: number;
-  name: string;
-};
-
-export type NewCategoriesDto = {
-  name: string;
-};
 
 export type NewTopicsDto = {
   categoriesId: number;
@@ -34,65 +26,10 @@ export type TopicsWithCategoriesResDto = {
   topics: TopicsWithCategoriesDto[],
 }
 
-export type ChapterTitle = {
-  id: number;
-  title: string;
-};
-
-export type ChaptersDto = {
-  id: number;
-  title: string;
-  content: string;
-};
-
-export type NewChaptersDto = {
-  topicId: number;
-  title: string;
-  content: string;
-};
-
-export type ChaptersWithPostsDto = {
-  id: number;
-  title: string;
-  content: string;
-  postsList: PostsDto[];
-}
-
 export type TopicsWithChaptersDto = {
   id: number;
   name: string;
   description: string;
   chaptersList: ChaptersWithPostsDto[];
   users: PublicUsersDto;
-};
-
-export type TopicsByCategory = {
-  topics: TopicsWithCategoriesDto[];
-  id: number;
-  name: string;
-}
-
-export type TopicsProps = {
-  categoriesWithTopics: TopicsByCategory[];
-};
-
-export type TopicProps = {
-  topic: TopicsWithChaptersDto;
-  chapterId: number,
-  postId: number,
-};
-
-export type CategoryItemProps = {
-  name: string;
-  topics: TopicsWithCategoriesDto[];
-}
-
-export type TopicItemProps = {
-  topic: TopicsWithCategoriesDto;
-};
-
-export type ChapterItemProps = {
-  chapter: ChaptersWithPostsDto;
-  onClickChapter: (chapterId: number) => void;
-  onClickPost: (postId: number) => void;
 };

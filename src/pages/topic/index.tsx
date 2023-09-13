@@ -1,6 +1,10 @@
 import TopicsScreen from "@/screens/topic";
-import { TopicsByCategory, TopicsProps } from "@/types/topic";
+import { TopicsByCategory } from "@/types/category";
 import { apis } from "@/utils/api"
+
+export type TopicsProps = {
+  categoriesWithTopics: TopicsByCategory[];
+};
 
 export default function Topics({
   categoriesWithTopics,

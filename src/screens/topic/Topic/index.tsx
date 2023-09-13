@@ -3,11 +3,13 @@ import { PostsDto } from '@/types/post';
 import ChapterList from './ChapterList/ChapterList';
 import Content from './Content';
 import styles from './Topic.module.css';
-import { ChaptersWithPostsDto, TopicProps, TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersDto } from "@/types/topic";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import ChapterOptions from './ChapterList/ChapterOptions';
+import { ChaptersWithPostsDto } from '@/types/chapter';
+import { TopicProps } from '@/pages/topic/[...id]';
 
 const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;

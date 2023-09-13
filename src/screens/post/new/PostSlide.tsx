@@ -3,12 +3,12 @@ import Icon from '@mdi/react';
 import { mdiKeyboardBackspace } from '@mdi/js';
 import MyEditor from '@/components/MyEditor';
 import { ChangeEventHandler, useCallback, useState } from 'react';
-import { ChapterTitle, NewChaptersDto } from '@/types/topic';
 import { PostType } from '.';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
 import { newPostsDto } from '@/types/post';
 import Dropdown from './Dropdown';
+import { ChapterTitle, NewChaptersDto } from '@/types/chapter';
 
 type PostSlideProps = {
   chapters: ChapterTitle[];

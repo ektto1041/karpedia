@@ -1,6 +1,6 @@
+import { TopicsProps } from '@/pages/topic';
 import CategoryItem from './CategoryItem';
 import styles from './Topics.module.css';
-import { TopicsProps } from "@/types/topic";
 
 export default function TopicsScreen({
   categoriesWithTopics,
