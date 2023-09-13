@@ -90,7 +90,7 @@ export default function PortfolioScreen() {
         <h1>프로젝트</h1>
         <div className={styles['project-list']} >
           {projects.map(project => (
-            <ProjectItem project={project} />
+            <ProjectItem key={project.title} project={project} />
           ))}
         </div>
       </div>

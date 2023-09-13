@@ -1,4 +1,4 @@
-import PortfolioScreen from '@/screens/topic/portfolio/Portfolio'
+import PortfolioScreen from '@/screens/portfolio/Portfolio'
 
 export default function Home() {
   return (
