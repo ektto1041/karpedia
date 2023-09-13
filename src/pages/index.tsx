@@ -1,13 +1,9 @@
-import Head from 'next/head'
-import { Inter } from '@next/font/google'
-import HomeScreen from '@/screens'
-
-const inter = Inter({ subsets: ['latin'] })
+import PortfolioScreen from '@/screens/topic/portfolio/Portfolio'
 
 export default function Home() {
   return (
     <>
-      <HomeScreen />
+      <PortfolioScreen />
     </>
   )
 }
