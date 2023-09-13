@@ -1,6 +1,11 @@
-import { CategoryItemProps } from '@/types/topic';
+import { TopicsWithCategoriesDto } from '@/types/topic';
 import styles from './CategoryItem.module.css';
 import TopicItem from './TopicItem';
+
+type CategoryItemProps = {
+  name: string;
+  topics: TopicsWithCategoriesDto[];
+}
 
 export default function CategoryItem({
   name,

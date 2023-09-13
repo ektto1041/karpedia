@@ -2,7 +2,8 @@ import styles from './EditBox.module.css';
 import Icon from '@mdi/react';
 import { mdiPencilCircle } from '@mdi/js';
 import { mdiDeleteCircle } from '@mdi/js';
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsDto } from '@/types/topic';
+import { TopicsDto } from '@/types/topic';
+import { CategoriesDto } from '@/types/category';
 
 type EditBoxProps<T> = {
   onClickUpdate: (data: T) => void;

@@ -1,7 +1,13 @@
 import TopicScreen from "@/screens/topic/Topic";
-import { TopicProps, TopicsDto, TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersDto } from "@/types/topic";
 import { apis } from "@/utils/api";
 import { GetStaticPropsContext } from "next";
+
+export type TopicProps = {
+  topic: TopicsWithChaptersDto;
+  chapterId: number,
+  postId: number,
+};
 
 export default function Topic({
   topic,

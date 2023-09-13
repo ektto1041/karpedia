@@ -1,5 +1,10 @@
-import { PostItemProps } from '@/types/post';
+import { PostsDto } from '@/types/post';
 import styles from './PostItem.module.css';
+
+type PostItemProps = {
+  post: PostsDto;
+  onClickPost: (postId: number) => void;
+};
 
 export default function PostItem({
   post,

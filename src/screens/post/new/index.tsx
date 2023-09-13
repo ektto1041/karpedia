@@ -5,7 +5,8 @@ import css from '@/utils/css';
 import TypeSlide from './TypeSlide';
 import PostSlide from './PostSlide';
 import { apis } from '@/utils/api';
-import { TopicsWithChaptersDto, ChapterTitle } from '@/types/topic';
+import { TopicsWithChaptersDto } from '@/types/topic';
+import { ChapterTitle } from '@/types/chapter';
 
 export type PostType = 'category' | 'post';
 

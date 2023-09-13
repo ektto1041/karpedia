@@ -1,6 +1,11 @@
-import { ContentProps } from '@/types/post';
+import { PostsDto } from '@/types/post';
 import styles from './Content.module.css';
 import MyEditor from '@/components/MyEditor';
+import { ChaptersWithPostsDto } from '@/types/chapter';
+
+type ContentProps = {
+  post: PostsDto | ChaptersWithPostsDto;
+};
 
 export default function Content({
   post,

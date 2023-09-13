@@ -1,9 +1,10 @@
-import { CategoriesDto, NewCategoriesDto, NewTopicsDto, TopicsByCategory, TopicsDto } from '@/types/topic';
+import { NewTopicsDto, TopicsDto } from '@/types/topic';
 import styles from './CategoryEditItem.module.css';
 import EditBox from './EditBox';
 import TopicEditItem from './TopicEditItem';
 import AddBox from './AddBox';
 import { ChangeEventHandler, useCallback, useState } from 'react';
+import { CategoriesDto, TopicsByCategory } from '@/types/category';
 
 type CategoryEditItemProps = {
   category: TopicsByCategory;

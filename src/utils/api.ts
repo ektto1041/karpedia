@@ -1,5 +1,7 @@
-import { CommentsEntity, CreateCommentsDto, CreatePostDto, PostItemResDto, PostsDto, PostsEntity, PostsPaging, TopicsEntity, newPostsDto } from "@/types/post";
-import { CategoriesDto, ChaptersDto, NewCategoriesDto, NewChaptersDto, NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
+import { CategoriesDto, NewCategoriesDto } from "@/types/category";
+import { ChaptersDto, NewChaptersDto } from "@/types/chapter";
+import { PostsDto, newPostsDto } from "@/types/post";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
 import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -18,7 +20,6 @@ export const apis = {
 
   /**
    * 페이지를 revalidate 해주는 api
-   * @returns revalidate 결과
    */
   revalidateTopic: () => {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=topic`);

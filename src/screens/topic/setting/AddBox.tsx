@@ -1,7 +1,8 @@
 import styles from './AddBox.module.css';
 import Icon from '@mdi/react';
 import { mdiPlusCircle } from '@mdi/js';
-import { NewCategoriesDto, NewTopicsDto } from '@/types/topic';
+import { NewTopicsDto } from '@/types/topic';
+import { NewCategoriesDto } from '@/types/category';
 
 type AddBoxProps<T> = {
   onClickCreate: (data: T) => void;
