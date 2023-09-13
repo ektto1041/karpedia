@@ -63,9 +63,7 @@ export default function TopicSettingScreen() {
     const response = await apis.createTopic(data);
     if(response.status >= 200 && response.status < 300) {
       const topicId = response.data.id;
-      revalidateTopic(async () => {        
-        await apis.revalidateTopicAfterCreate(topicId);
-
+      revalidateTopic(() => {        
         router.reload();
       })
     }
