@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  border-top: 2px solid var(--black);
+
+  --old-blue: #e2e2e2;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+}
+
+.content {
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.25rem;
+  color: var(--black);
+  font-family: "BareunBatang";
+  text-indent: 1rem;
+  border-bottom: 1px dashed var(--black);
+}
+
+.content a {
+  font-family: "BareunBatang";
+}
+
+.key {
+  background-color: var(--old-blue);
+  border-right: 1px dashed var(--black);
+  width: 20%;
+}
+
+.value {
+  width: 80%;
+}

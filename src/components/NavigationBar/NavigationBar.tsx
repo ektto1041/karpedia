@@ -25,7 +25,7 @@ export default function NavigationBar() {
   const router = useRouter();
 
   const menuItems = useMemo<MenuItem[]>(() => ([
-    {name: '포트폴리오', href: '/'},
+    {name: '포트폴리오', href: '/portfolio'},
     {name: '토픽', href: '/topic'},
   ]), []);
 
