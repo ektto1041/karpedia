@@ -4,12 +4,12 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 export default function SiteMap() {}
 
 export async function getServerSideProps({ res }: GetServerSidePropsContext) {
-  const result = await apis.getAllPost();
-  const allPostId = result.data.map(post => post.id);
+  // const result = await apis.getAllPost();
+  // const allPostId = result.data.map(post => post.id);
 
-  res.setHeader('Content-Type', 'text/xml');
-  res.write(generateSiteMap(allPostId));
-  res.end();
+  // res.setHeader('Content-Type', 'text/xml');
+  // res.write(generateSiteMap(allPostId));
+  // res.end();
 
   return {
     props: {},
