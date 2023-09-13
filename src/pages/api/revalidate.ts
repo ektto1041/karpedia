@@ -6,7 +6,7 @@ type ErrorRes = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<string | ErrorRes>
+  res: NextApiResponse<any>
 ) {
   if (req.query.secret !== process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY) {
     return res.status(401).json({ message: 'Invalid token' })
@@ -18,6 +18,6 @@ export default async function handler(
     await res.revalidate(`/${page}`);
     return res.json('revalidation success!');
   } catch (err) {
-    return res.status(500).send({ message: 'Error revalidating' })
+    return res.status(500).send(err)
   }
 }
