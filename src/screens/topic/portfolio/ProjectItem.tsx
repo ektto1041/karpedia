@@ -23,7 +23,8 @@ export default function ProjectItem({
   return (
     <div className={styles.container}>
       <div className={styles.img}>
-        <Image src={bgImg} alt='project-img' width={700} height={400}/>
+        {/* <Image src={bgImg} alt='project-img' width={700} height={400}/> */}
+        <Image src={bgImg} alt='project-img' fill/>
       </div>
       <div className={styles.description}>
         <div className={styles.title} >
