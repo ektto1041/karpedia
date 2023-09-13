@@ -47,7 +47,7 @@ export default function NewPostScreen() {
     <div className={styles.container}>
       <div className={css(styles.content, selectedType ? styles.clicked : '')}>
         <div className={styles['slide-type']}>
-          <TypeSlide onClickType={onClickType} />
+          <TypeSlide onClickType={onClickType} hasChapter={chapters ? chapters.length > 0 : false} />
         </div>
         <div className={styles['slide-post']}>
           {chapters && (<PostSlide selectedType={selectedType} chapters={chapters} onClickBackToType={onClickBackToType} topicId={topicId} />)}
