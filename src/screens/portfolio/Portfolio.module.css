@@ -135,7 +135,7 @@
 .project-box {
   position: relative;
   width: 100%;
-  background-color: var(--sub);
+  background: linear-gradient(135deg, var(--sub), var(--sub-shadow));
   box-shadow: 0 0 4px 2px var(--black-o80);
   padding-top: 32px;
   padding-bottom: 128px;

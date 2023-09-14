@@ -1,6 +1,9 @@
 .container {
   margin-bottom: 64px;
   padding: 32px 0;
+
+  --sticky-memo-color: #FCEC81;
+  --dark-sticky-memo-color: #F4E479;
 }
 
 .img {
@@ -21,7 +24,7 @@
   width: 516px;
   height: auto;
   padding: 16px;
-  background: linear-gradient(135deg, #FCEC81, #F4E479) ;
+  background: linear-gradient(135deg, var(--sticky-memo-color), var(--dark-sticky-memo-color)) ;
   border: #FCEC81 1px solid;
   box-shadow: 2.5px 2.5px 2px 2px var(--black-o80);
 }
@@ -96,9 +99,6 @@
 
   .img {
     margin: 0 auto;
-    /* min-width: 350px;
-    width: 350px;
-    height: 200px; */
   }
 
   .info {
