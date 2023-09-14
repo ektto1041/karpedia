@@ -11,17 +11,12 @@
 }
 
 .content {
-  height: 40px;
+  min-height: 40px;
   line-height: 40px;
   font-size: 1.25rem;
   color: var(--black);
-  font-family: "BareunBatang";
   text-indent: 1rem;
   border-bottom: 1px dashed var(--black);
-}
-
-.content a {
-  font-family: "BareunBatang";
 }
 
 .key {
@@ -32,4 +27,56 @@
 
 .value {
   width: 80%;
+}
+
+@media (min-width: 1280px) {
+  .content {
+    font-size: 1.25rem;
+    font-family: "BareunBatang";
+  }
+
+  .content a {
+    font-family: "BareunBatang";
+  }
+}
+
+@media (min-width: 1020px) and (max-width: 1279px) {
+  .content {
+    font-size: 1rem;
+    font-family: "BareunBatang";
+  }
+
+  .content a {
+    font-family: "BareunBatang";
+  }
+}
+
+@media (max-width: 1019px) {
+  .container {
+    border-top: none;
+  }
+
+  .row {
+    display: block;
+  }
+
+  .content {
+    min-height: 32px;
+    line-height: 32px;
+    font-size: 1rem;
+    border-bottom: none;
+  }
+
+  .key {
+    background-color: var(--white);
+    border-right: none;
+    text-indent: 0;
+    color: var(--main-red);
+    font-weight: bold;
+    width: 100%;
+  }
+
+  .value {
+    width: 100%;
+  }
 }

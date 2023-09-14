@@ -57,13 +57,11 @@ export default function PortfolioScreen() {
       <div className={styles['profile-box']} >
         <div className={styles.deco} />
         <div className={styles['background']}>
-          <div className={styles['main-block']} >
-            <div className={styles.resume} >
-              이 력 서
-            </div>
-            <div className={styles['sub-info']}>
-              <OldForm />
-            </div>
+          <div className={styles.resume} >
+            이 력 서
+          </div>
+          <div className={styles['sub-info']}>
+            <OldForm />
           </div>
         </div>
         <div className={styles['main-info']}>
@@ -72,7 +70,7 @@ export default function PortfolioScreen() {
           </div>
           <div className={styles['profile-content']}>
             <h1>박상연</h1>
-            <h2>많은 사람들에게 영향을 줄 수 있는 <span>웹 개발자</span>가 되고 싶습니다.</h2>
+            <h2>많은 사람들에게 영향을 줄 수 있는 <br className={styles['new-line']} /><span>웹 개발자</span>가 되고 싶습니다.</h2>
             <div className={styles['div-line']} />
             <ul>
               <li>
