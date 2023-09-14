@@ -15,7 +15,9 @@ export default function Content({
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>{title}</h1>
-      <MyEditor editable={false} defaultContent={post.content} onChangeContent={() => {}} />
+      <div className={styles.content} >
+        <MyEditor editable={false} defaultContent={post.content} onChangeContent={() => {}} />
+      </div>
     </div>
   );
 };
