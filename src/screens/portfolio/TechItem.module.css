@@ -11,3 +11,10 @@
   border-radius: 8px;
   overflow: hidden;
 }
+
+@media (max-width: 720px) {
+  .container {
+    width: 48px;
+    height: 48px;
+  }
+}

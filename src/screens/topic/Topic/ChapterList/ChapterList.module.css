@@ -1,4 +1,12 @@
-.container {
-  width: 288px;
-  
+@media (min-width: 992px) {
+  .container {
+    width: 288px;
+    padding-bottom: 128px;
+  }
+}
+
+@media (max-width: 991px) {
+  .container {
+    width: 100%;
+  }
 }

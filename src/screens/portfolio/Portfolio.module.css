@@ -43,13 +43,17 @@
 }
 
 .profile-content h2 {
-  height: 32px;
+  min-height: 32px;
   line-height: 32px;
   font-size: 1.25rem;
   font-weight: normal;
   color: var(--gray);
   text-indent: 0;
   margin: 0;
+}
+
+.new-line {
+  display: none;
 }
 
 .profile-content h2 span {
@@ -67,7 +71,7 @@
 .profile-content li {
   position: relative;
   list-style: none;
-  height: 32px;
+  min-height: 32px;
   line-height: 32px;
   font-size: 1.25rem;
 }
@@ -88,17 +92,7 @@
 
 .background {
   position: absolute;
-  left: 0; top: 280px;
-  min-width: 1280px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.background .main-block {
-  position: relative;
-  width: 1280px;
+  top: 280px;
   height: 432px;
   background-color: var(--white);
   box-shadow: 0 4px 4px 2px var(--black-o80);
@@ -109,7 +103,6 @@
 .resume {
   font-family: "BareunBatang";
   font-size: 3.5rem;
-
   margin-top: 80px;
   width: 100%;
   height: 80px;
@@ -122,7 +115,7 @@
 .sub-info {
   height: 128px;
   width: 100%;
-  padding: 0 7rem;
+  padding: 0 6rem;
   margin-top: 16px;
 }
 
@@ -139,13 +132,12 @@
   border-radius: 0 0 0 16px;
 }
 
-
 .project-box {
   position: relative;
   width: 100%;
-  background-color: var(--sub);
+  background: linear-gradient(135deg, var(--sub), var(--sub-shadow));
   box-shadow: 0 0 4px 2px var(--black-o80);
-  padding-top: 128px;
+  padding-top: 32px;
   padding-bottom: 128px;
 }
 
@@ -161,5 +153,96 @@
 
 .project-list {
   width: 100%;
-  padding: 0 5%;
+}
+
+@media (min-width: 1280px) {
+  .background {
+    width: 1280px;
+    left: calc((100% - 1280px) / 2);
+  }
+}
+
+@media (min-width: 1020px) and (max-width: 1279px) {
+  .background {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@media (max-width: 1019px) {
+  .main-info {
+    position:relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px;
+    display: block;
+  }
+
+  .image-container {
+    width: 256px;
+    height: 256px;
+    margin: 0 auto;
+  }
+
+  .profile-content {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .profile-content h2 {
+    font-size: 1rem;
+  }
+
+  .new-line {
+    display: block;
+  }
+
+  .div-line {
+    display: none;
+  }
+
+  .profile-content ul {
+    margin-top: 32px;
+  }
+
+  .profile-content li {
+    font-size: 1rem;
+  }
+
+  .deco {
+    display: none;
+  }
+
+  .background {
+    width: 100%;
+    left: 0;
+    top: 512px;
+    box-shadow: none;
+    border: none;
+  }
+
+  .resume {
+    display: none;
+  }
+
+  .sub-info {
+    padding: 0 32px;
+  }
+
+  .profile-box {
+    position: relative;
+    width: 100%;
+    height: calc(var(--box-height) + 160px);
+  }
+
+  .project-box {
+    padding-top: 0;
+  }
+
+  .project-box h1 {
+    font-size: 2rem;
+    text-indent: 2rem;
+    height: 64px;
+    line-height: 64px;
+  }
 }

@@ -1,82 +1,130 @@
 .container {
-  width: 100%;
-  display: flex;
   margin-bottom: 64px;
-  padding: 16px;
+  padding: 32px 0;
 
-  background-color: var(--white);
-  /* background-color: #FCEC81; */
-  box-shadow: 2px 2px 2px 2px var(--black-o80);
+  --sticky-memo-color: #FCEC81;
+  --dark-sticky-memo-color: #F4E479;
 }
 
 .img {
+  min-width: 700px;
+  width: 700px;
+  height: 400px;
   position: relative;
   padding: 16px;
-  
+  background-color: var(--white);
+  box-shadow: 2.5px 2.5px 2px 2px var(--black-o80);
 }
 
 .img img {
   object-fit: contain;
 }
 
-.description {
-  padding-top: 32px;
+.info {
+  width: 516px;
+  height: auto;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--sticky-memo-color), var(--dark-sticky-memo-color)) ;
+  border: #FCEC81 1px solid;
+  box-shadow: 2.5px 2.5px 2px 2px var(--black-o80);
 }
 
 .title {
+  display: flex;
   min-height: 64px;
   line-height: 64px;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.description {
+  font-size: 1rem;
 }
 
 .date {
-  height: 48px;
-  line-height: 48px;
-  font-size: 1.5rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.histories {
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-top: 16px;
+}
+
+.histories ul{
+  list-style: none;
+}
+
+.history {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 .icon-row {
   display: flex;
   height: 64px;
-  /* background-color: var(--white); */
-  /* box-shadow: 3px 3px 2px 2px var(--black-o80); */
-}
-
-.desc {
-  font-size: 1.25rem;
-  margin-top: 32px;
-}
-
-@media (min-width: 0px) {
-  .container {
-    display: block;
-  }
-
-  .img {
-    min-width: 100%;
-    width: 100%;
-    height: 30vw;
-  }
-
-  .description {
-    margin-left: 32px;
-  }
 }
 
 @media (min-width: 1280px) {
   .container {
+    width: 1280px;
     display: flex;
+    align-items: flex-start;
+    margin: 0 auto;
   }
 
   .img {
-    min-width: 732px;
-    width: 732px;
-    height: 432px;
+    min-width: 700px;
+    width: 700px;
+    height: 400px;
   }
 
-  .description {
+  .info {
     margin-left: 32px;
+  }
+}
+
+
+@media (min-width: 720px) and (max-width: 1279px) {
+  .container {
+    width: 100%;
+    display: block;
+  }
+
+  .img {
+    margin: 0 auto;
+  }
+
+  .info {
+    margin: 0 auto;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 719px) {
+  .container {
+    width: 100%;
+    display: block;
+  }
+
+  .img {
+    margin: 0 auto;
+    min-width: 280px;
+    width: 280px;
+    height: 160px;
+  }
+
+  .info {
+    max-width: 516px;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 32px;
   }
 }
 

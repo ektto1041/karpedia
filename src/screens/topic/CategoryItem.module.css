@@ -4,14 +4,37 @@
 
 .category-name {
   width: 100%;
-  text-indent: 4rem;
-  font-size: 2rem;
   font-weight: bold; 
   color: var(--main-red);
+  user-select: none;
+  height: 32px;
+  line-height: 32px;
 }
 
 .content {
-  width: 100%;
-  display: flex;
+  width: auto;
   flex-wrap: wrap;
+}
+
+@media (min-width: 800px) {
+  .category-name {
+    text-indent: 2rem;
+    font-size: 2rem;
+  }
+
+  .content {
+    display: flex;
+  }
+}
+
+@media (max-width: 799px) {
+  .category-name {
+    text-indent: 2rem;
+    font-size: 1rem;
+    background-color: var(--white-gray);
+  }
+
+  .content {
+    display: block;
+  }
 }

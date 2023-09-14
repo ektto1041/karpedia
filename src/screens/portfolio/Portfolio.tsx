@@ -11,12 +11,19 @@ const projects: Project[] = [
     date: '2023.봄 ~ 진행중',
     description: (
       <>
-        공부하는 내용들을 정리하기 위한 블로그이자, 포트폴리오입니다.<br />
-        또, 배운 내용들을 실제로 적용해보는 실습 재료이기도 합니다.<br />
-        계속해서 유지보수를 하고 있고, 포스트도 업로드하고 있습니다.<br />
+        학습한 내용을 기록하고, 공유하기 위한 개인 블로그입니다.<br />
+        포트폴리오로도 사용하고 있습니다.<br />
+        혼자 개발하였습니다.
       </>
     ),
     icons: ["/next.svg", "/vercel.svg", "nest-logo.svg", "/aws-logo.svg"],
+    histories: [
+      'Next.js를 활용하여 페이지마다 다른 렌더링 방식을 고민하고 적용',
+      'Next.js를 활용하여 서버 구축',
+      'MySQL을 활용하여 DB 구축',
+      'Google login 구현',
+      'Vercel과 AWS를 활용하여 배포',
+    ],
   },
   {
     bgImg: '/gigs.png',
@@ -25,14 +32,20 @@ const projects: Project[] = [
     date: "2022.겨울 ~ 2023.봄",
     description: (
       <>
-        웹 개발과 개발 프로세스를 공부한 뒤 팀원을 모아 진행한 프로젝트입니다.<br />
-        저는 Frontend 담당으로 참여하였고, React.js 프레임워크를 이용해 구현하였습니다.<br />
-        설 무대가 많지 않은 인디 가수들과,<br />
-        무대로써 자신의 장소를 제공하고자 하는 무대 제공자를 위한 플랫폼으로<br />
-        현재 배포되어 있지만, 운영이 되고 있지는 않습니다.
+        무명 아티스트들을 위한 장소 대여 중개 플랫폼입니다.<br />
+        아티스트는 서비스에 가입하여 자신을 홍보하고,<br />
+        원하는 장소를 예약할 수 있습니다.<br />
+        현재는 배포 중단되었습니다.<br />
+        교내 공모전에 공모하여 장려상을 수상하였습니다.
       </>
     ),
     icons: ["/react-logo.svg", "/spring-logo.svg", "/mysql-logo.svg", "/aws-logo.svg"],
+    histories: [
+      'React.js를 활용하여 클라이언트 구축',
+      'MUI를 활용하여 스타일링',
+      'Kakao, Naver login 구현',
+      'AWS를 활용하여 배포',
+    ],
   },
   {
     bgImg: '/chimtooview.png',
@@ -41,13 +54,20 @@ const projects: Project[] = [
     date: "2020.겨울 ~ 2021.봄",
     description: (
       <>
-        웹 개발을 처음 배우기 시작했던 때, 좋아하던 유투버인 침착맨을 주제로 진행해본 프로젝트입니다.<br />
-        침착맨 채널 모든 영상을 다양한 조건으로 정렬해서 보여주는 기능을 가지고 있었습니다.<br />
-        이외에도 게시판, 공지사항 등이 구현되어 있었습니다.<br />
-        씩씩하게 시작했던 프로젝트지만, 기술적 한계로 인해 개발과 배포를 멈추었습니다.
+        Youtube 채널의 통계를 보여주고,<br />
+        원하는 조건으로 영상을 검색할 수 있는 웹 서비스입니다.<br />
+        배포하여 실제 사용자들에게 피드백을 받아가며 운영을 했습니다.<br />
+        현재는 배포 중단되었습니다.
       </>
     ),
     icons: ["/react-logo.svg", "/spring-logo.svg", "/mysql-logo.svg", "/aws-logo.svg"],
+    histories: [
+      'React.js를 활용하여 클라이언트 구축',
+      'Spring을 활용하여 서버 구축',
+      'Ant Design을 활용하여 스타일링',
+      'MySQL을 활용하여 DB 구축',
+      'AWS를 활용하여 배포',
+    ],
   },
 ]
 
@@ -57,13 +77,11 @@ export default function PortfolioScreen() {
       <div className={styles['profile-box']} >
         <div className={styles.deco} />
         <div className={styles['background']}>
-          <div className={styles['main-block']} >
-            <div className={styles.resume} >
-              이 력 서
-            </div>
-            <div className={styles['sub-info']}>
-              <OldForm />
-            </div>
+          <div className={styles.resume} >
+            이 력 서
+          </div>
+          <div className={styles['sub-info']}>
+            <OldForm />
           </div>
         </div>
         <div className={styles['main-info']}>
@@ -72,7 +90,7 @@ export default function PortfolioScreen() {
           </div>
           <div className={styles['profile-content']}>
             <h1>박상연</h1>
-            <h2>많은 사람들에게 영향을 줄 수 있는 <span>웹 개발자</span>가 되고 싶습니다.</h2>
+            <h2>많은 사람들에게 영향을 줄 수 있는 <br className={styles['new-line']} /><span>웹 개발자</span>가 되고 싶습니다.</h2>
             <div className={styles['div-line']} />
             <ul>
               <li>

@@ -6,10 +6,14 @@ import styles from './Topic.module.css';
 import { TopicsWithChaptersDto } from "@/types/topic";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ChapterOptions from './ChapterList/ChapterOptions';
 import { ChaptersWithPostsDto } from '@/types/chapter';
 import { TopicProps } from '@/pages/topic/[...id]';
+import Icon from '@mdi/react';
+import { mdiListBoxOutline } from '@mdi/js';
+import useWindowSize from '@/hooks/useWindowSize';
+import css from '@/utils/css';
 
 const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
@@ -39,13 +43,21 @@ export default function TopicScreen({
 }: TopicProps) {
   const {id, name, description, chaptersList, users} = topic
   const post = chapterId !== -1 ? findPost(topic, chapterId, postId) : null;
+
   const [isOwner, setOwner] = useState(false);
+  const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
 
   const router = useRouter();
+  const windowWidth = useWindowSize();
 
   useEffect(() => {
     setOwner(getCookie('uid') === String(users.id));
   }, []);
+
+  useEffect(() => {
+    setMoblieMenuClicked(false);
+    document.body.classList.remove('mobile-chapter-list');
+  }, [router])
 
   const onClickChapter = (chapterId: number) => {
     router.push(`/topic/${topic.id}/${chapterId}`);
@@ -55,22 +67,47 @@ export default function TopicScreen({
     router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
   };
 
+  const onClickMobileMenu = useCallback(() => {
+    setMoblieMenuClicked(!isMobileMenuClicked);
+
+    if(!isMobileMenuClicked) {
+      document.body.classList.add('mobile-chapter-list');
+    } else {
+      document.body.classList.remove('mobile-chapter-list');
+    }
+  }, [isMobileMenuClicked]);
+
   return (
     <div className={styles.container}>
-      { post ? (
-        <>
-          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
-          <Content post={post} />  
-        </>
-      ) : (
-        <div className={styles.warning}>
-          <div className={styles.message}>
-            작성된 포스트가 없습니다.
+      <div className={styles['mobile-menu-button-container']}>
+        <div className={styles['mobile-menu-button']}  onClick={onClickMobileMenu}>
+          <div className={styles['post-list-icon']}>
+            <Icon path={mdiListBoxOutline} />
           </div>
-          
-          {isOwner && (<ChapterOptions topicId={id} />)}
+          포스트 목록
         </div>
-      )}
+        <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
+          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+        </div>
+      </div>
+      <div className={styles.content}>
+        { post ? (
+          <>
+            <div className={styles['chapter-list-wrapper']}>
+              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+            </div>
+            <Content post={post} />  
+          </>
+        ) : (
+          <div className={styles.warning}>
+            <div className={styles.message}>
+              작성된 포스트가 없습니다.
+            </div>
+            
+            {isOwner && (<ChapterOptions topicId={id} />)}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

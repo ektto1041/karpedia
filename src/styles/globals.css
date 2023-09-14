@@ -40,12 +40,13 @@
   --gray: #7f7f7f;
   --light-gray: #7f7f7f80;
   --white-gray: #eaeaea;
-  --background-white: #f6f6f6;
+  --background-white: #f9f9f9;
   --white: #fcfcfc;
   --white-oa0: #ffffffa0;
   --sub: #FFB07F;
   --sub-o40: #FFB07F40;
   --sub-dark: #d8905F;
+  --sub-shadow: #F7A877;
   --main-red-o22: #f3156022;
   --main-red-o40: #f3156040;
   --main-red-of0: #f31560f0;
@@ -56,6 +57,10 @@ body {
 }
 
 body.small {
+  overflow-y: hidden;
+}
+
+body.mobile-chapter-list {
   overflow-y: hidden;
 }
 
@@ -82,7 +87,7 @@ button {
 .ProseMirror {
   min-height: 728px;
   padding: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .ProseMirror p {

@@ -1,4 +1,26 @@
 .container {
   width: 704px;
-  overflow: hidden;
+  /* height: 3000px; */
+}
+
+.title {
+  height: 64px;
+  line-height: 64px;
+  color: var(--main-red);
+}
+
+.content {
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 8px;
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (max-width: 991px) {
+  .title {
+    padding-left: 16px;
+  }
 }
