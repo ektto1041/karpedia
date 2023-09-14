@@ -12,11 +12,11 @@
 }
 
 .content {
-  width: 100%;
+  width: auto;
   flex-wrap: wrap;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 800px) {
   .category-name {
     text-indent: 2rem;
     font-size: 2rem;
@@ -27,7 +27,7 @@
   }
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 799px) {
   .category-name {
     text-indent: 2rem;
     font-size: 1rem;

@@ -1,4 +1,5 @@
 .description {
+  display: block;
   width: 100%;
   height: 128px;
   line-height: 128px;
@@ -12,7 +13,7 @@
   width: 100%;
 }
 
-@media (min-width: 0px) {
+@media (max-width: 799px) {
   .container {
     width: 100%;
     margin: 0;
@@ -23,14 +24,23 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 800px) and (max-width: 1199px) {
+  .container {
+    width: 800px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
   .container {
     width: 1200px;
     margin: 0 auto;
   }
-  
-  .description {
-    display: block;
-  }
 }
 
+@media (min-width: 1600px) {
+  .container {
+    width: 1600px;
+    margin: 0 auto;
+  }
+}

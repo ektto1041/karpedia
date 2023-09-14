@@ -82,7 +82,7 @@ button {
 .ProseMirror {
   min-height: 728px;
   padding: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .ProseMirror p {
