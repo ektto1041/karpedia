@@ -13,7 +13,7 @@ export default function Footer() {
 
   return (
     <div className={styles.container}>
-      <button className={styles['login-button']} onClick={handleClickLogin}>⚙️ 관리자 계정으로 로그인</button>
+      {/* <button className={styles['login-button']} onClick={handleClickLogin}>⚙️ 관리자 계정으로 로그인</button> */}
     </div>
   );
 };

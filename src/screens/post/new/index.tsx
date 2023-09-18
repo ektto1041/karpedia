@@ -8,7 +8,7 @@ import { apis } from '@/utils/api';
 import { TopicsWithChaptersDto } from '@/types/topic';
 import { ChapterTitle } from '@/types/chapter';
 
-export type PostType = 'category' | 'post';
+export type PostType = 'chapter' | 'post';
 
 export default function NewPostScreen() {
   const router = useRouter();
