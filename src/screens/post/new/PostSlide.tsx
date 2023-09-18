@@ -42,7 +42,7 @@ export default function PostSlide({
   };
 
   const onClickWrite = useCallback(async () => {
-    if(selectedType === 'category') {
+    if(selectedType === 'chapter') {
       const newChapter: NewChaptersDto = { topicId, title, content };
 
       const response = await apis.createChapter(newChapter);
