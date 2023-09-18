@@ -86,7 +86,7 @@ button {
 /* PM */
 .ProseMirror {
   padding: 5px;
-  min-height: 100%;
+  min-height: 800px;
 }
 
 .ProseMirror p {
