@@ -11,6 +11,7 @@ import { mdiFormatListNumbered, mdiFormatListBulleted } from '@mdi/js';
 import { mdiAlphaABoxOutline, mdiAlphaABox } from '@mdi/js';
 import { mdiMinus, mdiFormatQuoteOpen } from '@mdi/js';
 import { mdiCodeBraces, mdiCodeBracesBox } from '@mdi/js';
+import { mdiTable, mdiTableColumnPlusBefore, mdiTableColumnPlusAfter, mdiTableRowPlusBefore, mdiTableRowPlusAfter, mdiTableRemove, mdiTableColumnRemove, mdiTableRowRemove, mdiTableMergeCells, mdiTableSplitCell, mdiTableColumn, mdiTableRow } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useCallback, useMemo } from 'react';
 import TextAlign from '@tiptap/extension-text-align';
@@ -31,6 +32,10 @@ import CodeBlock from '@tiptap/extension-code-block';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
 import Blockquote from '@tiptap/extension-blockquote';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 
 type Menu = {
   icon: string;
@@ -82,6 +87,15 @@ export default function MyEditor({
       Bold,
       BulletList,
       Blockquote,
+      Table.configure({
+        resizable: true,
+        cellMinWidth: 64,
+        handleWidth: 8,
+        allowTableNodeSelection: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     onUpdate: (p) => onChangeContent(p.editor.getHTML()),
     content: defaultContent,
@@ -149,7 +163,24 @@ export default function MyEditor({
       null,
       { icon: mdiMinus, onClick: () => editor.commands.setHorizontalRule(), },
       { icon: mdiFormatQuoteOpen, onClick: () => editor.commands.toggleBlockquote(), },
-    ]
+    ],
+    [
+      { icon: mdiTable, onClick: () => editor.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true }) },
+      { icon: mdiTableColumnPlusBefore, onClick: () => editor.commands.addColumnBefore() },
+      { icon: mdiTableColumnPlusAfter, onClick: () => editor.commands.addColumnAfter() },
+      { icon: mdiTableRowPlusBefore, onClick: () => editor.commands.addRowBefore() },
+      { icon: mdiTableRowPlusAfter, onClick: () => editor.commands.addRowAfter() },
+      null,
+      { icon: mdiTableMergeCells, onClick: () => editor.commands.mergeCells() },
+      { icon: mdiTableSplitCell, onClick: () => editor.commands.splitCell() },
+      { icon: mdiTableColumn, onClick: () => editor.commands.toggleHeaderColumn() },
+      { icon: mdiTableRow, onClick: () => editor.commands.toggleHeaderRow() },
+      null,
+      { icon: mdiTableRemove, onClick: () => editor.commands.deleteTable() },
+      { icon: mdiTableColumnRemove, onClick: () => editor.commands.deleteColumn() },
+      { icon: mdiTableRowRemove, onClick: () => editor.commands.deleteRow() },
+      // { icon: mdiTableRowRemove, onClick: () => editor.commands.setCellAttribute('backgroundColor', '#FFFFFF') },
+    ],
   ], [editor, setLink, setImage, setColor, setHighlight]);
 
   return (

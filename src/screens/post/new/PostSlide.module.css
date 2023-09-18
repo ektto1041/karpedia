@@ -1,9 +1,7 @@
 .container {
-  width: 100%;
-}
-
-.header {
-
+  width: 1280px;
+  margin: 0 auto;
+  height: calc(100vh);
 }
 
 .back-button {
@@ -39,6 +37,7 @@
 
 .content {
   width: 100%;
+  height: calc(100% - 72px);
 }
 
 .button-box {
@@ -49,7 +48,6 @@
 }
 
 .button {
-  margin-top: 8px;
   height: 32px;
   padding-left: 16px;
   padding-right: 16px;

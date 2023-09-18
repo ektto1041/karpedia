@@ -1,14 +1,12 @@
 .container {
-  width: 1280px;
-  min-height: 960px;
+  width: 100vw;
+  min-height: calc(100vh);
   margin: 0 auto;
-  margin-top: 64px;
   position: relative;
-  overflow: hidden;
 }
 
 .content {
-  width: 2560px;
+  width: 200vw;
   display: flex;
   position: absolute;
   left: 0; top: 0;
@@ -16,7 +14,7 @@
 }
 
 .clicked {
-  left: -1280px; 
+  left: -100vw; 
 }
 
 .slide-type {
