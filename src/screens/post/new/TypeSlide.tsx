@@ -23,8 +23,8 @@ export default function TypeSlide({
     <div className={styles.container}>
       <h1>어떤 포스트를 작성하시나요?</h1>
       <div className={styles.content}>
-        <div className={styles['type-item']} onClick={() => onClickType('category')} >
-          카테고리
+        <div className={styles['type-item']} onClick={() => onClickType('chapter')} >
+          챕터
         </div>
         <div className={styles['type-item']} onClick={onClickPost} >
           포스트
