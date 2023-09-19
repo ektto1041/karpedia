@@ -9,6 +9,7 @@ export type ChaptersDto = {
   id: number;
   title: string;
   content: string;
+  orders: number;
 };
 
 export type NewChaptersDto = {
@@ -21,5 +22,6 @@ export type ChaptersWithPostsDto = {
   id: number;
   title: string;
   content: string;
+  orders: number;
   postsList: PostsDto[];
 }

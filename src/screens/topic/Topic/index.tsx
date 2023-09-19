@@ -48,7 +48,6 @@ export default function TopicScreen({
   const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
 
   const router = useRouter();
-  const windowWidth = useWindowSize();
 
   useEffect(() => {
     setOwner(getCookie('uid') === String(users.id));

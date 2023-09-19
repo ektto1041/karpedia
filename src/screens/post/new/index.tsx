@@ -23,6 +23,12 @@ export default function NewPostScreen() {
   const getTopic = useCallback(async (topicId: number) => {
     const response = await apis.getTopic(topicId);
     if(response.status === 200) {
+      const t = response.data;
+      t.chaptersList.sort((a, b) => b.orders - a.orders);
+      t.chaptersList.forEach(chapter => {
+        chapter.postsList.sort((a, b) => b.orders - a.orders);
+      });
+      
       setTopic(response.data);
     }
   }, []);

@@ -56,9 +56,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const topic = (await apis.getTopic(topicId)).data;
 
   // sorting
-  topic.chaptersList.sort((a, b) => a.title < b.title ? -1 : 1);
+  topic.chaptersList.sort((a, b) => b.orders - a.orders);
   topic.chaptersList.forEach(chapter => {
-    chapter.postsList.sort((a, b) => a.title < b.title ? -1 : 1);
+    chapter.postsList.sort((a, b) => b.orders - a.orders);
   });
 
   const chapterId: number = ids[1] ? parseInt(ids[1]) : (topic.chaptersList[0]?.id || -1); 
