@@ -65,6 +65,10 @@ export default function TopicSettingScreen() {
     }
   }, [router]);
 
+  const onClickMoveCategory = useCallback((from: number, to: number) => {
+    console.log(from + ',' + to);
+  }, []);
+
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);
     if(response.status >= 200 && response.status < 300) {
@@ -103,11 +107,14 @@ export default function TopicSettingScreen() {
         <CheckBox label='순서 설정' value={isSortingMode} onChange={onChangeSortingMode} />
       </div>
       
-      {categories.map(category => (
+      {categories.map((category, i) => (
         <CategoryEditItem key={category.id}
           category={category}
+          categoryIdx={i}
+          isLast={Boolean(categories.length-1 === i)}
           onClickUpdateCategory={onClickUpdateCategory}
           onClickDeleteCategory={onClickDeleteCategory}
+          onClickMoveCategory={onClickMoveCategory}
           onClickCreateTopic={OnClickCreateTopic}
           onClickUpdateTopic={onClickUpdateTopic}
           onClickDeleteTopic={onClickDeleteTopic}

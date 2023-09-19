@@ -3,13 +3,16 @@ import styles from './CategoryEditItem.module.css';
 import EditBox from './EditBox';
 import TopicEditItem from './TopicEditItem';
 import AddBox from './AddBox';
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import { ChangeEventHandler, useCallback, useMemo, useState } from 'react';
 import { CategoriesDto, TopicsByCategory } from '@/types/category';
 
 type CategoryEditItemProps = {
   category: TopicsByCategory;
+  categoryIdx: number;
+  isLast: boolean;
   onClickUpdateCategory: (data: CategoriesDto) => void;
   onClickDeleteCategory: (categoryId: number) => void;
+  onClickMoveCategory: (from: number, to: number) => void;
   onClickCreateTopic: (data: NewTopicsDto) => void;
   onClickUpdateTopic: (data: TopicsDto) => void;
   onClickDeleteTopic: (topicId: number) => void;
@@ -17,19 +20,24 @@ type CategoryEditItemProps = {
 
 export default function CategoryEditItem({
   category,
+  categoryIdx,
+  isLast,
   onClickUpdateCategory,
   onClickDeleteCategory,
+  onClickMoveCategory,
   onClickCreateTopic,
   onClickUpdateTopic,
   onClickDeleteTopic,
 }: CategoryEditItemProps) {
-  const {id, name, topics} = category;
+  const {id, name, orders, topics} = category;
 
   const [categoryName, setCategoryName] = useState<string>(name);
   const [newTopicName, setNewTopicName] = useState<string>('');
   const [newTopicDescription, setNewTopicDescription] = useState<string>('');
 
-  const updatedCategory: CategoriesDto = { id, name: categoryName };
+  const hasUpper = useMemo(() => categoryIdx > 0, [categoryIdx]);
+
+  const updatedCategory: CategoriesDto = { id, name: categoryName, orders };
   const newTopic: NewTopicsDto = { categoriesId: id, name: newTopicName, description: newTopicDescription };
 
   const onChangeCategoryName = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
@@ -63,7 +71,14 @@ export default function CategoryEditItem({
         <input type='text' placeholder='새 토픽 설명을 입력하세요.' value={newTopicDescription} onChange={onChangeNewTopicDescription} />
         <AddBox onClickCreate={onClickCreateTopic} data={newTopic} />
       </div>
-      <EditBox onClickUpdate={onClickUpdateCategory} onClickDelete={onClickDeleteCategory} data={updatedCategory} />
+      <EditBox
+        onClickUpdate={onClickUpdateCategory}
+        onClickDelete={onClickDeleteCategory}
+        hasUpper={hasUpper}
+        hasLower={!isLast}
+        onClickMoveUp={() => onClickMoveCategory(categoryIdx, categoryIdx-1)}
+        onClickMoveDown={() => onClickMoveCategory(categoryIdx, categoryIdx+1)}
+        data={updatedCategory} />
     </div>
   )
 }
