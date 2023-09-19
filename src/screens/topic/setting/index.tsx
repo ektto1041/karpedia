@@ -11,6 +11,7 @@ import CheckBox from '@/components/CheckBox/CheckBox';
 export default function TopicSettingScreen() {
   const router = useRouter();
 
+  const [isSortingMode, setSortingMode] = useState(false);
   const [categories, setCategories] = useState<TopicsByCategory[]>([]);
   const [newCategoryName, setNewCategoryName] = useState('');
 
@@ -32,6 +33,10 @@ export default function TopicSettingScreen() {
     await apis.revalidateTopic();
     callback();
   }, []) ;
+
+  const onChangeSortingMode = useCallback((value: boolean) => {
+    setSortingMode(value);
+  }, []);
 
   const OnClickCreateCategory = useCallback(async (data: NewCategoriesDto) => {
     const response = await apis.createCategory(data);
@@ -95,7 +100,7 @@ export default function TopicSettingScreen() {
   return (
     <div className={styles.container}>
       <div className={styles.header} >
-        <CheckBox label='순서 설정' />
+        <CheckBox label='순서 설정' value={isSortingMode} onChange={onChangeSortingMode} />
       </div>
       
       {categories.map(category => (

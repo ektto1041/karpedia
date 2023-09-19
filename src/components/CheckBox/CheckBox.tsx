@@ -4,20 +4,18 @@ import css from '@/utils/css';
 
 type CheckBoxProps = {
   label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
 };
 
 export default function CheckBox({
   label,
+  value,
+  onChange,
 }: CheckBoxProps) {
-  const [isSelected, setSelected] = useState(false);
-
-  const onClick = useCallback(() => {
-    setSelected(!isSelected);
-  }, [isSelected]);
-
   return (
-    <div className={css(styles.container, isSelected ? styles.selected : '')} onClick={onClick}>
-      <div className={css(styles.background, isSelected ? styles.selected : '')} >
+    <div className={css(styles.container, value ? styles.selected : '')} onClick={() => {onChange(!value)}}>
+      <div className={css(styles.background, value ? styles.selected : '')} >
         <div className={styles.white} />
         <div className={styles.red} />
       </div>
