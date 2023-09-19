@@ -12,12 +12,14 @@ export type TopicsDto = {
   id: number;
   name: string;
   description: string;
+  orders: number;
 };
 
 export type TopicsWithCategoriesDto = {
   id: number;
   name: string;
   description: string;
+  orders: number;
   categoriesId: number;
 };
 
@@ -30,6 +32,7 @@ export type TopicsWithChaptersDto = {
   id: number;
   name: string;
   description: string;
+  orders: number;
   chaptersList: ChaptersWithPostsDto[];
   users: PublicUsersDto;
 };

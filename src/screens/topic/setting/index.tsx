@@ -23,7 +23,6 @@ export default function TopicSettingScreen() {
     const response = await apis.getAllTopicsWithCategoriesForSetting();
     const { categories, topics } = response.data;
 
-    topics.sort((a, b) => (a.categoriesId - b.categoriesId));
     const categoriesWithTopics: TopicsByCategory[] = categories.map(c => ({ ...c, topics: topics.filter(t => t.categoriesId === c.id), }));
     setCategories(categoriesWithTopics);
   };
