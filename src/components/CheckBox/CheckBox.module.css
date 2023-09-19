@@ -1,0 +1,52 @@
+.container {
+  display: inline-block;
+  width: auto;
+  height: 100%;
+  margin: 0 16px;
+  padding: 0 16px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--main-red);
+  border-radius: 4px;
+  user-select: none;
+  cursor: pointer;
+
+  transition: all ease .25s;
+  color: var(--main-red);
+}
+
+.container.selected {
+  color: var(--white);
+}
+
+.background {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 200%;
+  background-color: var(--white);
+  transition: all ease .25s;
+  z-index: -1;
+}
+
+.background .white {
+  width: 100%;
+  height: 50%;
+  background-color: var(--white);
+}
+
+.background .red {
+  width: 100%;
+  height: 50%;
+  background-color: var(--main-red);
+}
+
+.background.selected {
+  top: -100%;
+}
+
+.content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}

@@ -6,6 +6,7 @@ import CategoryEditItem from './CategoryEditItem';
 import AddBox from './AddBox';
 import { useRouter } from 'next/router';
 import { CategoriesDto, NewCategoriesDto, TopicsByCategory } from '@/types/category';
+import CheckBox from '@/components/CheckBox/CheckBox';
 
 export default function TopicSettingScreen() {
   const router = useRouter();
@@ -93,6 +94,10 @@ export default function TopicSettingScreen() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.header} >
+        <CheckBox label='순서 설정' />
+      </div>
+      
       {categories.map(category => (
         <CategoryEditItem key={category.id}
           category={category}
