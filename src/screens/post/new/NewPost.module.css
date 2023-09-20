@@ -1,19 +1,17 @@
 .container {
   width: 100vw;
-  min-height: calc(100vh);
-  margin: 0 auto;
-  position: relative;
+  overflow-x: hidden;
 }
 
 .content {
   width: 200vw;
   display: flex;
-  position: absolute;
-  left: 0; top: 0;
+  margin-left: 0;
   transition: all .5s ease-out;
 }
 
 .clicked {
+  margin-left: -100vw;
   left: -100vw; 
 }
 

@@ -1,7 +1,6 @@
 .container {
   width: 1280px;
   margin: 0 auto;
-  height: calc(100vh);
 }
 
 .back-button {
@@ -37,7 +36,6 @@
 
 .content {
   width: 100%;
-  height: calc(100% - 136px);
 }
 
 .button-box {
