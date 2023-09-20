@@ -1,10 +1,10 @@
 import TopicScreen from "@/screens/topic/Topic";
-import { TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { apis } from "@/utils/api";
 import { GetStaticPropsContext } from "next";
 
 export type TopicProps = {
-  topic: TopicsWithChaptersDto;
+  topic: TopicsWithChaptersWithPostsDto;
   chapterId: number,
   postId: number,
 };
@@ -22,7 +22,7 @@ type Path = {
 };
 
 export async function getStaticPaths() {
-  const allTopics: TopicsWithChaptersDto[] = (await apis.getAllTopic()).data;
+  const allTopics: TopicsWithChaptersWithPostsDto[] = (await apis.getAllTopic()).data;
 
   // topic O, chapter X, post X -> to First Chapter
   // topic O, chapter O, post X -> to Chapter

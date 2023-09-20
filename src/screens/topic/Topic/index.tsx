@@ -3,7 +3,7 @@ import { PostsDto } from '@/types/post';
 import ChapterList from './ChapterList/ChapterList';
 import Content from './Content';
 import styles from './Topic.module.css';
-import { TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import { mdiListBoxOutline } from '@mdi/js';
 import useWindowSize from '@/hooks/useWindowSize';
 import css from '@/utils/css';
 
-const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
+const findPost = (topic: TopicsWithChaptersWithPostsDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
   if(postId > -1) {
     const post: PostsDto = chapter.postsList.find(p => p.id === postId)!;
@@ -26,7 +26,7 @@ const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: numbe
   return chapter;
 }
 
-const findChapterIdByPostId = (topic: TopicsWithChaptersDto, postId: number): number => {
+const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: number): number => {
   for(const chapter of topic.chaptersList) {
     for(const post of chapter.postsList) {
       if(post.id === postId) return chapter.id;

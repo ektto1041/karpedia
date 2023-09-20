@@ -1,7 +1,7 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto } from "@/types/chapter";
 import { PostsDto, newPostsDto } from "@/types/post";
-import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto } from "@/types/topic";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import axios, { AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -53,13 +53,21 @@ export const apis = {
   /**
    * 한 토픽의 모든 챕터와 글을 가져오는 API
    */
-  getTopic: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersDto>> => {
+  getTopic: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersWithPostsDto>> => {
     return ax.get(`/topics/${topicId}`);
   },
 
+  
   // 모든 토픽의 모든 챕터와 글을 가져오는 API
   getAllTopic: () => {
     return ax.get(`/topics/posts`);
+  },
+  
+  /**
+   * 한 토픽의 정보와 모든 챕터를 가져오는 API
+   */
+  getTopicWithChapters: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersDto>> => {
+    return ax.get(`/topics/${topicId}/chapters`);
   },
 
   // 토픽을 추가하는 API

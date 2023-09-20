@@ -1,6 +1,7 @@
 import { TopicsProps } from '@/pages/topic';
 import CategoryItem from './CategoryItem';
 import styles from './Topics.module.css';
+import { Fragment } from 'react';
 
 export default function TopicsScreen({
   categoriesWithTopics,
@@ -12,7 +13,7 @@ export default function TopicsScreen({
       </div>
       <div className={styles.content}>
         {categoriesWithTopics.map(c => {
-          if(c.topics.length === 0) return (<></>);
+          if(c.topics.length === 0) return (<Fragment key={c.id}></Fragment>);
           else return (<CategoryItem key={c.id} name={c.name} topics={c.topics} />)
         })}
       </div>
