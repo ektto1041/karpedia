@@ -15,7 +15,6 @@ export default function Dropdown<T extends ChapterTitle>({
   value,
   onChange,
 }: DropdownProps<T>) {
-  console.log(data);
   const onClickItem = useCallback((val: number) => {
     onChange(val);
   }, [onChange]);

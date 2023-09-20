@@ -7,8 +7,7 @@ import PostSlide from './PostSlide';
 import { apis } from '@/utils/api';
 import { TopicsWithChaptersWithPostsDto } from '@/types/topic';
 import { ChapterTitle } from '@/types/chapter';
-
-export type PostType = 'chapter' | 'post';
+import { PostType } from '@/components/PostEditor/PostEditor';
 
 export default function NewPostScreen() {
   const router = useRouter();
