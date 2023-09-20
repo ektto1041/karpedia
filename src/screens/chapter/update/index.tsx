@@ -5,7 +5,7 @@ import { apis } from '@/utils/api';
 import { TopicsNameDto } from '@/types/topic';
 import { ChaptersWithTopicsIdDto, NewChaptersUpdateDto } from '@/types/chapter';
 import PostEditor, { PostEditorResult } from '@/components/PostEditor/PostEditor';
-import Dropdown from '@/screens/post/new/Dropdown';
+import Dropdown from '@/components/Dropdown/Dropdown';
 
 export default function UpdateChapterScreen() {
   const router = useRouter();

@@ -1,8 +1,8 @@
 import styles from './PostEditor.module.css';
-import Dropdown from '@/screens/post/new/Dropdown';
 import { ChapterTitle } from '@/types/chapter';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import MyEditor from '../MyEditor';
+import Dropdown from '../Dropdown/Dropdown';
 
 export type PostType = 'chapter' | 'post';
 
