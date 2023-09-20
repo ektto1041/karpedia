@@ -65,9 +65,14 @@ export default function TopicSettingScreen() {
     }
   }, [router]);
 
-  const onClickMoveCategory = useCallback((from: number, to: number) => {
-    console.log(from + ',' + to);
-  }, []);
+  const onClickMoveCategory = useCallback(async (from: number, to: number) => {
+    const response = await apis.swapCategoryOrder(categories[from].id, categories[to].id);
+    if(response.status < 300) {
+      revalidateTopic(() => {
+        router.reload();
+      })
+    }
+  }, [router]);
 
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);

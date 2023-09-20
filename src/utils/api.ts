@@ -90,6 +90,11 @@ export const apis = {
     return ax.put(`/categories`, category);
   },
 
+  // 두 카테고리의 순서를 바꾸는 API
+  swapCategoryOrder: (from: number, to: number) => {
+    return ax.patch(`/categories/${from}/${to}`);
+  },
+
   // 카테고리를 삭제하는 API
   deleteCategory: (categoryId: number) => {
     return ax.delete(`/categories/${categoryId}`);
