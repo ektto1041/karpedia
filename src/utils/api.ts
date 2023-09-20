@@ -72,6 +72,11 @@ export const apis = {
     return ax.put(`/topics`, topic);
   },
 
+  // 두 토픽의 순서를 바꾸는 API
+  swapTopicOrder: (from: number, to: number) => {
+    return ax.patch(`/topics/${from}/${to}`);
+  },
+
   // 토픽을 삭제하는 API
   deleteTopic: (topicId: number) => {
     return ax.delete(`/topics/${topicId}`);

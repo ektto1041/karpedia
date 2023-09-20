@@ -72,7 +72,7 @@ export default function TopicSettingScreen() {
         router.reload();
       })
     }
-  }, [router]);
+  }, [categories, router]);
 
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);
@@ -123,6 +123,7 @@ export default function TopicSettingScreen() {
           onClickCreateTopic={OnClickCreateTopic}
           onClickUpdateTopic={onClickUpdateTopic}
           onClickDeleteTopic={onClickDeleteTopic}
+          revalidateTopic={revalidateTopic}
         />
       ))}
       <div className={styles['new-category']} >

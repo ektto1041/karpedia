@@ -5,6 +5,8 @@ import TopicEditItem from './TopicEditItem';
 import AddBox from './AddBox';
 import { ChangeEventHandler, useCallback, useMemo, useState } from 'react';
 import { CategoriesDto, TopicsByCategory } from '@/types/category';
+import { apis } from '@/utils/api';
+import { useRouter } from 'next/router';
 
 type CategoryEditItemProps = {
   category: TopicsByCategory;
@@ -16,6 +18,7 @@ type CategoryEditItemProps = {
   onClickCreateTopic: (data: NewTopicsDto) => void;
   onClickUpdateTopic: (data: TopicsDto) => void;
   onClickDeleteTopic: (topicId: number) => void;
+  revalidateTopic: (callback: () => void) => Promise<void>;
 };
 
 export default function CategoryEditItem({
@@ -28,7 +31,10 @@ export default function CategoryEditItem({
   onClickCreateTopic,
   onClickUpdateTopic,
   onClickDeleteTopic,
+  revalidateTopic,
 }: CategoryEditItemProps) {
+  const router = useRouter();
+
   const {id, name, orders, topics} = category;
 
   const [categoryName, setCategoryName] = useState<string>(name);
@@ -52,16 +58,29 @@ export default function CategoryEditItem({
     setNewTopicDescription(e.target.value);
   }, []);
 
+  // TODO
+  const onClickMoveTopic = useCallback(async (from: number, to: number) => {
+    const response = await apis.swapTopicOrder(topics[from].id, topics[to].id);
+    if(response.status < 300) {
+      revalidateTopic(() => {
+        router.reload();
+      })
+    }
+  }, [topics, router]);
+
   return (
     <div className={styles.container} >
       <input type='text' value={categoryName} onChange={onChangeCategoryName} />
       {topics.length > 0 && (
         <div className={styles['topic-list']}>
-          {topics.map(topic => (
+          {topics.map((topic, i) => (
             <TopicEditItem key={topic.id}
               topic={topic}
+              topicIdx={i}
+              isLast={Boolean(topics.length-1 === i)}
               onClickUpdateTopic={onClickUpdateTopic}
               onClickDeleteTopic={onClickDeleteTopic}
+              onClickMoveTopic={onClickMoveTopic}
             />
           ))}
         </div>
