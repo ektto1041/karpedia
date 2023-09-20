@@ -6,7 +6,7 @@ import styles from './Topic.module.css';
 import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ChapterOptions from './ChapterList/ChapterOptions';
 import { ChaptersWithPostsDto } from '@/types/chapter';
 import { TopicProps } from '@/pages/topic/[...id]';
@@ -66,6 +66,10 @@ export default function TopicScreen({
     router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
   };
 
+  const updateHref = useMemo(() => {
+    return postId === -1 ? `/chapter/update?cid=${chapterId}` : '';
+  }, [postId, chapterId]);
+
   const onClickMobileMenu = useCallback(() => {
     setMoblieMenuClicked(!isMobileMenuClicked);
 
@@ -86,14 +90,14 @@ export default function TopicScreen({
           포스트 목록
         </div>
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
-          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
         </div>
       </div>
       <div className={styles.content}>
         { post ? (
           <>
             <div className={styles['chapter-list-wrapper']}>
-              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
             </div>
             <Content post={post} />  
           </>
@@ -103,7 +107,7 @@ export default function TopicScreen({
               작성된 포스트가 없습니다.
             </div>
             
-            {isOwner && (<ChapterOptions topicId={id} />)}
+            {isOwner && (<ChapterOptions topicId={id} updateHref={updateHref} />)}
           </div>
         )}
       </div>
