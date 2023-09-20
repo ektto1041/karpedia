@@ -1,7 +1,7 @@
 import styles from './PostEditor.module.css';
 import Dropdown from '@/screens/post/new/Dropdown';
 import { ChapterTitle } from '@/types/chapter';
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import MyEditor from '../MyEditor';
 
 export type PostType = 'chapter' | 'post';
@@ -16,16 +16,28 @@ type PostEditorProps = {
   type: PostType | null;
   chapters: ChapterTitle[];
   onWrite: (data: PostEditorResult) => void;
+  defaultTitle?: string;
+  defaultContent?: string;
 };
 
 export default function PostEditor({
   type,
   chapters,
   onWrite,
+  defaultTitle,
+  defaultContent,
 }: PostEditorProps) {
   const [chapterIdx, setChapterIdx] = useState(0);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(defaultTitle || '');
+  const [content, setContent] = useState(defaultContent || '<p></p>');
+
+  useEffect(() => {
+    setTitle(defaultTitle || '');
+  }, [defaultTitle]);
+
+  useEffect(() => {
+    setContent(defaultContent || '<p></p>');
+  }, [defaultContent]);
 
   const onChangeChapter = useCallback((value: number) => {
     setChapterIdx(value);
@@ -53,7 +65,7 @@ export default function PostEditor({
       {type === 'post' && (<Dropdown data={chapters} value={chapterIdx} onChange={onChangeChapter} />)} 
       <input className={styles.title} type='text' placeholder='제목을 입력하세요.' value={title} onChange={onChangeTitle} />
       <div className={styles.content}>
-        <MyEditor onChangeContent={onChangeContent} defaultContent={'<p></p>'} editable={true} />
+        <MyEditor onChangeContent={onChangeContent} defaultContent={defaultContent || '<p></p>'} editable={true} />
       </div>
       <div className={styles['button-box']}>
         <div className={styles.button} onClick={onClickWrite}>글쓰기</div>

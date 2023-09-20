@@ -1,5 +1,5 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
-import { ChaptersDto, NewChaptersDto } from "@/types/chapter";
+import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
 import { PostsDto, newPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import axios, { Axios, AxiosResponse } from "axios";
@@ -124,8 +124,16 @@ export const apis = {
     return ax.post(`/chapters`, newChapter);
   },
 
+  updateChapter: (newChapter: NewChaptersUpdateDto): Promise<AxiosResponse<ChaptersDto>> => {
+    return ax.put(`/chapters`, newChapter);
+  },
+
   swapChapterOrder: (from: number, to: number): Promise<AxiosResponse<void>> => {
     return ax.patch(`/chapters/${from}/${to}`);
+  },
+
+  getUpdateChapter: (chapterId: number): Promise<AxiosResponse<UpdateChaptersDto>> => {
+    return ax.get(`/chapters/update/${chapterId}`);
   },
 
   /**

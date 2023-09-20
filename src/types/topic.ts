@@ -15,6 +15,12 @@ export type TopicsDto = {
   orders: number;
 };
 
+export type TopicsNameDto = {
+  id: number;
+  name: string;
+  orders: number;
+};
+
 export type TopicsWithCategoriesDto = {
   id: number;
   name: string;

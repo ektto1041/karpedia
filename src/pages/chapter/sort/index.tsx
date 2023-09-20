@@ -1,4 +1,4 @@
-import SortChapterScreen from "@/screens/chapter/sort/SortChapterScreen";
+import SortChapterScreen from "@/screens/chapter/sort";
 
 export default function SortChapter() {
   return (

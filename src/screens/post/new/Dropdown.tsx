@@ -1,8 +1,11 @@
 import styles from './Dropdown.module.css';
 import Icon from '@mdi/react';
 import { mdiTriangleSmallDown } from '@mdi/js';
-import { useCallback, useState } from 'react';
-import { ChapterTitle } from '@/types/chapter';
+
+export type DropdownData = {
+  id: number;
+  title: string;
+};
 
 type DropdownProps<T> = {
   data: T[];
@@ -10,15 +13,11 @@ type DropdownProps<T> = {
   onChange: (value: number) => void;
 };
 
-export default function Dropdown<T extends ChapterTitle>({
+export default function Dropdown<T extends DropdownData>({
   data,
   value,
   onChange,
 }: DropdownProps<T>) {
-  const onClickItem = useCallback((val: number) => {
-    onChange(val);
-  }, [onChange]);
-
   return (
     <div className={styles.container}>
       <div className={styles.selected}>
