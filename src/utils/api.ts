@@ -2,7 +2,7 @@ import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto } from "@/types/chapter";
 import { PostsDto, newPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
-import axios, { AxiosResponse } from "axios";
+import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
@@ -14,6 +14,14 @@ export const apis = {
     return ax.get('/auths/testat');
   },
 
+  /**
+   * Auths
+   */
+  // 현재 로그인 정보와 어드민인지 검사하는 API
+  checkAuths: (): Promise<AxiosResponse<void>> => {
+    return ax.get('/auths');
+  },
+
   googleLogin: (): Promise<AxiosResponse<any>> => {
     return ax.get(`/auths/google`, { headers: {"Cache-control": "no-cache"}});
   },
@@ -21,51 +29,46 @@ export const apis = {
   /**
    * 페이지를 revalidate 해주는 api
    */
+  // /topic
   revalidateTopic: () => {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=topic`);
   },
 
+  // /topic/[...id]
   revalidateTopicAfterCreate: (topicId: number) => {
     return axios.get(`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}api/revalidate?secret=${process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY}&page=topic/${topicId}`);
   },
 
   /**
-   * 모든 토픽들을 가져오는 API
+   * Topics
    */
+
+  // 모든 토픽들을 가져오는 API
   getAllTopics: (): Promise<AxiosResponse<TopicsDto[]>> => {
     return ax.get('/topics');
   },
 
-  /**
-   * 모든 토픽들을 카테고리로 분류해서 가져오는 API
-   */
+  // 모든 토픽들을 카테고리로 분류해서 가져오는 API
   getAllTopicsWithCategories: (): Promise<AxiosResponse<TopicsWithCategoriesResDto>> => {
     return ax.get('/topics/categories');
   },
 
-  /**
-   * 모든 토픽들을 카테고리로 분류해서 가져오는 API ( 토픽 관리용 어드민 체크 )
-   */
+  // 모든 토픽들을 카테고리로 분류해서 가져오는 API ( 토픽 관리용 어드민 체크 )
   getAllTopicsWithCategoriesForSetting: (): Promise<AxiosResponse<TopicsWithCategoriesResDto>> => {
     return ax.get('/topics/setting');
   },
 
-  /**
-   * 한 토픽의 모든 챕터와 글을 가져오는 API
-   */
+  // 한 토픽의 모든 챕터와 글을 가져오는 API
   getTopic: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersWithPostsDto>> => {
     return ax.get(`/topics/${topicId}`);
   },
-
   
   // 모든 토픽의 모든 챕터와 글을 가져오는 API
   getAllTopic: () => {
     return ax.get(`/topics/posts`);
   },
   
-  /**
-   * 한 토픽의 정보와 모든 챕터를 가져오는 API
-   */
+  // 한 토픽의 정보와 모든 챕터를 가져오는 API
   getTopicWithChapters: (topicId: number): Promise<AxiosResponse<TopicsWithChaptersDto>> => {
     return ax.get(`/topics/${topicId}/chapters`);
   },
@@ -119,6 +122,10 @@ export const apis = {
   // 챕터를 추가하는 API
   createChapter: (newChapter: NewChaptersDto): Promise<AxiosResponse<ChaptersDto>> => {
     return ax.post(`/chapters`, newChapter);
+  },
+
+  swapChapterOrder: (from: number, to: number): Promise<AxiosResponse<void>> => {
+    return ax.patch(`/chapters/${from}/${to}`);
   },
 
   /**
