@@ -1,10 +1,10 @@
 import TopicScreen from "@/screens/topic/Topic";
-import { TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { apis } from "@/utils/api";
 import { GetStaticPropsContext } from "next";
 
 export type TopicProps = {
-  topic: TopicsWithChaptersDto;
+  topic: TopicsWithChaptersWithPostsDto;
   chapterId: number,
   postId: number,
 };
@@ -22,7 +22,7 @@ type Path = {
 };
 
 export async function getStaticPaths() {
-  const allTopics: TopicsWithChaptersDto[] = (await apis.getAllTopic()).data;
+  const allTopics: TopicsWithChaptersWithPostsDto[] = (await apis.getAllTopic()).data;
 
   // topic O, chapter X, post X -> to First Chapter
   // topic O, chapter O, post X -> to Chapter
@@ -56,9 +56,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const topic = (await apis.getTopic(topicId)).data;
 
   // sorting
-  topic.chaptersList.sort((a, b) => a.title < b.title ? -1 : 1);
+  topic.chaptersList.sort((a, b) => b.orders - a.orders);
   topic.chaptersList.forEach(chapter => {
-    chapter.postsList.sort((a, b) => a.title < b.title ? -1 : 1);
+    chapter.postsList.sort((a, b) => b.orders - a.orders);
   });
 
   const chapterId: number = ids[1] ? parseInt(ids[1]) : (topic.chaptersList[0]?.id || -1); 
@@ -76,6 +76,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       topic,
       chapterId,
       postId,
-    }
+    },
+    revalidate: 10,
   };
 };

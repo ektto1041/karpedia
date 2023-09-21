@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mdi/js": "^7.1.96",
+    "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
     "@next/font": "13.1.6",
     "@tiptap/extension-blockquote": "^2.0.3",

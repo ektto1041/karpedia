@@ -5,10 +5,9 @@ import css from '@/utils/css';
 import TypeSlide from './TypeSlide';
 import PostSlide from './PostSlide';
 import { apis } from '@/utils/api';
-import { TopicsWithChaptersDto } from '@/types/topic';
+import { TopicsWithChaptersWithPostsDto } from '@/types/topic';
 import { ChapterTitle } from '@/types/chapter';
-
-export type PostType = 'chapter' | 'post';
+import { PostType } from '@/components/PostEditor/PostEditor';
 
 export default function NewPostScreen() {
   const router = useRouter();
@@ -16,13 +15,19 @@ export default function NewPostScreen() {
   const topicId: number = parseInt(router.query.tid as string); 
   
   const [selectedType, setSelectedType] = useState<PostType | null>(null);
-  const [topic, setTopic] = useState<TopicsWithChaptersDto>();
+  const [topic, setTopic] = useState<TopicsWithChaptersWithPostsDto>();
 
   const chapters: ChapterTitle[] | undefined = topic?.chaptersList.map(chapter => ({ id: chapter.id, title: chapter.title }));
 
   const getTopic = useCallback(async (topicId: number) => {
     const response = await apis.getTopic(topicId);
     if(response.status === 200) {
+      const t = response.data;
+      t.chaptersList.sort((a, b) => b.orders - a.orders);
+      t.chaptersList.forEach(chapter => {
+        chapter.postsList.sort((a, b) => b.orders - a.orders);
+      });
+      
       setTopic(response.data);
     }
   }, []);

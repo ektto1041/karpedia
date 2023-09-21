@@ -6,10 +6,12 @@ import CategoryEditItem from './CategoryEditItem';
 import AddBox from './AddBox';
 import { useRouter } from 'next/router';
 import { CategoriesDto, NewCategoriesDto, TopicsByCategory } from '@/types/category';
+import CheckBox from '@/components/CheckBox/CheckBox';
 
 export default function TopicSettingScreen() {
   const router = useRouter();
 
+  const [isSortingMode, setSortingMode] = useState(false);
   const [categories, setCategories] = useState<TopicsByCategory[]>([]);
   const [newCategoryName, setNewCategoryName] = useState('');
 
@@ -23,7 +25,6 @@ export default function TopicSettingScreen() {
     const response = await apis.getAllTopicsWithCategoriesForSetting();
     const { categories, topics } = response.data;
 
-    topics.sort((a, b) => (a.categoriesId - b.categoriesId));
     const categoriesWithTopics: TopicsByCategory[] = categories.map(c => ({ ...c, topics: topics.filter(t => t.categoriesId === c.id), }));
     setCategories(categoriesWithTopics);
   };
@@ -32,6 +33,10 @@ export default function TopicSettingScreen() {
     await apis.revalidateTopic();
     callback();
   }, []) ;
+
+  const onChangeSortingMode = useCallback((value: boolean) => {
+    setSortingMode(value);
+  }, []);
 
   const OnClickCreateCategory = useCallback(async (data: NewCategoriesDto) => {
     const response = await apis.createCategory(data);
@@ -59,6 +64,15 @@ export default function TopicSettingScreen() {
       })
     }
   }, [router]);
+
+  const onClickMoveCategory = useCallback(async (from: number, to: number) => {
+    const response = await apis.swapCategoryOrder(categories[from].id, categories[to].id);
+    if(response.status < 300) {
+      revalidateTopic(() => {
+        router.reload();
+      })
+    }
+  }, [categories, router]);
 
   const OnClickCreateTopic = useCallback(async (data: NewTopicsDto) => {
     const response = await apis.createTopic(data);
@@ -94,14 +108,22 @@ export default function TopicSettingScreen() {
 
   return (
     <div className={styles.container}>
-      {categories.map(category => (
+      <div className={styles.header} >
+        <CheckBox label='순서 설정' value={isSortingMode} onChange={onChangeSortingMode} />
+      </div>
+      
+      {categories.map((category, i) => (
         <CategoryEditItem key={category.id}
           category={category}
+          categoryIdx={i}
+          isLast={Boolean(categories.length-1 === i)}
           onClickUpdateCategory={onClickUpdateCategory}
           onClickDeleteCategory={onClickDeleteCategory}
+          onClickMoveCategory={onClickMoveCategory}
           onClickCreateTopic={OnClickCreateTopic}
           onClickUpdateTopic={onClickUpdateTopic}
           onClickDeleteTopic={onClickDeleteTopic}
+          revalidateTopic={revalidateTopic}
         />
       ))}
       <div className={styles['new-category']} >

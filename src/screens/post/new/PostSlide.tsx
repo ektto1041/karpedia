@@ -1,14 +1,13 @@
 import styles from './PostSlide.module.css';
 import Icon from '@mdi/react';
 import { mdiKeyboardBackspace } from '@mdi/js';
-import MyEditor from '@/components/MyEditor';
-import { ChangeEventHandler, useCallback, useState } from 'react';
-import { PostType } from '.';
+import { useCallback, useState } from 'react';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
 import { newPostsDto } from '@/types/post';
-import Dropdown from './Dropdown';
 import { ChapterTitle, NewChaptersDto } from '@/types/chapter';
+import PostEditor, { PostEditorResult, PostType } from '@/components/PostEditor/PostEditor';
+import Dropdown from '@/components/Dropdown/Dropdown';
 
 type PostSlideProps = {
   chapters: ChapterTitle[];
@@ -26,41 +25,29 @@ export default function PostSlide({
   const router = useRouter();
 
   const [chapterIdx, setChapterIdx] = useState(0);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
 
-  const onChangeCategory = useCallback((value: number) => {
-    setChapterIdx(value);
-  }, []);
-
-  const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const onChangeContent = (value: string) => {
-    setContent(value);
-  };
-
-  const onClickWrite = useCallback(async () => {
+  const onWrite = useCallback(async (data: PostEditorResult) => {
+    const {title, content} = data;
     if(selectedType === 'chapter') {
       const newChapter: NewChaptersDto = { topicId, title, content };
 
       const response = await apis.createChapter(newChapter);
       if(response.status < 300) {
-        await apis.revalidateTopicAfterCreate(topicId);
         router.push('/');
       }
-
-    } else if(selectedType === 'post') {
+    } else {
       const newPost: newPostsDto = { chapterId: chapters[chapterIdx].id, title, content };
 
       const response = await apis.createPost(newPost);
       if(response.status < 300) {
-        await apis.revalidateTopicAfterCreate(topicId);
         router.push('/');
       }
     }
-  }, [selectedType, topicId, title, content]);
+  }, [topicId, selectedType]);
+
+  const onChangeChapterIdx = useCallback((value: number) => {
+    setChapterIdx(value);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -73,14 +60,10 @@ export default function PostSlide({
         </div>
       </div>
 
-      {selectedType === 'post' && (<Dropdown data={chapters} value={chapterIdx} onChange={onChangeCategory} />)} 
-      <input className={styles.title} type='text' placeholder='제목을 입력하세요.' value={title} onChange={onChangeTitle} />
-      <div className={styles.content}>
-        <MyEditor onChangeContent={onChangeContent} defaultContent={'<p></p>'} editable={true} />
-      </div>
-      <div className={styles['button-box']}>
-        <div className={styles.button} onClick={onClickWrite}>글쓰기</div>
-      </div>
+      {selectedType === 'post' && (
+        <Dropdown data={chapters.map(c => ({ id: c.id, title: c.title }))} value={chapterIdx} onChange={onChangeChapterIdx} />
+      )}
+      <PostEditor onWrite={onWrite} />
     </div>
   );
 };

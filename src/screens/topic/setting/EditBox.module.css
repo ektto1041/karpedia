@@ -1,7 +1,7 @@
 .container {
   position: absolute;
   top: 0; right: 0;
-  width: 128px;
+  width: 256px;
   height: 64px;
   display: flex;
 }
@@ -12,4 +12,8 @@
   padding: 8px;
   color: var(--main-red);
   cursor: pointer;
+}
+
+.disabled {
+  color: var(--gray);
 }

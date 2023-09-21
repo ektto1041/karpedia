@@ -3,10 +3,10 @@ import { PostsDto } from '@/types/post';
 import ChapterList from './ChapterList/ChapterList';
 import Content from './Content';
 import styles from './Topic.module.css';
-import { TopicsWithChaptersDto } from "@/types/topic";
+import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ChapterOptions from './ChapterList/ChapterOptions';
 import { ChaptersWithPostsDto } from '@/types/chapter';
 import { TopicProps } from '@/pages/topic/[...id]';
@@ -15,7 +15,7 @@ import { mdiListBoxOutline } from '@mdi/js';
 import useWindowSize from '@/hooks/useWindowSize';
 import css from '@/utils/css';
 
-const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
+const findPost = (topic: TopicsWithChaptersWithPostsDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
   if(postId > -1) {
     const post: PostsDto = chapter.postsList.find(p => p.id === postId)!;
@@ -26,7 +26,7 @@ const findPost = (topic: TopicsWithChaptersDto, chapterId: number, postId: numbe
   return chapter;
 }
 
-const findChapterIdByPostId = (topic: TopicsWithChaptersDto, postId: number): number => {
+const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: number): number => {
   for(const chapter of topic.chaptersList) {
     for(const post of chapter.postsList) {
       if(post.id === postId) return chapter.id;
@@ -48,7 +48,6 @@ export default function TopicScreen({
   const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
 
   const router = useRouter();
-  const windowWidth = useWindowSize();
 
   useEffect(() => {
     setOwner(getCookie('uid') === String(users.id));
@@ -66,6 +65,10 @@ export default function TopicScreen({
   const onClickPost = (postId: number) => {
     router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
   };
+
+  const updateHref = useMemo(() => {
+    return postId === -1 ? `/chapter/update?cid=${chapterId}` : `/post/update?pid=${postId}`;
+  }, [postId, chapterId]);
 
   const onClickMobileMenu = useCallback(() => {
     setMoblieMenuClicked(!isMobileMenuClicked);
@@ -87,14 +90,14 @@ export default function TopicScreen({
           포스트 목록
         </div>
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
-          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
         </div>
       </div>
       <div className={styles.content}>
         { post ? (
           <>
             <div className={styles['chapter-list-wrapper']}>
-              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} />
+              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
             </div>
             <Content post={post} />  
           </>
@@ -104,7 +107,7 @@ export default function TopicScreen({
               작성된 포스트가 없습니다.
             </div>
             
-            {isOwner && (<ChapterOptions topicId={id} />)}
+            {isOwner && (<ChapterOptions topicId={id} updateHref={updateHref} />)}
           </div>
         )}
       </div>

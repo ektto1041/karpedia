@@ -3,11 +3,6 @@
   height: 100%;
 }
 
-.container>div:nth-child(2) {
-  height: calc(100% - 96px);
-  overflow-y: auto;
-}
-
 .menu-bar {
   width: 100%;
 }

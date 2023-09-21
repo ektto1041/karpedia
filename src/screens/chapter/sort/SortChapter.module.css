@@ -1,0 +1,13 @@
+.container {
+  width: 1280px;
+  margin: 0 auto;
+  padding-top: 64px;
+}
+
+.container h1 {
+  font-size: 2rem;
+}
+
+.list {
+  background-color: var(--white);
+}

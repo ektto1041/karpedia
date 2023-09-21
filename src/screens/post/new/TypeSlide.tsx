@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { PostType } from '.';
 import styles from './TypeSlide.module.css';
+import { PostType } from '@/components/PostEditor/PostEditor';
 
 type TypeSlideProps = {
   onClickType: (type: PostType) => void;
