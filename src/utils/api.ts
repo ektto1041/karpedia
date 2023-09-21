@@ -1,6 +1,6 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
-import { PostsDto, newPostsDto } from "@/types/post";
+import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, newPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import axios, { Axios, AxiosResponse } from "axios";
 
@@ -144,8 +144,16 @@ export const apis = {
     return ax.post(`/posts`, newPost);
   },
 
+  updatePost: (newPost: NewPostsUpdateDto): Promise<AxiosResponse<PostsDto>> => {
+    return ax.put(`/posts`, newPost);
+  },
+
   swapPostOrder: (from: number, to: number): Promise<AxiosResponse<void>> => {
     return ax.patch(`/posts/${from}/${to}`);
+  },
+
+  getUpdatePost: (postId: number): Promise<AxiosResponse<UpdatePostsDto>> => {
+    return ax.get(`/posts/update/${postId}`);
   },
 };
 

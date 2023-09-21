@@ -1,33 +1,25 @@
 import styles from './PostEditor.module.css';
-import { ChapterTitle } from '@/types/chapter';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import MyEditor from '../MyEditor';
-import Dropdown from '../Dropdown/Dropdown';
 
 export type PostType = 'chapter' | 'post';
 
 export type PostEditorResult = {
-  chapterId?: number;
   title: string;
   content: string;
 };
 
 type PostEditorProps = {
-  type: PostType | null;
-  chapters: ChapterTitle[];
   onWrite: (data: PostEditorResult) => void;
   defaultTitle?: string;
   defaultContent?: string;
 };
 
 export default function PostEditor({
-  type,
-  chapters,
   onWrite,
   defaultTitle,
   defaultContent,
 }: PostEditorProps) {
-  const [chapterIdx, setChapterIdx] = useState(0);
   const [title, setTitle] = useState(defaultTitle || '');
   const [content, setContent] = useState(defaultContent || '<p></p>');
 
@@ -39,10 +31,6 @@ export default function PostEditor({
     setContent(defaultContent || '<p></p>');
   }, [defaultContent]);
 
-  const onChangeChapter = useCallback((value: number) => {
-    setChapterIdx(value);
-  }, []);
-
   const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
@@ -53,16 +41,14 @@ export default function PostEditor({
 
   const onClickWrite = useCallback(() => {
     const data: PostEditorResult = {
-      chapterId: type === 'post' ? chapters[chapterIdx].id : undefined,
       title, content
     };
 
     onWrite(data);
-  }, [onWrite, type, chapters, chapterIdx, title, content]);
+  }, [onWrite, title, content]);
 
   return (
     <div className={styles.container} >
-      {type === 'post' && (<Dropdown data={chapters} value={chapterIdx} onChange={onChangeChapter} />)} 
       <input className={styles.title} type='text' placeholder='제목을 입력하세요.' value={title} onChange={onChangeTitle} />
       <div className={styles.content}>
         <MyEditor onChangeContent={onChangeContent} defaultContent={defaultContent || '<p></p>'} editable={true} />

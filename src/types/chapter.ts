@@ -13,6 +13,12 @@ export type ChaptersDto = {
   orders: number;
 };
 
+export type ChaptersTitleDto = {
+  id: number;
+  title: string;
+  orders: number;
+};
+
 export type NewChaptersDto = {
   topicId: number;
   title: string;

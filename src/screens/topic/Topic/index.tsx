@@ -67,7 +67,7 @@ export default function TopicScreen({
   };
 
   const updateHref = useMemo(() => {
-    return postId === -1 ? `/chapter/update?cid=${chapterId}` : '';
+    return postId === -1 ? `/chapter/update?cid=${chapterId}` : `/post/update?pid=${postId}`;
   }, [postId, chapterId]);
 
   const onClickMobileMenu = useCallback(() => {

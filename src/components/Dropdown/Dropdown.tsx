@@ -21,7 +21,7 @@ export default function Dropdown<T extends DropdownData>({
   return (
     <div className={styles.container}>
       <div className={styles.selected}>
-        {data[value].title}
+        {data[value]?.title}
         <div className={styles.icon}>
           <Icon path={mdiTriangleSmallDown}/>
         </div>

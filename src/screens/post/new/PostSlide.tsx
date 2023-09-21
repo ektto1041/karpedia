@@ -1,12 +1,13 @@
 import styles from './PostSlide.module.css';
 import Icon from '@mdi/react';
 import { mdiKeyboardBackspace } from '@mdi/js';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
 import { newPostsDto } from '@/types/post';
 import { ChapterTitle, NewChaptersDto } from '@/types/chapter';
 import PostEditor, { PostEditorResult, PostType } from '@/components/PostEditor/PostEditor';
+import Dropdown from '@/components/Dropdown/Dropdown';
 
 type PostSlideProps = {
   chapters: ChapterTitle[];
@@ -23,9 +24,11 @@ export default function PostSlide({
 }: PostSlideProps) {
   const router = useRouter();
 
+  const [chapterIdx, setChapterIdx] = useState(0);
+
   const onWrite = useCallback(async (data: PostEditorResult) => {
-    const {chapterId, title, content} = data;
-    if(!Boolean(chapterId)) {
+    const {title, content} = data;
+    if(selectedType === 'chapter') {
       const newChapter: NewChaptersDto = { topicId, title, content };
 
       const response = await apis.createChapter(newChapter);
@@ -33,8 +36,8 @@ export default function PostSlide({
         await apis.revalidateTopicAfterCreate(topicId);
         router.push('/');
       }
-    } else if(chapterId) {
-      const newPost: newPostsDto = { chapterId, title, content };
+    } else {
+      const newPost: newPostsDto = { chapterId: chapters[chapterIdx].id, title, content };
 
       const response = await apis.createPost(newPost);
       if(response.status < 300) {
@@ -43,6 +46,10 @@ export default function PostSlide({
       }
     }
   }, [topicId]);
+
+  const onChangeChapterIdx = useCallback((value: number) => {
+    setChapterIdx(value);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -55,7 +62,8 @@ export default function PostSlide({
         </div>
       </div>
 
-      <PostEditor type={selectedType} chapters={chapters} onWrite={onWrite} />
+      <Dropdown data={chapters.map(c => ({ id: c.id, title: c.title }))} value={chapterIdx} onChange={onChangeChapterIdx}  />
+      <PostEditor onWrite={onWrite} />
     </div>
   );
 };
