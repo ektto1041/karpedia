@@ -33,7 +33,6 @@ export default function PostSlide({
 
       const response = await apis.createChapter(newChapter);
       if(response.status < 300) {
-        await apis.revalidateTopicAfterCreate(topicId);
         router.push('/');
       }
     } else {
@@ -41,7 +40,6 @@ export default function PostSlide({
 
       const response = await apis.createPost(newPost);
       if(response.status < 300) {
-        await apis.revalidateTopicAfterCreate(topicId);
         router.push('/');
       }
     }

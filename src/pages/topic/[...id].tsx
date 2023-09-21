@@ -76,6 +76,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       topic,
       chapterId,
       postId,
-    }
+    },
+    revalidate: 10,
   };
 };
