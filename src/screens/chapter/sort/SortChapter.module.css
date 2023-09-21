@@ -11,37 +11,3 @@
 .list {
   background-color: var(--white);
 }
-
-.item {
-  display: flex;
-  align-items: center;
-  min-height: 32px;
-  padding-left: 16px;
-}
-
-.button-box {
-  display: flex;
-  width: auto;
-  height: 32px;
-}
-
-.button {
-  width: 32px;
-  height: 32px;
-  padding: 8px;
-  transition: all ease .25s;
-}
-
-.disabled {
-  color: var(--white-gray);
-  cursor: default;
-}
-
-.abled {
-  color: var(--black);
-  cursor: pointer;
-}
-
-.abled:hover {
-  color: var(--main-red);
-}

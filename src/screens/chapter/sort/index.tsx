@@ -1,19 +1,17 @@
-import Icon from '@mdi/react';
 import styles from './SortChapter.module.css';
-import { mdiTriangle, mdiTriangleDown } from '@mdi/js';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { apis } from '@/utils/api';
-import { TopicsWithChaptersDto } from '@/types/topic';
-import { ChaptersDto } from '@/types/chapter';
-import css from '@/utils/css';
+import { TopicsWithChaptersWithPostsDto } from '@/types/topic';
+import { ChaptersWithPostsDto } from '@/types/chapter';
+import SortChapterItem from './SortChapterItem';
 
 export default function SortChapterScreen() {
   const router = useRouter();
   const topicId: number = parseInt(router.query.tid as string);
 
-  const [topic, setTopic] = useState<TopicsWithChaptersDto>();
-  const chapters: ChaptersDto[] = useMemo(
+  const [topic, setTopic] = useState<TopicsWithChaptersWithPostsDto>();
+  const chapters: ChaptersWithPostsDto[] = useMemo(
     () => topic ? [...topic.chaptersList] : []
   , [topic]);
 
@@ -25,10 +23,13 @@ export default function SortChapterScreen() {
       return;
     }
 
-    const response = await apis.getTopicWithChapters(topicId);
+    const response = await apis.getTopic(topicId);
     if(response.status === 200) {
       const t = response.data;
       t.chaptersList.sort((a, b) => b.orders - a.orders);
+      t.chaptersList.forEach(chapter => {
+        chapter.postsList.sort((a, b) => b.orders - a.orders);
+      });
       
       setTopic(response.data);
     }
@@ -40,7 +41,7 @@ export default function SortChapterScreen() {
     }
   }, [router]);
 
-  const onClickMove = useCallback(async (from: number, to: number) => {
+  const onClickMoveChapter = useCallback(async (from: number, to: number) => {
     const response = await apis.swapChapterOrder(chapters[from].id, chapters[to].id);
     if(response.status < 300) {
       router.reload();
@@ -49,28 +50,17 @@ export default function SortChapterScreen() {
 
   return (
     <div className={styles.container}>
-      <h1>챕터 순서 설정</h1>
+      <h1>포스트 순서 설정</h1>
       <div className={styles.list}>
         {chapters.map((c, i) => (
-          <div key={c.id} className={styles.item}>
-            {c.title}
-            <div className={styles['button-box']}>
-              <div
-                className={css(styles.button, Boolean(i > 0) ? styles.abled : styles.disabled)}
-                onClick={() => onClickMove(i, i-1)}
-              >
-                <Icon path={mdiTriangle} />
-              </div>
-              <div
-                className={css(styles.button, Boolean(i < (chapters.length-1)) ? styles.abled : styles.disabled)}
-                onClick={() => onClickMove(i, i+1)}
-              >
-                <Icon path={mdiTriangleDown} />
-              </div>
-            </div>
-          </div>
+          <SortChapterItem
+            key={c.id}
+            data={c}
+            idx={i}
+            isLast={Boolean(i === chapters.length-1)}
+            onClickMoveParent={onClickMoveChapter}
+          />
         ))}
-        
       </div>
     </div>
   );

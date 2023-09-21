@@ -143,6 +143,10 @@ export const apis = {
   createPost: (newPost: newPostsDto): Promise<AxiosResponse<PostsDto>> => {
     return ax.post(`/posts`, newPost);
   },
+
+  swapPostOrder: (from: number, to: number): Promise<AxiosResponse<void>> => {
+    return ax.patch(`/posts/${from}/${to}`);
+  },
 };
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);
