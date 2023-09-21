@@ -45,7 +45,7 @@ export default function PostSlide({
         router.push('/');
       }
     }
-  }, [topicId]);
+  }, [topicId, selectedType]);
 
   const onChangeChapterIdx = useCallback((value: number) => {
     setChapterIdx(value);
@@ -62,7 +62,9 @@ export default function PostSlide({
         </div>
       </div>
 
-      <Dropdown data={chapters.map(c => ({ id: c.id, title: c.title }))} value={chapterIdx} onChange={onChangeChapterIdx}  />
+      {selectedType === 'post' && (
+        <Dropdown data={chapters.map(c => ({ id: c.id, title: c.title }))} value={chapterIdx} onChange={onChangeChapterIdx} />
+      )}
       <PostEditor onWrite={onWrite} />
     </div>
   );
