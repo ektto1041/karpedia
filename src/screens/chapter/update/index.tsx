@@ -59,8 +59,6 @@ export default function UpdateChapterScreen() {
         <>
           <Dropdown data={topics.map(t => ({ id: t.id, title: t.name }))} value={selectedTopicIdx} onChange={onChangeTopic}  />
           <PostEditor
-            type='chapter'
-            chapters={[]}
             onWrite={onWrite}
             defaultTitle={chapter.title}
             defaultContent={chapter.content}
