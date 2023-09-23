@@ -99,7 +99,10 @@ export default function TopicScreen({
             <div className={styles['chapter-list-wrapper']}>
               <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
             </div>
-            <Content post={post} />  
+            <div className={styles.post}>
+              <h3>{topic.name}</h3>
+              <Content post={post} /> 
+            </div>
           </>
         ) : (
           <div className={styles.warning}>

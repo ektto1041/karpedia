@@ -10,6 +10,17 @@
   align-items: flex-start;
 }
 
+.post {
+  width: 704px;
+}
+
+.post>h3 {
+  margin: 0;
+  text-indent: 0;
+  color: var(--gray);
+  font-weight: normal;
+}
+
 .warning {
   width: 100%;
   height: 300px;
@@ -33,7 +44,7 @@
 
   .chapter-list-wrapper {
     position: sticky;
-    top: 192px;
+    top: 128px;
   }
 }
 
