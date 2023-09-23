@@ -64,7 +64,7 @@ export const apis = {
   },
   
   // 모든 토픽의 모든 챕터와 글을 가져오는 API
-  getAllTopic: () => {
+  getAllTopicWithChaptersWithPosts: (): Promise<AxiosResponse<TopicsWithChaptersWithPostsDto[]>> => {
     return ax.get(`/topics/posts`);
   },
   
