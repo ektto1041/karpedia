@@ -22,7 +22,7 @@ type Path = {
 };
 
 export async function getStaticPaths() {
-  const allTopics: TopicsWithChaptersWithPostsDto[] = (await apis.getAllTopic()).data;
+  const allTopics: TopicsWithChaptersWithPostsDto[] = (await apis.getAllTopicWithChaptersWithPosts()).data;
 
   // topic O, chapter X, post X -> to First Chapter
   // topic O, chapter O, post X -> to Chapter
