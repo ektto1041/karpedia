@@ -19,7 +19,7 @@ export const apis = {
    */
   // 현재 로그인 정보와 어드민인지 검사하는 API
   checkAuths: (): Promise<AxiosResponse<void>> => {
-    return ax.get('/auths');
+    return ax.get('/auths/check');
   },
 
   googleLogin: (): Promise<AxiosResponse<any>> => {
