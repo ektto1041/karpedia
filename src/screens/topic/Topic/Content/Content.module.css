@@ -15,6 +15,10 @@
   border-radius: 8px;
 }
 
+.hide-content {
+  display: none;
+}
+
 @media (min-width: 992px) {
 
 }
