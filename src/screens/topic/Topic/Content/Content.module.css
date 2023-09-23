@@ -1,12 +1,12 @@
 .container {
   width: 704px;
-  /* height: 3000px; */
 }
 
 .title {
   height: 64px;
   line-height: 64px;
   color: var(--main-red);
+  text-indent: 4px;
 }
 
 .content {

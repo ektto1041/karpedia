@@ -37,6 +37,7 @@
   --main-red: #f31560;
   --black: #111111;
   --black-o80: #11111180; 
+  --black-o40: #11111140;
   --gray: #7f7f7f;
   --light-gray: #7f7f7f80;
   --white-gray: #eaeaea;
@@ -44,12 +45,16 @@
   --white: #fcfcfc;
   --white-oa0: #ffffffa0;
   --sub: #FFB07F;
+  --sub-o20: #FFB07F20;
   --sub-o40: #FFB07F40;
+  --sub-o80: #FFB07F80;
   --sub-dark: #d8905F;
   --sub-shadow: #F7A877;
   --main-red-o22: #f3156022;
   --main-red-o40: #f3156040;
   --main-red-of0: #f31560f0;
+  --third: #FFECAF;
+  --third-o80: #FFECAF80;
 }
 
 body {
@@ -85,7 +90,7 @@ button {
 
 /* PM */
 .ProseMirror {
-  padding: 5px;
+  padding: 4px;
   min-height: 256px;
 }
 
@@ -95,8 +100,7 @@ button {
 }
 
 .ProseMirror h1,h2,h3,h4,h5,h6 {
-  text-indent: 10px;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-bottom: .25rem;
 }
 
@@ -124,57 +128,60 @@ button {
 }
 
 .ProseMirror code {
-  background-color: #2e3840;
+  background-color: var(--sub-o20);
   border-radius: 0.25em;
   box-decoration-break: clone;
-  color: #f9dbbb;
+  color: var(--main-red);
   font-size: 0.9rem;
   padding: 0.25em;
+  font-family: "D2Coding", monospace;
 }
 
 .ProseMirror pre {
-  background: #2e3840;
+  background: var(--sub-o40);
   border-radius: 0.5rem;
-  color: #f9dbbb;
+  color: var(--main-red);
   font-family: "D2Coding", monospace;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1rem;
+  margin: 1rem 0;
 }
 
 .ProseMirror pre code {
   background: none;
-  color: inherit;
   padding: 0;
-  font-family: "D2Coding";
 }
 
 .ProseMirror blockquote {
-  border-left: 3px solid rgba(13, 13, 13, 0.1);
-  padding-left: 1rem;
+  border-left: 3px solid var(--third);
+  padding: .5rem;
   margin-left: 1rem;
+  background-color: var(--third-o80);
+  border-radius: 0 0 0px 8px;
+  box-shadow: 2px 2px 1px 1px var(--black-o40);
 }
 
 .ProseMirror table {
   border-collapse: collapse;
-  margin: 0;
+  margin: 0 auto;
   table-layout: fixed;
   /* width: 100%; */
 }
 
 .ProseMirror td,th {
-  border: 2px solid var(--gray);
+  border: 2px solid var(--black);
   padding: 3px 5px;
   position: relative;
   vertical-align: top;
 }
 
 .ProseMirror th {
-  background-color: #f1f3f5;
+  background-color: var(--third-o80);
   font-weight: bold;
   text-align: left;
 }
 
 .ProseMirror .selectedCell:after {
-  background: var(--sub-o40);
+  background: var(--sub-o80);
   content: "";
   left: 0;
   right: 0;
