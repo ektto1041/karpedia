@@ -10,3 +10,8 @@
   margin-bottom: 8px;
   cursor: pointer;
 }
+
+.current {
+  color: var(--main-red);
+  font-weight: bold;
+}
