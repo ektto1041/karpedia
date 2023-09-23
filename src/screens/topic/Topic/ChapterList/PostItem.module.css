@@ -11,3 +11,8 @@
 .container:hover {
   color: var(--black);
 }
+
+.current {
+  color: var(--main-red);
+  font-weight: bold;
+}

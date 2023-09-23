@@ -9,6 +9,8 @@ export type ChapterListProps = {
   onClickPost: (postId: number) => void;
   isOwner: boolean;
   topicId: number;
+  chapterId: number;
+  postId: number;
   updateHref: string;
 };
 
@@ -18,12 +20,21 @@ export default function ChapterList({
   onClickPost,
   isOwner,
   topicId,
+  chapterId,
+  postId,
   updateHref,
 }: ChapterListProps) {
   return (
     <div className={styles.container} >
       {chapterList?.map(chapter => (
-        <ChapterItem key={chapter.id} chapter={chapter} onClickChapter={onClickChapter} onClickPost={onClickPost}/>
+        <ChapterItem
+          key={chapter.id}
+          chapter={chapter}
+          pathChapterId={chapterId}
+          pathPostId={postId}
+          onClickChapter={onClickChapter}
+          onClickPost={onClickPost}
+        />
       ))}
       {isOwner && (<ChapterOptions topicId={topicId} updateHref={updateHref} />)}
     </div>

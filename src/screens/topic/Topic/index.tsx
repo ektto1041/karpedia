@@ -90,14 +90,32 @@ export default function TopicScreen({
           포스트 목록
         </div>
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
-          <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
+          <ChapterList
+            chapterList={chaptersList}
+            onClickChapter={onClickChapter}
+            onClickPost={onClickPost}
+            isOwner={isOwner}
+            topicId={id}
+            chapterId={chapterId}
+            postId={postId}
+            updateHref={updateHref}
+          />
         </div>
       </div>
       <div className={styles.content}>
         { post ? (
           <>
             <div className={styles['chapter-list-wrapper']}>
-              <ChapterList chapterList={chaptersList} onClickChapter={onClickChapter} onClickPost={onClickPost} isOwner={isOwner} topicId={id} updateHref={updateHref} />
+            <ChapterList
+              chapterList={chaptersList}
+              onClickChapter={onClickChapter}
+              onClickPost={onClickPost}
+              isOwner={isOwner}
+              topicId={id}
+              chapterId={chapterId}
+              postId={postId}
+              updateHref={updateHref}
+            />
             </div>
             <div className={styles.post}>
               <h3>{topic.name}</h3>
