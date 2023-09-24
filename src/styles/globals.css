@@ -94,6 +94,14 @@ button {
   min-height: 256px;
 }
 
+.comment-editor {
+  min-height: 128px;
+}
+
+.comment-editor:focus {
+  outline: none;
+}
+
 .ProseMirror p {
   line-height: 1.75rem;
   margin: 1px 0;

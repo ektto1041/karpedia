@@ -1,0 +1,13 @@
+.container {
+  width: 64px;
+  height: 100%;
+  padding: 4px;
+}
+
+.profile-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+
+  background-color: red;
+}

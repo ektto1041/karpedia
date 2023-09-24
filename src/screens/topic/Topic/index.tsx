@@ -14,6 +14,7 @@ import Icon from '@mdi/react';
 import { mdiListBoxOutline } from '@mdi/js';
 import useWindowSize from '@/hooks/useWindowSize';
 import css from '@/utils/css';
+import CommentBox from './CommentBox';
 
 const findPost = (topic: TopicsWithChaptersWithPostsDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
@@ -106,20 +107,21 @@ export default function TopicScreen({
         { post ? (
           <>
             <div className={styles['chapter-list-wrapper']}>
-            <ChapterList
-              chapterList={chaptersList}
-              onClickChapter={onClickChapter}
-              onClickPost={onClickPost}
-              isOwner={isOwner}
-              topicId={id}
-              chapterId={chapterId}
-              postId={postId}
-              updateHref={updateHref}
-            />
+              <ChapterList
+                chapterList={chaptersList}
+                onClickChapter={onClickChapter}
+                onClickPost={onClickPost}
+                isOwner={isOwner}
+                topicId={id}
+                chapterId={chapterId}
+                postId={postId}
+                updateHref={updateHref}
+              />
             </div>
             <div className={styles.post}>
               <h3>{topic.name}</h3>
-              <Content post={post} /> 
+              <Content post={post} />
+              <CommentBox />
             </div>
           </>
         ) : (
