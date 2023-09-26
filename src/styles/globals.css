@@ -102,6 +102,14 @@ button {
   outline: none;
 }
 
+.ProseMirror .empty-editor:first-child::before {
+  color: var(--gray);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .ProseMirror p {
   line-height: 1.75rem;
   margin: 1px 0;

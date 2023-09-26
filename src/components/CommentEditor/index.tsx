@@ -16,6 +16,7 @@ import Italic from '@tiptap/extension-italic';
 import History from '@tiptap/extension-history';
 import TextStyle from '@tiptap/extension-text-style';
 import Bold from '@tiptap/extension-bold';
+import Placeholder from '@tiptap/extension-placeholder';
 
 type Menu = {
   icon: string;
@@ -51,6 +52,10 @@ export default function CommentEditor({
       History,
       TextStyle,
       Bold,
+      Placeholder.configure({
+        emptyEditorClass: 'empty-editor',
+        placeholder: '댓글을 입력해주세요.',
+      }),
     ],
     editorProps: {
       attributes: {
