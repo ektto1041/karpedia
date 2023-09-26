@@ -17,6 +17,7 @@ import History from '@tiptap/extension-history';
 import TextStyle from '@tiptap/extension-text-style';
 import Bold from '@tiptap/extension-bold';
 import Placeholder from '@tiptap/extension-placeholder';
+import CharacterCount from '@tiptap/extension-character-count';
 
 type Menu = {
   icon: string;
@@ -56,6 +57,9 @@ export default function CommentEditor({
         emptyEditorClass: 'empty-editor',
         placeholder: '댓글을 입력해주세요.',
       }),
+      CharacterCount.configure({
+        limit: 300,
+      }),
     ],
     editorProps: {
       attributes: {
@@ -94,6 +98,7 @@ export default function CommentEditor({
         </div>
       )}
       <EditorContent editor={editor} />
+      <div className={styles['character-count']}>{editor?.storage.characterCount.characters()}/{300}</div>
     </div>
   );
 };

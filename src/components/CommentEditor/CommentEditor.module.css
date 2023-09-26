@@ -28,3 +28,12 @@
 .menu-item:hover {
   color: var(--main-red);
 }
+
+.character-count {
+  width: 100%;
+  padding-right: 16px;
+  height: 32px;
+  line-height: 32px;
+  color: var(--gray);
+  text-align: end;
+}
