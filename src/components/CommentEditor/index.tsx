@@ -63,7 +63,7 @@ export default function CommentEditor({
     ],
     editorProps: {
       attributes: {
-        class: 'comment-editor',
+        class: `comment-editor${editable ? ' editable' : ''}`,
       },
     },
     onUpdate: (p) => onChangeContent(p.editor.getHTML()),
@@ -98,7 +98,7 @@ export default function CommentEditor({
         </div>
       )}
       <EditorContent editor={editor} />
-      <div className={styles['character-count']}>{editor?.storage.characterCount.characters()}/{300}</div>
+      {editable && (<div className={styles['character-count']}>{editor?.storage.characterCount.characters()}/{300}</div>)}
     </div>
   );
 };

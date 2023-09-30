@@ -95,6 +95,10 @@ button {
 }
 
 .comment-editor {
+  min-height: 48px;
+}
+
+.comment-editor.editable {
   min-height: 128px;
 }
 

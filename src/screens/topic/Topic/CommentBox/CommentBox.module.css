@@ -4,3 +4,7 @@
   margin-top: 64px;
   border-top: 2px solid var(--white-gray);
 }
+
+.comment-list {
+  width: 100%;
+}

@@ -138,6 +138,7 @@ export default function TopicScreen({
                 <CommentBox
                   onClickCreateComment={onClickCreateComment}
                   viewer={users}
+                  postId={postId}
                 />
               )}
             </div>
