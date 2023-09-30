@@ -15,6 +15,8 @@ import { mdiListBoxOutline } from '@mdi/js';
 import useWindowSize from '@/hooks/useWindowSize';
 import css from '@/utils/css';
 import CommentBox from './CommentBox';
+import { apis } from '@/utils/api';
+import { NewCommentsDto } from '@/types/comment';
 
 const findPost = (topic: TopicsWithChaptersWithPostsDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
   const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
@@ -81,6 +83,18 @@ export default function TopicScreen({
     }
   }, [isMobileMenuClicked]);
 
+  const onClickCreateComment = useCallback(async (content: string) => {
+    const newComment: NewCommentsDto = {
+      content,
+      postsId: postId,
+    }
+
+    const response = await apis.createComment(newComment);
+    if(response.status < 300) {
+      router.reload();
+    }
+  }, [postId, router]);
+
   return (
     <div className={styles.container}>
       <div className={styles['mobile-menu-button-container']}>
@@ -121,7 +135,9 @@ export default function TopicScreen({
             <div className={styles.post}>
               <h3>{topic.name}</h3>
               <Content post={post} />
-              <CommentBox />
+              <CommentBox
+                onClickCreateComment={onClickCreateComment}
+              />
             </div>
           </>
         ) : (

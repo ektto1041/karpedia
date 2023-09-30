@@ -4,7 +4,7 @@ import { mdiKeyboardBackspace } from '@mdi/js';
 import { useCallback, useState } from 'react';
 import { apis } from '@/utils/api';
 import { useRouter } from 'next/router';
-import { newPostsDto } from '@/types/post';
+import { NewPostsDto } from '@/types/post';
 import { ChapterTitle, NewChaptersDto } from '@/types/chapter';
 import PostEditor, { PostEditorResult, PostType } from '@/components/PostEditor/PostEditor';
 import Dropdown from '@/components/Dropdown/Dropdown';
@@ -36,7 +36,7 @@ export default function PostSlide({
         router.push('/');
       }
     } else {
-      const newPost: newPostsDto = { chapterId: chapters[chapterIdx].id, title, content };
+      const newPost: NewPostsDto = { chapterId: chapters[chapterIdx].id, title, content };
 
       const response = await apis.createPost(newPost);
       if(response.status < 300) {
