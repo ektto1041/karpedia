@@ -12,7 +12,6 @@ import { ChaptersWithPostsDto } from '@/types/chapter';
 import { TopicProps } from '@/pages/topic/[...id]';
 import Icon from '@mdi/react';
 import { mdiListBoxOutline } from '@mdi/js';
-import useWindowSize from '@/hooks/useWindowSize';
 import css from '@/utils/css';
 import CommentBox from './CommentBox';
 import { apis } from '@/utils/api';
@@ -135,9 +134,12 @@ export default function TopicScreen({
             <div className={styles.post}>
               <h3>{topic.name}</h3>
               <Content post={post} />
-              <CommentBox
-                onClickCreateComment={onClickCreateComment}
-              />
+              {postId != -1 && (
+                <CommentBox
+                  onClickCreateComment={onClickCreateComment}
+                  viewer={users}
+                />
+              )}
             </div>
           </>
         ) : (

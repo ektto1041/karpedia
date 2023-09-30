@@ -5,9 +5,9 @@
 }
 
 .profile-image {
+  position: relative;
   width: 56px;
   height: 56px;
   border-radius: 16px;
-
-  background-color: red;
+  overflow: hidden;
 }
