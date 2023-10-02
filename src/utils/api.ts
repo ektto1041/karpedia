@@ -3,6 +3,7 @@ import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } 
 import { CommentsDto, CommentsWithPublicUsersDto, NewCommentsDto } from "@/types/comment";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
+import { PublicUsersDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -25,6 +26,14 @@ export const apis = {
 
   googleLogin: (): Promise<AxiosResponse<any>> => {
     return ax.get(`/auths/google`, { headers: {"Cache-control": "no-cache"}});
+  },
+
+  /**
+   * Users
+   */
+  // 현재 로그인한 유저가 유저 정보를 가져오는 API
+  getSelfUsers: (): Promise<AxiosResponse<PublicUsersDto>> => {
+    return ax.get(`/users/self`);
   },
 
   /**
