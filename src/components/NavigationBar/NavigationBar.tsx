@@ -11,6 +11,9 @@ import { mdiMenu } from '@mdi/js';
 import { mdiMagnify } from '@mdi/js';
 import { mdiClose } from '@mdi/js';
 import MobileMenuList from './MobileMenuList';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
+import { fetchSelfUser, selectAuthStatus, selectSelfUser } from '@/redux/slices/AuthSlice';
 
 export type MenuItem = {
   name: string;
@@ -22,7 +25,11 @@ export default function NavigationBar() {
   const [isAdmin, setAdmin] = useState<boolean>(false);
   const [isMenuClicked, setMenuClicked] = useState(false);
 
+  const authStatus = useSelector((state: RootState) => selectAuthStatus(state));
+  const selfUser = useSelector((state: RootState) => selectSelfUser(state));
+
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
   const menuItems = useMemo<MenuItem[]>(() => ([
     {name: '포트폴리오', href: '/portfolio'},
@@ -30,8 +37,15 @@ export default function NavigationBar() {
   ]), []);
 
   useEffect(() => {
+    console.log('useEffect');
     const cookieUid = getCookie('uid');
-    if(cookieUid) setUid(cookieUid as string);
+    if(cookieUid) {
+      setUid(cookieUid as string);
+
+      if(authStatus === 'idle') {
+        dispatch(fetchSelfUser());
+      }
+    }
 
     if(getCookie('is_admin') === '1') setAdmin(true);
   }, []);
