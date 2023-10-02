@@ -1,9 +1,12 @@
-import { CommentsDto, CommentsWithPublicUsersDto, NewCommentsDto } from '@/types/comment';
+import { CommentsWithPublicUsersDto } from '@/types/comment';
 import styles from './CommentBox.module.css';
 import CommentItem from './CommentItem';
 import { PublicUsersDto } from '@/types/user';
 import { useCallback, useEffect, useState } from 'react';
 import { apis } from '@/utils/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { selectSelfUser } from '@/redux/slices/AuthSlice';
 
 type CommentBoxProps = {
   onClickCreateComment: (content: string) => void;
@@ -17,6 +20,8 @@ export default function CommentBox({
   postId,
 }: CommentBoxProps) {
   const [commentList, setCommentList] = useState<CommentsWithPublicUsersDto[]>([]);
+
+  const selfUser = useSelector((state: RootState) => selectSelfUser(state));
 
   const getCommentList = useCallback(async () => {
     const response = await apis.getCommentsWithPublicUser(postId);
@@ -36,7 +41,7 @@ export default function CommentBox({
           <CommentItem key={comment.id} comment={comment} user={comment.users} />
           ))}
       </div>
-      <CommentItem isNewComment onClickCreate={onClickCreateComment} user={viewer} />
+      {selfUser && (<CommentItem isNewComment onClickCreate={onClickCreateComment} user={selfUser} />)}
     </div>
   );
 };
