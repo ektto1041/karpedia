@@ -82,11 +82,12 @@ export default function TopicScreen({
     }
   }, [isMobileMenuClicked]);
 
-  const onClickCreateComment = useCallback(async (content: string) => {
+  const onClickCreateComment = useCallback(async (content: string, replyToId?: number) => {
     const newComment: NewCommentsDto = {
       content,
       postsId: postId,
-    }
+      replyToId,
+    };
 
     const response = await apis.createComment(newComment);
     if(response.status < 300) {

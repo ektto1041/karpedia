@@ -1,18 +1,21 @@
 import CommentEditor from '@/components/CommentEditor';
 import styles from './CommentContent.module.css';
 import time from '@/utils/time';
+import { CommentsDto } from '@/types/comment';
 
 type CommentContentProps = {
-  defaultContent: string;
-  modifiedAt: Date;
+  comment: CommentsDto,
   userName: string;
+  onClickReply: (commentId: number) => void;
 };
 
 export default function CommentContent({
-  defaultContent,
-  modifiedAt,
+  comment,
   userName,
+  onClickReply,
 }: CommentContentProps) {
+  const {content: defaultContent, modifiedAt} = comment;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -31,7 +34,7 @@ export default function CommentContent({
           <div className={styles.button}>
             수정하기
           </div>
-          <div className={styles.button}>
+          <div className={styles.button} onClick={() => onClickReply(comment.id)}>
             답변하기
           </div>
         </div>

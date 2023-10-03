@@ -1,14 +1,20 @@
 import CommentEditor from '@/components/CommentEditor';
 import styles from './NewCommentContent.module.css';
-import { NewCommentsDto } from '@/types/comment';
 import { useCallback, useMemo, useState } from 'react';
+import Icon from '@mdi/react';
+import { mdiCancel, mdiReplyOutline } from '@mdi/js';
+import { CommentsWithPublicUsersDto } from '@/types/comment';
 
 type NewCommentContentProps = {
-  onClickCreate: (content: string) => void;
+  onClickCreate: (content: string, replyToId?: number) => void;
+  replyTo?: CommentsWithPublicUsersDto;
+  onClickCancelReply: () => void;
 };
 
 export default function NewCommentContent({
   onClickCreate,
+  replyTo,
+  onClickCancelReply,
 }: NewCommentContentProps) {
   const [content, setContent] = useState('<p></p>');
 
@@ -19,8 +25,21 @@ export default function NewCommentContent({
   return (
     <div className={styles.container}>
       <CommentEditor onChangeContent={onChangeContent} defaultContent='<p></p>' editable />
+      {replyTo && (
+        <div className={styles['reply-to']} onClick={onClickCancelReply}>
+          <div className={styles['reply-to-name']}>
+            <Icon path={mdiReplyOutline} size={'24px'} />
+            {replyTo.users.name} 님에게 답장
+          </div>
+          <div className={styles['cancel-icon']}>
+            <Icon path={mdiCancel} size={'24px'} />
+            취소
+          </div>
+        </div>
+      )}
+      
       <div className={styles['button-box']}>
-        <div className={styles.button} onClick={() => onClickCreate(content)} >
+        <div className={styles.button} onClick={() => onClickCreate(content, replyTo ? replyTo.id : undefined)} >
           작성하기
         </div>
       </div>
