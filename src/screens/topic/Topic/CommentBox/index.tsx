@@ -1,8 +1,8 @@
-import { CommentsDto, CommentsWithPublicUsersDto } from '@/types/comment';
+import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
 import styles from './CommentBox.module.css';
 import CommentItem from './CommentItem';
 import { PublicUsersDto } from '@/types/user';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { apis } from '@/utils/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -19,8 +19,8 @@ export default function CommentBox({
   viewer,
   postId,
 }: CommentBoxProps) {
-  const [commentList, setCommentList] = useState<CommentsWithPublicUsersDto[]>([]);
-  const [replyTo, setReplyTo] = useState<CommentsWithPublicUsersDto>();
+  const [commentList, setCommentList] = useState<CommentsWithPublicUsersWithReplyToDto[]>([]);
+  const [replyTo, setReplyTo] = useState<CommentsWithPublicUsersWithReplyToDto>();
 
   const commentRefs = useRef<HTMLDivElement[]>([]);
   const newCommentRef = useRef<HTMLDivElement>();
@@ -42,12 +42,18 @@ export default function CommentBox({
     const comment = commentList.find(comment => comment.id === commentId)!;
     setReplyTo({...comment});
 
-    newCommentRef.current?.scrollIntoView({ behavior: 'smooth' });
+    newCommentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [commentList, newCommentRef]);
 
   const onClickCancelReply = useCallback(() => {
     setReplyTo(undefined);
   }, []);
+
+  const onClickScrollToReplyFrom = useCallback((commentId: number) => {
+    const commentIdx = commentList.findIndex(comment => comment.id === commentId);
+
+    commentRefs.current[commentIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [commentList, commentRefs]);
 
   return (
     <div className={styles.container}>
@@ -58,6 +64,7 @@ export default function CommentBox({
             commentProps={{
               comment,
               onClickReply,
+              onClickScrollToReplyFrom,
             }}
             user={comment.users}
             refs={ref => {commentRefs.current[i] = ref!}}

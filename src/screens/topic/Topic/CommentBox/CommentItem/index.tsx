@@ -1,4 +1,4 @@
-import { CommentsDto, CommentsWithPublicUsersDto, NewCommentsDto } from '@/types/comment';
+import { CommentsDto, CommentsWithPublicUsersDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto } from '@/types/comment';
 import CommentAuthorBox from './CommentAuthorBox';
 import styles from './CommentItem.module.css';
 import NewCommentContent from './NewCommentContent';
@@ -8,13 +8,14 @@ import { LegacyRef } from 'react';
 
 type NewCommentProps = {
   onClickCreate: (content: string, replyToId?: number) => void;
-  replyTo?: CommentsWithPublicUsersDto;
+  replyTo?: CommentsWithPublicUsersWithReplyToDto;
   onClickCancelReply: () => void;
 }
 
 type CommentProps = {
-  comment: CommentsDto;
+  comment: CommentsWithPublicUsersWithReplyToDto;
   onClickReply: (commentId: number) => void;
+  onClickScrollToReplyFrom: (commentId: number) => void;
 }
 
 type CommentItemProps = {
@@ -40,7 +41,7 @@ export default function CommentItem({
         {isNewComment ? (
           <NewCommentContent {...newCommentProps!} />
         ) : (
-          <CommentContent {...commentProps!} userName={user.name} />
+          <CommentContent {...commentProps!} />
         )}
       </div>
     </div>

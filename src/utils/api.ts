@@ -1,6 +1,6 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
-import { CommentsDto, CommentsWithPublicUsersDto, NewCommentsDto } from "@/types/comment";
+import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto } from "@/types/comment";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { PublicUsersDto } from "@/types/user";
@@ -173,7 +173,7 @@ export const apis = {
     return ax.post(`/comments`, newComment);
   },
 
-  getCommentsWithPublicUser: (postId: number): Promise<AxiosResponse<CommentsWithPublicUsersDto[]>> => {
+  getCommentsWithPublicUser: (postId: number): Promise<AxiosResponse<CommentsWithPublicUsersWithReplyToDto[]>> => {
     return ax.get(`/comments/${postId}`);
   },
 };

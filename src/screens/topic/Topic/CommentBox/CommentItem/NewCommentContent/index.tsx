@@ -3,11 +3,11 @@ import styles from './NewCommentContent.module.css';
 import { useCallback, useMemo, useState } from 'react';
 import Icon from '@mdi/react';
 import { mdiCancel, mdiReplyOutline } from '@mdi/js';
-import { CommentsWithPublicUsersDto } from '@/types/comment';
+import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
 
 type NewCommentContentProps = {
   onClickCreate: (content: string, replyToId?: number) => void;
-  replyTo?: CommentsWithPublicUsersDto;
+  replyTo?: CommentsWithPublicUsersWithReplyToDto;
   onClickCancelReply: () => void;
 };
 
