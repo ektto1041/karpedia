@@ -94,6 +94,26 @@ button {
   min-height: 256px;
 }
 
+.comment-editor {
+  min-height: 48px;
+}
+
+.comment-editor.editable {
+  min-height: 128px;
+}
+
+.comment-editor:focus {
+  outline: none;
+}
+
+.ProseMirror .empty-editor:first-child::before {
+  color: var(--gray);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .ProseMirror p {
   line-height: 1.75rem;
   margin: 1px 0;
@@ -155,6 +175,7 @@ button {
   border-left: 3px solid var(--third);
   padding: .5rem;
   margin-left: 1rem;
+  margin-right: 1rem;
   background-color: var(--third-o80);
   border-radius: 0 0 0px 8px;
   box-shadow: 2px 2px 1px 1px var(--black-o40);

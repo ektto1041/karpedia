@@ -19,7 +19,7 @@ export type PostsWithChaptersIdDto = {
   chaptersId: number;
 }
 
-export type newPostsDto = {
+export type NewPostsDto = {
   title: string;
   content: string;
   chapterId: number;

@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  padding: 8px;
+  margin-top: 64px;
+  border-top: 2px solid var(--white-gray);
+}
+
+.comment-list {
+  width: 100%;
+}

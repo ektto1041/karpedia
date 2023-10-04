@@ -1,6 +1,7 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
-import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, newPostsDto } from "@/types/post";
+import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
+import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { PublicUsersDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
@@ -149,7 +150,7 @@ export const apis = {
    * Posts
    */
   // 포스트를 추가하는 API
-  createPost: (newPost: newPostsDto): Promise<AxiosResponse<PostsDto>> => {
+  createPost: (newPost: NewPostsDto): Promise<AxiosResponse<PostsDto>> => {
     return ax.post(`/posts`, newPost);
   },
 
@@ -163,6 +164,25 @@ export const apis = {
 
   getUpdatePost: (postId: number): Promise<AxiosResponse<UpdatePostsDto>> => {
     return ax.get(`/posts/update/${postId}`);
+  },
+
+  /**
+   * Comments
+   */
+  createComment: (newComment: NewCommentsDto): Promise<AxiosResponse<CommentsDto>> => {
+    return ax.post(`/comments`, newComment);
+  },
+
+  updateComment: (newComment: NewCommentsUpdateDto): Promise<AxiosResponse<CommentsDto>> => {
+    return ax.put(`/comments`, newComment);
+  },
+
+  getCommentsWithPublicUser: (postId: number): Promise<AxiosResponse<CommentsWithPublicUsersWithReplyToDto[]>> => {
+    return ax.get(`/comments/${postId}`);
+  },
+
+  deleteComment: (commentId: number): Promise<AxiosResponse<void>> => {
+    return ax.delete(`/comments/${commentId}`);
   },
 };
 
