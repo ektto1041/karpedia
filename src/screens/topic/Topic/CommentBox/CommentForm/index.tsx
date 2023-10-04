@@ -48,7 +48,7 @@ export default function CommentForm({
         <div className={styles['reply-to']} onClick={onClickCancelReply!}>
           <div className={styles['reply-to-name']}>
             <Icon path={mdiReplyOutline} size={'24px'} />
-            {replyTo.users.name} 님에게 답장
+            {replyTo.users.name} 님에게 답장 <br />클릭하여 취소
           </div>
           <div className={styles['cancel-icon']}>
             <Icon path={mdiCancel} size={'24px'} />

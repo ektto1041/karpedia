@@ -15,10 +15,7 @@
   padding-left: 32px;
   transition: all ease .25s;
   position: relative;
-}
-
-.reply-to:hover {
-  background-color: var(--main-red);
+  font-size: .9rem;
 }
 
 .reply-to>div {
@@ -37,18 +34,10 @@
   gap: 16px;
 }
 
-.reply-to:hover .reply-to-name {
-  color: var(--main-red)
-}
-
 .cancel-icon {
   justify-content: center;
   color: var(--white-gray);
   opacity: 0;
-}
-
-.reply-to:hover .cancel-icon {
-  opacity: 1;
 }
 
 .button-box {
@@ -69,4 +58,37 @@
   line-height: 40px;
   user-select: none;
   cursor: pointer;
+}
+
+@media (min-width: 480px) {
+  .reply-to:hover {
+    background-color: var(--main-red);
+  }
+
+  .reply-to:hover .reply-to-name {
+    color: var(--main-red)
+  }
+
+  .reply-to:hover .cancel-icon {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 479px) {
+  .reply-to {
+    padding: 0;
+    font-size: .7rem; 
+  }
+
+  .reply-to-name {
+    color: var(--main-red);
+  }
+
+  .reply-to-name>svg {
+    display: none;
+  }
+
+  .button {
+    font-size: .9rem;
+  }
 }

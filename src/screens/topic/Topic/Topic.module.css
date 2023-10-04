@@ -50,7 +50,8 @@
 
 @media (max-width: 991px) {
   .content {
-    width: 100%;
+    width: 704px;
+    margin: 0 auto;
   }
 
   .mobile-menu-button-container {
@@ -102,5 +103,16 @@
     display: block;
     background-color: var(--white);
     height: calc(100vh - 128px);
+  }
+}
+
+@media (max-width: 703px) {
+  .content {
+    width: 100%;
+    margin: 0;
+  }
+
+  .post {
+    width: 100%;
   }
 }

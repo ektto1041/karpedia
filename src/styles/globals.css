@@ -175,6 +175,7 @@ button {
   border-left: 3px solid var(--third);
   padding: .5rem;
   margin-left: 1rem;
+  margin-right: 1rem;
   background-color: var(--third-o80);
   border-radius: 0 0 0px 8px;
   box-shadow: 2px 2px 1px 1px var(--black-o40);

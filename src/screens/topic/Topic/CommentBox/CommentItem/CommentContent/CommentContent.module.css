@@ -29,7 +29,6 @@
   position: relative;
   margin: 8px;
   height: 40px;
-  line-height: 24px;
   font-size: .9rem;
   text-indent: 16px;
   padding: 8px;
@@ -38,11 +37,6 @@
   user-select: none;
   cursor: pointer;
   transition: all ease .25s;
-}
-
-.reply-to:hover {
-  color: var(--main-red);
-  background-color: var(--main-red);
 }
 
 .scroll-icon {
@@ -56,10 +50,6 @@
   justify-content: center;
   align-items: center;
   transition: all ease .25s;
-}
-
-.reply-to:hover .scroll-icon {
-  opacity: 1;
 }
 
 .content {
@@ -105,4 +95,27 @@
 
 .button:hover {
   color: var(--main-red);
+}
+
+@media (min-width: 480px) {
+  .reply-to {
+    line-height: 24px;
+  }
+  
+  .reply-to:hover {
+    color: var(--main-red);
+    background-color: var(--main-red);
+  }
+
+  .reply-to:hover .scroll-icon {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 479px) {
+  .reply-to {
+    font-size: .7rem;
+    text-indent: 0;
+    height: auto;
+  }
 }
