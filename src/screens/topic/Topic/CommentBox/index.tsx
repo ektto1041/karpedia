@@ -18,7 +18,7 @@ export default function CommentBox({
   postId,
 }: CommentBoxProps) {
   const [commentList, setCommentList] = useState<CommentsWithPublicUsersWithReplyToDto[]>([]);
-  const [replyTo, setReplyTo] = useState<CommentsWithPublicUsersWithReplyToDto>();
+  const [replyTo, setReplyTo] = useState<CommentsWithPublicUsersWithReplyToDto | null>(null);
 
   const commentRefs = useRef<HTMLDivElement[]>([]);
   const newCommentRef = useRef<HTMLDivElement>();
@@ -45,7 +45,7 @@ export default function CommentBox({
   }, [commentList, newCommentRef]);
 
   const onClickCancelReply = useCallback(() => {
-    setReplyTo(undefined);
+    setReplyTo(null);
   }, []);
 
   const onClickScrollToReplyFrom = useCallback((commentId: number) => {

@@ -13,6 +13,11 @@ export type NewCommentsDto = {
   replyToId?: number;
 }
 
+export type NewCommentsUpdateDto = {
+  id: number;
+  content: string;
+}
+
 export type CommentsWithPublicUsersWithReplyToDto = {
   id: number;
   content: string;

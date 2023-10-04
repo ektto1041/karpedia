@@ -1,9 +1,11 @@
-import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
+import { CommentsWithPublicUsersWithReplyToDto, NewCommentsUpdateDto } from '@/types/comment';
 import CommentContentWrapper from '../CommentContentWrapper';
 import styles from './CommentItem.module.css';
 import CommentContent from './CommentContent';
 import { LegacyRef, useCallback, useState } from 'react';
 import CommentForm from '../CommentForm';
+import { apis } from '@/utils/api';
+import { useRouter } from 'next/router';
 
 type CommentItemProps = {
   comment: CommentsWithPublicUsersWithReplyToDto;
@@ -20,6 +22,8 @@ export default function CommentItem_({
 }: CommentItemProps) {
   const [isUpdate, setUpdate] = useState(false);
 
+  const router = useRouter();
+
   const onClickUpdate = useCallback(() => {
     setUpdate(true);
   }, []);
@@ -27,6 +31,18 @@ export default function CommentItem_({
   const onClickCancelUpdate = useCallback(() => {
     setUpdate(false);
   }, []);
+
+  const onClickSubmitUpdate = useCallback(async (content: string) => {
+    const newComment: NewCommentsUpdateDto = {
+      id: comment.id,
+      content,
+    };
+
+    const response = await apis.updateComment(newComment);
+    if(response.status < 300) {
+      router.reload();
+    }
+  }, [comment, router]);
 
   return (
     <CommentContentWrapper user={comment.users} refs={refs}>
@@ -40,8 +56,9 @@ export default function CommentItem_({
       ) : (
         <CommentForm
           defaultContent={comment.content}
+          replyTo={null}
           submitText='수정하기'
-          onClickSubmit={() => {}}
+          onClickSubmit={onClickSubmitUpdate}
           buttons={[{ text: '취소하기', onClick: onClickCancelUpdate }]}
         />
       )}

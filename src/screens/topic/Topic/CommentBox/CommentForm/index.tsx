@@ -12,7 +12,7 @@ type Button = {
 
 type CommentFormProps = {
   defaultContent?: string;
-  replyTo?: CommentsWithPublicUsersDto;
+  replyTo: CommentsWithPublicUsersDto | null;
   onClickCancelReply?: () => void;
   submitText: string;
   onClickSubmit: (content: string) => void;

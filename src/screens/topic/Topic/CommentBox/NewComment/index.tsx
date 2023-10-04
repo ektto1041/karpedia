@@ -8,7 +8,7 @@ import { CommentsWithPublicUsersDto } from '@/types/comment';
 import { LegacyRef } from 'react';
 
 type NewCommentProps = {
-  replyTo?: CommentsWithPublicUsersDto;
+  replyTo: CommentsWithPublicUsersDto | null;
   onClickCancelReply: () => void;
   onClickCreateComment: (comment: string) => void;
   refs: LegacyRef<HTMLDivElement>;
