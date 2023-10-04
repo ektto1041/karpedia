@@ -13,6 +13,7 @@ type CommentContentProps = {
   onClickUpdate: () => void;
   onClickReply: (commentId: number) => void;
   onClickScrollToReplyFrom: (commentId: number) => void;
+  onClickDelete: (commentId: number) => void;
 };
 
 export default function CommentContent({
@@ -20,8 +21,9 @@ export default function CommentContent({
   onClickUpdate,
   onClickReply,
   onClickScrollToReplyFrom,
+  onClickDelete,
 }: CommentContentProps) {
-  const {content, modifiedAt, users, replyTo} = comment;
+  const {id, content, modifiedAt, users, replyTo} = comment;
 
   const selfUser = useSelector((state: RootState) => selectSelfUser(state));
 
@@ -54,7 +56,7 @@ export default function CommentContent({
             </div>
             {selfUser.id === users.id && (
               <>
-                <div className={styles.button} onClick={onClickUpdate}>
+                <div className={styles.button} onClick={() => onClickDelete(id)}>
                   <Icon path={mdiDeleteOutline} size={'24px'} />
                 </div>
                 <div className={styles.button} onClick={onClickUpdate}>

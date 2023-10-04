@@ -44,6 +44,13 @@ export default function CommentItem({
     }
   }, [comment, router]);
 
+  const onClickDelete = useCallback(async (commentId: number) => {
+    const response = await apis.deleteComment(commentId);
+    if(response.status < 300) {
+      router.reload();
+    }
+  }, [router]);
+
   return (
     <CommentContentWrapper user={comment.users} refs={refs}>
       {!isUpdate ? (
@@ -52,6 +59,7 @@ export default function CommentItem({
           onClickReply={onClickReply}
           onClickUpdate={onClickUpdate}
           onClickScrollToReplyFrom={onClickScrollToReplyFrom}
+          onClickDelete={onClickDelete}
         />
       ) : (
         <CommentForm

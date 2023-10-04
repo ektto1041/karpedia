@@ -180,6 +180,10 @@ export const apis = {
   getCommentsWithPublicUser: (postId: number): Promise<AxiosResponse<CommentsWithPublicUsersWithReplyToDto[]>> => {
     return ax.get(`/comments/${postId}`);
   },
+
+  deleteComment: (commentId: number): Promise<AxiosResponse<void>> => {
+    return ax.delete(`/comments/${commentId}`);
+  },
 };
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);
