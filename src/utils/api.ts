@@ -142,8 +142,16 @@ export const apis = {
     return ax.patch(`/chapters/${from}/${to}`);
   },
 
+  getOneChapterById: (chapterId: number): Promise<AxiosResponse<ChaptersDto>> => {
+    return ax.get(`/chapters/${chapterId}`);
+  },
+
   getUpdateChapter: (chapterId: number): Promise<AxiosResponse<UpdateChaptersDto>> => {
     return ax.get(`/chapters/update/${chapterId}`);
+  },
+
+  getFirstInTopic: (topicId: number): Promise<AxiosResponse<ChaptersDto | null>> => {
+    return ax.get(`/chapters/topics/${topicId}`);
   },
 
   /**
@@ -160,6 +168,10 @@ export const apis = {
 
   swapPostOrder: (from: number, to: number): Promise<AxiosResponse<void>> => {
     return ax.patch(`/posts/${from}/${to}`);
+  },
+
+  getOnePostById: (postId: number): Promise<AxiosResponse<PostsDto>> => {
+    return ax.get(`/posts/${postId}`);
   },
 
   getUpdatePost: (postId: number): Promise<AxiosResponse<UpdatePostsDto>> => {

@@ -1,32 +1,19 @@
-
-import { PostsDto } from '@/types/post';
 import ChapterList from './ChapterList/ChapterList';
 import Content from './Content';
 import styles from './Topic.module.css';
 import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { useRouter } from 'next/router';
-import { getCookie } from 'cookies-next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import ChapterOptions from './ChapterList/ChapterOptions';
-import { ChaptersWithPostsDto } from '@/types/chapter';
 import { TopicProps } from '@/pages/topic/[...id]';
 import Icon from '@mdi/react';
 import { mdiListBoxOutline } from '@mdi/js';
 import css from '@/utils/css';
 import CommentBox from './CommentBox';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
-import { NewCommentsDto } from '@/types/comment';
-
-const findPost = (topic: TopicsWithChaptersWithPostsDto, chapterId: number, postId: number): PostsDto | ChaptersWithPostsDto => {
-  const chapter: ChaptersWithPostsDto = topic.chaptersList.find(c => c.id === chapterId)!;
-  if(postId > -1) {
-    const post: PostsDto = chapter.postsList.find(p => p.id === postId)!;
-
-    return post;
-  }
-
-  return chapter;
-}
 
 const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: number): number => {
   for(const chapter of topic.chaptersList) {
@@ -39,20 +26,31 @@ const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: nu
 }
 
 export default function TopicScreen({
-  topic,
+  post,
+  topicId,
   chapterId,
   postId,
 }: TopicProps) {
-  const {id, name, description, chaptersList, users} = topic
-  const post = chapterId !== -1 ? findPost(topic, chapterId, postId) : null;
+  const [topic, setTopic] = useState<TopicsWithChaptersWithPostsDto | null>(null);
 
-  const [isOwner, setOwner] = useState(false);
   const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
 
+  const selfUser = useSelector((state: RootState) => selectSelfUser(state));
   const router = useRouter();
 
+  const isOwner = useMemo(() => {
+    return (selfUser && topic && selfUser.id === topic.users.id) ? true : false;
+  }, [selfUser, topic]);
+
+  const getTopic = useCallback(async () => {
+    const response = await apis.getTopic(topicId);
+    if(response.status < 300) {
+      setTopic(response.data);
+    }
+  }, []);
+
   useEffect(() => {
-    setOwner(getCookie('uid') === String(users.id));
+    getTopic();
   }, []);
 
   useEffect(() => {
@@ -60,12 +58,13 @@ export default function TopicScreen({
     document.body.classList.remove('mobile-chapter-list');
   }, [router])
 
+  // 아래 두 메소드는 topic 이 truthy 일 때만 호출되므로 타입을 확정해줌
   const onClickChapter = (chapterId: number) => {
-    router.push(`/topic/${topic.id}/${chapterId}`);
+    router.push(`/topic/${topic!.id}/${chapterId}`);
   };
 
   const onClickPost = (postId: number) => {
-    router.push(`/topic/${topic.id}/${findChapterIdByPostId(topic, postId)}/${postId}`);
+    router.push(`/topic/${topic!.id}/${findChapterIdByPostId(topic!, postId)}/${postId}`);
   };
 
   const updateHref = useMemo(() => {
@@ -92,35 +91,40 @@ export default function TopicScreen({
           포스트 목록
         </div>
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
-          <ChapterList
-            chapterList={chaptersList}
-            onClickChapter={onClickChapter}
-            onClickPost={onClickPost}
-            isOwner={isOwner}
-            topicId={id}
-            chapterId={chapterId}
-            postId={postId}
-            updateHref={updateHref}
-          />
+          {topic && (
+            <ChapterList
+              chapterList={topic.chaptersList}
+              onClickChapter={onClickChapter}
+              onClickPost={onClickPost}
+              isOwner={isOwner}
+              topicId={topic.id}
+              chapterId={chapterId}
+              postId={postId}
+              updateHref={updateHref}
+            />
+          )}
         </div>
       </div>
       <div className={styles.content}>
         { post ? (
           <>
-            <div className={styles['chapter-list-wrapper']}>
-              <ChapterList
-                chapterList={chaptersList}
-                onClickChapter={onClickChapter}
-                onClickPost={onClickPost}
-                isOwner={isOwner}
-                topicId={id}
-                chapterId={chapterId}
-                postId={postId}
-                updateHref={updateHref}
-              />
-            </div>
+            { topic && (
+              <div className={styles['chapter-list-wrapper']}>
+                <ChapterList
+                  chapterList={topic.chaptersList}
+                  onClickChapter={onClickChapter}
+                  onClickPost={onClickPost}
+                  isOwner={isOwner}
+                  topicId={topic.id}
+                  chapterId={chapterId}
+                  postId={postId}
+                  updateHref={updateHref}
+                />
+              </div>
+            )}
+            
             <div className={styles.post}>
-              <h3>{topic.name}</h3>
+              <h3>{topic ? topic.name : ''}</h3>
               <Content post={post} />
               {postId != -1 && (
                 <CommentBox
@@ -135,7 +139,7 @@ export default function TopicScreen({
               작성된 포스트가 없습니다.
             </div>
             
-            {isOwner && (<ChapterOptions topicId={id} updateHref={updateHref} />)}
+            {isOwner && (<ChapterOptions topicId={topic!.id} updateHref={updateHref} />)}
           </div>
         )}
       </div>
