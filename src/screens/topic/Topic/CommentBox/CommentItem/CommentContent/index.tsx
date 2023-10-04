@@ -3,7 +3,7 @@ import styles from './CommentContent.module.css';
 import time from '@/utils/time';
 import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
 import Icon from '@mdi/react';
-import { mdiArrowUpCircleOutline } from '@mdi/js';
+import { mdiArrowUpCircleOutline, mdiCommentQuoteOutline, mdiDeleteOutline, mdiPencilOutline } from '@mdi/js';
 import { useSelector } from 'react-redux';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { RootState } from '@/redux/store';
@@ -49,14 +49,19 @@ export default function CommentContent({
         </div>
         {selfUser && (
           <div className={styles['button-box']}>
-            {selfUser.id === users.id && (
-              <div className={styles.button} onClick={onClickUpdate}>
-                수정하기
-              </div>
-            )}
             <div className={styles.button} onClick={() => onClickReply(comment.id)}>
-              답변하기
+              <Icon path={mdiCommentQuoteOutline} size={'24px'} />
             </div>
+            {selfUser.id === users.id && (
+              <>
+                <div className={styles.button} onClick={onClickUpdate}>
+                  <Icon path={mdiDeleteOutline} size={'24px'} />
+                </div>
+                <div className={styles.button} onClick={onClickUpdate}>
+                  <Icon path={mdiPencilOutline} size={'24px'} />
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

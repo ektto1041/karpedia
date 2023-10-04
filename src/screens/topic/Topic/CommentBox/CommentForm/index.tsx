@@ -58,14 +58,14 @@ export default function CommentForm({
       )}
       
       <div className={styles['button-box']}>
-        <div className={styles.button} onClick={() => onClickSubmit(content)} >
-          {submitText}
-        </div>
         {buttons?.map(button => (
           <div key={button.text} className={styles.button} onClick={button.onClick} >
             {button.text}
           </div>
         ))}
+        <div className={styles.button} onClick={() => onClickSubmit(content)} >
+          {submitText}
+        </div>
       </div>
     </div>
   );

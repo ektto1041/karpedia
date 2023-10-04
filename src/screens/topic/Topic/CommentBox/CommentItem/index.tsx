@@ -14,7 +14,7 @@ type CommentItemProps = {
   refs: LegacyRef<HTMLDivElement>;
 }
 
-export default function CommentItem_({
+export default function CommentItem({
   comment,
   onClickReply,
   onClickScrollToReplyFrom,
