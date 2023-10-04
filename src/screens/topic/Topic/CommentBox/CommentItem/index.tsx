@@ -1,49 +1,51 @@
-import { CommentsDto, CommentsWithPublicUsersDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto } from '@/types/comment';
-import CommentAuthorBox from './CommentAuthorBox';
+import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
+import CommentContentWrapper from '../CommentContentWrapper';
 import styles from './CommentItem.module.css';
-import NewCommentContent from './NewCommentContent';
-import { PublicUsersDto } from '@/types/user';
 import CommentContent from './CommentContent';
-import { LegacyRef } from 'react';
+import { LegacyRef, useCallback, useState } from 'react';
+import CommentForm from '../CommentForm';
 
-type NewCommentProps = {
-  onClickCreate: (content: string, replyToId?: number) => void;
-  replyTo?: CommentsWithPublicUsersWithReplyToDto;
-  onClickCancelReply: () => void;
-}
-
-type CommentProps = {
+type CommentItemProps = {
   comment: CommentsWithPublicUsersWithReplyToDto;
   onClickReply: (commentId: number) => void;
   onClickScrollToReplyFrom: (commentId: number) => void;
+  refs: LegacyRef<HTMLDivElement>;
 }
 
-type CommentItemProps = {
-  isNewComment?: boolean;
-  newCommentProps?: NewCommentProps;
-  commentProps?: CommentProps;
-  user: PublicUsersDto;
-  refs?: LegacyRef<HTMLDivElement>;
-}
-
-export default function CommentItem({
-  isNewComment,
-  newCommentProps,
-  commentProps,
-  user,
+export default function CommentItem_({
+  comment,
+  onClickReply,
+  onClickScrollToReplyFrom,
   refs,
 }: CommentItemProps) {
+  const [isUpdate, setUpdate] = useState(false);
+
+  const onClickUpdate = useCallback(() => {
+    setUpdate(true);
+  }, []);
+
+  const onClickCancelUpdate = useCallback(() => {
+    setUpdate(false);
+  }, []);
 
   return (
-    <div className={styles.container} ref={refs} >
-      <CommentAuthorBox profileImage={user.profileImage} />
-      <div className={styles['content-container']}>
-        {isNewComment ? (
-          <NewCommentContent {...newCommentProps!} />
-        ) : (
-          <CommentContent {...commentProps!} />
-        )}
-      </div>
-    </div>
+    <CommentContentWrapper user={comment.users} refs={refs}>
+      {!isUpdate ? (
+        <CommentContent
+          comment={comment}
+          onClickReply={onClickReply}
+          onClickUpdate={onClickUpdate}
+          onClickScrollToReplyFrom={onClickScrollToReplyFrom}
+        />
+      ) : (
+        <CommentForm
+          defaultContent={comment.content}
+          submitText='수정하기'
+          onClickSubmit={() => {}}
+          buttons={[{ text: '취소하기', onClick: onClickCancelUpdate }]}
+        />
+      )}
+      
+    </CommentContentWrapper>
   );
-};
+}

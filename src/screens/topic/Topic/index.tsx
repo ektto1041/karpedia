@@ -82,19 +82,6 @@ export default function TopicScreen({
     }
   }, [isMobileMenuClicked]);
 
-  const onClickCreateComment = useCallback(async (content: string, replyToId?: number) => {
-    const newComment: NewCommentsDto = {
-      content,
-      postsId: postId,
-      replyToId,
-    };
-
-    const response = await apis.createComment(newComment);
-    if(response.status < 300) {
-      router.reload();
-    }
-  }, [postId, router]);
-
   return (
     <div className={styles.container}>
       <div className={styles['mobile-menu-button-container']}>
@@ -137,8 +124,6 @@ export default function TopicScreen({
               <Content post={post} />
               {postId != -1 && (
                 <CommentBox
-                  onClickCreateComment={onClickCreateComment}
-                  viewer={users}
                   postId={postId}
                 />
               )}

@@ -10,21 +10,20 @@ import { RootState } from '@/redux/store';
 
 type CommentContentProps = {
   comment: CommentsWithPublicUsersWithReplyToDto;
+  onClickUpdate: () => void;
   onClickReply: (commentId: number) => void;
   onClickScrollToReplyFrom: (commentId: number) => void;
 };
 
 export default function CommentContent({
   comment,
+  onClickUpdate,
   onClickReply,
   onClickScrollToReplyFrom,
 }: CommentContentProps) {
   const {content, modifiedAt, users, replyTo} = comment;
 
   const selfUser = useSelector((state: RootState) => selectSelfUser(state));
-
-  console.log(selfUser?.id);
-  console.log(users.id);
 
   return (
     <div className={styles.container}>
@@ -51,7 +50,7 @@ export default function CommentContent({
         {selfUser && (
           <div className={styles['button-box']}>
             {selfUser.id === users.id && (
-              <div className={styles.button}>
+              <div className={styles.button} onClick={onClickUpdate}>
                 수정하기
               </div>
             )}

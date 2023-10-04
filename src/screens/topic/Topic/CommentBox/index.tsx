@@ -1,4 +1,4 @@
-import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
+import { CommentsWithPublicUsersWithReplyToDto, NewCommentsDto } from '@/types/comment';
 import styles from './CommentBox.module.css';
 import CommentItem from './CommentItem';
 import { PublicUsersDto } from '@/types/user';
@@ -7,16 +7,14 @@ import { apis } from '@/utils/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
+import { useRouter } from 'next/router';
+import NewComment from './NewComment';
 
 type CommentBoxProps = {
-  onClickCreateComment: (content: string, replyToId?: number) => void;
-  viewer: PublicUsersDto;
   postId: number;
 };
 
 export default function CommentBox({
-  onClickCreateComment,
-  viewer,
   postId,
 }: CommentBoxProps) {
   const [commentList, setCommentList] = useState<CommentsWithPublicUsersWithReplyToDto[]>([]);
@@ -26,6 +24,7 @@ export default function CommentBox({
   const newCommentRef = useRef<HTMLDivElement>();
 
   const selfUser = useSelector((state: RootState) => selectSelfUser(state));
+  const router = useRouter();
 
   const getCommentList = useCallback(async () => {
     const response = await apis.getCommentsWithPublicUser(postId);
@@ -55,32 +54,38 @@ export default function CommentBox({
     commentRefs.current[commentIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [commentList, commentRefs]);
 
+  const onClickCreateComment = useCallback(async (content: string) => {
+    const newComment: NewCommentsDto = {
+      content,
+      postsId: postId,
+      replyToId: replyTo?.id,
+    };
+
+    const response = await apis.createComment(newComment);
+    if(response.status < 300) {
+      router.reload();
+    }
+  }, [postId, router, replyTo]);
+
   return (
     <div className={styles.container}>
       <div className={styles['comment-list']}>
         {commentList?.map((comment, i) => (
           <CommentItem
             key={comment.id}
-            commentProps={{
-              comment,
-              onClickReply,
-              onClickScrollToReplyFrom,
-            }}
-            user={comment.users}
+            comment={comment}
+            onClickReply={onClickReply}
+            onClickScrollToReplyFrom={onClickScrollToReplyFrom}
             refs={ref => {commentRefs.current[i] = ref!}}
           />
         ))}
       </div>
       {selfUser && (
-        <CommentItem
-          isNewComment
-          newCommentProps={{
-            onClickCreate: onClickCreateComment,
-            replyTo,
-            onClickCancelReply,
-          }}
-          user={selfUser}
-          refs={ref => newCommentRef.current = ref!}
+        <NewComment
+          replyTo={replyTo}
+          onClickCancelReply={onClickCancelReply}
+          onClickCreateComment={onClickCreateComment}
+          refs={ref => {newCommentRef.current = ref!}}
         />
       )}
     </div>
