@@ -19,6 +19,10 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    resetSelfUser: (state) => {
+      state.status = 'idle';
+      state.user = null;
+    },
     // change: (state, action: PayloadAction<string>) => {
     //   state.name = action.payload;
     // },
@@ -37,6 +41,8 @@ export const authSlice = createSlice({
       });
   }
 });
+
+export const { resetSelfUser } = authSlice.actions
 
 export const fetchSelfUser = createAsyncThunk('auth/fetchSelfUser', async () => {
   const response = await apis.getSelfUsers();

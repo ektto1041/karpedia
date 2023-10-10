@@ -82,10 +82,13 @@
 }
 
 .profile {
+  position: relative;
   margin-right: 16px;
   width: 32px;
   height: 32px;
-  color: var(--main-red);
+  border-radius: 16px;
+  overflow: hidden;
+  user-select: none;
 }
 
 .menu-list {

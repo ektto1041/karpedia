@@ -1,14 +1,12 @@
 import { CommentsWithPublicUsersWithReplyToDto, NewCommentsDto } from '@/types/comment';
 import styles from './CommentBox.module.css';
 import CommentItem from './CommentItem';
-import { PublicUsersDto } from '@/types/user';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { apis } from '@/utils/api';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { useRouter } from 'next/router';
 import NewComment from './NewComment';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type CommentBoxProps = {
   postId: number;
@@ -23,7 +21,7 @@ export default function CommentBox({
   const commentRefs = useRef<HTMLDivElement[]>([]);
   const newCommentRef = useRef<HTMLDivElement>();
 
-  const selfUser = useSelector((state: RootState) => selectSelfUser(state));
+  const selfUser = useAppSelector(state => selectSelfUser(state));
   const router = useRouter();
 
   const getCommentList = useCallback(async () => {
