@@ -36,6 +36,7 @@ import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
+import { apis } from '@/utils/api';
 
 type Menu = {
   icon: string;
@@ -109,9 +110,44 @@ export default function MyEditor({
   }, [editor]);
 
   const setImage = useCallback(() => {
-    const url = prompt('URL 을 입력해주세요.');
-    if(url === null) return;
-    editor.commands.setImage({ src: url });
+    const imageInput = document.createElement('input');
+    imageInput.type = 'file';
+    imageInput.setAttribute('style', 'display: none;');
+    imageInput.accept = 'image/*';
+    imageInput.addEventListener('change', async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files ? target.files[0] : null;
+
+      if(file) {
+        const MAX_SIZE = 1000000;
+        if(file.size <= MAX_SIZE) {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await apis.uploadImageToS3(formData);
+          if(response.status < 300) {
+            editor.commands.setImage({ src: response.data });
+
+          } else if(response.status === 500) {
+            alert('서버 오류로 인해 이미지 업로드에 실패했습니다.');
+          }
+        } else {
+          alert('이미지 파일의 용량은 1MB 를 초과할 수 없습니다.');
+        }
+      } else {
+        alert('이미지 파일을 선택하지 않았습니다.');
+      }
+
+      document.body.removeChild(imageInput);
+    });
+    imageInput.addEventListener('cancel', () => {
+      alert('이미지 파일을 선택하지 않았습니다.');
+
+      document.body.removeChild(imageInput);
+    })
+
+    document.body.appendChild(imageInput);
+    imageInput.click();
   }, [editor]);
 
   const setColor = useCallback((color: string) => {

@@ -184,6 +184,17 @@ export const apis = {
   deleteComment: (commentId: number): Promise<AxiosResponse<void>> => {
     return ax.delete(`/comments/${commentId}`);
   },
+
+  /**
+   * S3
+   */
+  uploadImageToS3: (formData: FormData) => {
+    return ax.post(`/s3/image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };
 
 export const fetcher = (url: string) => ax.get(url).then(res => res.data);
