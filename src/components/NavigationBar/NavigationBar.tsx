@@ -2,7 +2,6 @@ import Icon from '@mdi/react';
 import styles from './NavigationBar.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { mdiAccountCircle } from '@mdi/js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { apis } from '@/utils/api';
@@ -11,9 +10,10 @@ import { mdiMenu } from '@mdi/js';
 import { mdiMagnify } from '@mdi/js';
 import { mdiClose } from '@mdi/js';
 import MobileMenuList from './MobileMenuList';
-import { fetchSelfUser, selectAuthStatus, selectSelfUser } from '@/redux/slices/AuthSlice';
+import { fetchSelfUser, resetSelfUser, selectAuthStatus, selectSelfUser } from '@/redux/slices/AuthSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import Image from 'next/image';
 
 export type MenuItem = {
   name: string;
@@ -37,7 +37,6 @@ export default function NavigationBar() {
   ]), []);
 
   useEffect(() => {
-    console.log('useEffect');
     const cookieUid = getCookie('uid');
     if(cookieUid) {
       setUid(cookieUid as string);
@@ -45,9 +44,14 @@ export default function NavigationBar() {
       if(authStatus === 'idle') {
         dispatch(fetchSelfUser());
       }
-    }
 
-    if(getCookie('is_admin') === '1') setAdmin(true);
+      if(getCookie('is_admin') === '1') setAdmin(true);
+    } else {
+      setUid('');
+      setAdmin(false);
+
+      dispatch(resetSelfUser);
+    }
   }, []);
 
   // 모바일에서 페이지 이동했을 때 모바일 메뉴 리스트를 종료해주는 역할
@@ -91,7 +95,7 @@ export default function NavigationBar() {
             ) : (
               <>
                 <div className={styles.profile} onClick={onClickProfile}>
-                  <Icon path={mdiAccountCircle} />
+                  <Image src={selfUser.profileImage} alt='profile-image' fill />
                 </div>
                 {isAdmin && (
                   <Link href={'/topic/setting'} className={styles.button}>
