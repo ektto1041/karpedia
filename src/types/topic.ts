@@ -1,5 +1,6 @@
 import { CategoriesDto } from "./category";
 import { ChaptersDto, ChaptersWithPostsDto } from "./chapter";
+import { PostsDto } from "./post";
 import { PublicUsersDto } from "./user";
 
 export type NewTopicsDto = {
@@ -51,3 +52,20 @@ export type TopicsWithChaptersWithPostsDto = {
   chaptersList: ChaptersWithPostsDto[];
   users: PublicUsersDto;
 };
+
+export type TopicsWithOneChaptersDto = {
+  id: number;
+  name: string;
+  description: string;
+  orders: number;
+  chapters: ChaptersDto | null;
+}
+
+export type TopicsWithOneChaptersWithOnePostsDto = {
+  id: number;
+  name: string;
+  description: string;
+  orders: number;
+  chapters: ChaptersDto;
+  posts: PostsDto;
+}

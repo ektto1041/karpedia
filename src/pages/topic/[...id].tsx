@@ -1,20 +1,24 @@
 import TopicScreen from "@/screens/topic/Topic";
+import { ChaptersDto } from "@/types/chapter";
+import { PostsDto } from "@/types/post";
 import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { apis } from "@/utils/api";
 import { GetStaticPropsContext } from "next";
 
 export type TopicProps = {
-  topic: TopicsWithChaptersWithPostsDto;
-  chapterId: number,
-  postId: number,
+  post: PostsDto | ChaptersDto | null;
+  topicId: number;
+  chapterId: number;
+  postId: number;
 };
 
 export default function Topic({
-  topic,
+  post,
+  topicId,
   chapterId,
   postId,
 }: TopicProps) {
-  return <TopicScreen topic={topic} chapterId={chapterId} postId={postId} />
+  return <TopicScreen post={post} topicId={topicId} chapterId={chapterId} postId={postId} />
 };
 
 type Path = {
@@ -51,29 +55,46 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const ids: string[] = context.params!.id as string[];
   
   const topicId: number = parseInt(ids[0]);
-
-  // TODO 한 번의 쿼리로 해당 글 혹은 챕터를 가져오기
-  const topic = (await apis.getTopic(topicId)).data;
-
-  // sorting
-  topic.chaptersList.sort((a, b) => b.orders - a.orders);
-  topic.chaptersList.forEach(chapter => {
-    chapter.postsList.sort((a, b) => b.orders - a.orders);
-  });
-
-  const chapterId: number = ids[1] ? parseInt(ids[1]) : (topic.chaptersList[0]?.id || -1); 
+  let chapterId: number = ids[1] ? parseInt(ids[1]) : -1; 
   const postId: number = ids[2] ? parseInt(ids[2]) : -1;
-  
-  const hasNoData = !Boolean(topic);
-  if(hasNoData) {
-    return {
-      notFound: true,
-    };
+
+  let post: PostsDto | ChaptersDto | null = null;
+
+  const notFoundPage = { notFound: true }
+
+  // 1. 챕터가 지정되지 않았으면 토픽의 첫 챕터를 가져온다.
+  if(chapterId === -1) {
+    const response = await apis.getTopicWithFirstChapter(topicId);
+    if(response.status < 300) {
+      if(response.data) {
+        chapterId = response.data.chapters?.id || -1;
+        post = response.data.chapters;
+      }
+    } else if(response.status === 404) {
+      return notFoundPage;
+    }
+  // 2. 포스트가 지정되지 않았으면 해당 챕터를 가져온다.
+  } else if(postId === -1) {
+    const response = await apis.getTopicWithChapter(topicId, chapterId);
+    if(response.status < 300) {
+      post = response.data.chapters!;
+    } else if(response.status === 404) {
+      return notFoundPage;
+    }
+  // 3. 포스트가 지정되어 있으면 포스트를 가져온다.
+  } else {
+    const response = await apis.getTopicWithChapterWithPost(topicId, chapterId, postId);
+    if(response.status < 300) {
+      post = response.data.posts;
+    } else if(response.status === 404) {
+      return notFoundPage;
+    }
   }
 
   return {
     props: {
-      topic,
+      post,
+      topicId,
       chapterId,
       postId,
     },
