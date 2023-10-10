@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
-import styles from './NewComment.module.css';
-import { RootState } from '@/redux/store';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import CommentContentWrapper from '../CommentContentWrapper';
 import CommentForm from '../CommentForm';
 import { CommentsWithPublicUsersDto } from '@/types/comment';
 import { LegacyRef } from 'react';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type NewCommentProps = {
   replyTo: CommentsWithPublicUsersDto | null;
@@ -20,7 +18,7 @@ export default function NewComment({
   onClickCreateComment,
   refs,
 }: NewCommentProps) {
-  const selfUser = useSelector((state: RootState) => selectSelfUser(state))!;
+  const selfUser = useAppSelector(state => selectSelfUser(state))!;
   
   return (
     <CommentContentWrapper user={selfUser} refs={refs}>

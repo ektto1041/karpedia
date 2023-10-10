@@ -4,9 +4,8 @@ import time from '@/utils/time';
 import { CommentsWithPublicUsersWithReplyToDto } from '@/types/comment';
 import Icon from '@mdi/react';
 import { mdiArrowUpCircleOutline, mdiCommentQuoteOutline, mdiDeleteOutline, mdiPencilOutline } from '@mdi/js';
-import { useSelector } from 'react-redux';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
-import { RootState } from '@/redux/store';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type CommentContentProps = {
   comment: CommentsWithPublicUsersWithReplyToDto;
@@ -25,7 +24,7 @@ export default function CommentContent({
 }: CommentContentProps) {
   const {id, content, modifiedAt, users, replyTo} = comment;
 
-  const selfUser = useSelector((state: RootState) => selectSelfUser(state));
+  const selfUser = useAppSelector(state => selectSelfUser(state));
 
   return (
     <div className={styles.container}>
