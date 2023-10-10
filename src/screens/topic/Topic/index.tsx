@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
+import { ChaptersWithPostsDto } from '@/types/chapter';
 
 const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: number): number => {
   for(const chapter of topic.chaptersList) {
@@ -32,6 +33,12 @@ export default function TopicScreen({
   postId,
 }: TopicProps) {
   const [topic, setTopic] = useState<TopicsWithChaptersWithPostsDto | null>(null);
+  const chapterList: ChaptersWithPostsDto[] = useMemo(() => {
+    return topic ? topic.chaptersList.map(chapter => ({
+      ...chapter,
+      postsList: [...chapter.postsList].sort((a, b) => a.orders - b.orders),
+    })).sort((a, b) => a.orders - b.orders) : [];
+  }, [topic]);
 
   const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
 
@@ -93,7 +100,7 @@ export default function TopicScreen({
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
           {topic && (
             <ChapterList
-              chapterList={topic.chaptersList}
+              chapterList={chapterList}
               onClickChapter={onClickChapter}
               onClickPost={onClickPost}
               isOwner={isOwner}
@@ -111,7 +118,7 @@ export default function TopicScreen({
             { topic && (
               <div className={styles['chapter-list-wrapper']}>
                 <ChapterList
-                  chapterList={topic.chaptersList}
+                  chapterList={chapterList}
                   onClickChapter={onClickChapter}
                   onClickPost={onClickPost}
                   isOwner={isOwner}

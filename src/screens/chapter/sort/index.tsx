@@ -26,9 +26,9 @@ export default function SortChapterScreen() {
     const response = await apis.getTopic(topicId);
     if(response.status === 200) {
       const t = response.data;
-      t.chaptersList.sort((a, b) => b.orders - a.orders);
+      t.chaptersList.sort((a, b) => a.orders - b.orders);
       t.chaptersList.forEach(chapter => {
-        chapter.postsList.sort((a, b) => b.orders - a.orders);
+        chapter.postsList.sort((a, b) => a.orders - b.orders);
       });
       
       setTopic(response.data);
