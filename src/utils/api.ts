@@ -2,13 +2,14 @@ import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
 import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
-import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto } from "@/types/topic";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto } from "@/types/topic";
 import { PublicUsersDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL,
   withCredentials: true,
+  validateStatus: () => true,
 });
 
 export const apis = {
@@ -83,6 +84,21 @@ export const apis = {
     return ax.get(`/topics/${topicId}/chapters`);
   },
 
+  // 한 토픽과 토픽의 첫 챕터를 포함하여 가져오는 API (챕터는 null이 될 수 있음)
+  getTopicWithFirstChapter: (topicId: number): Promise<AxiosResponse<TopicsWithOneChaptersDto>> => {
+    return ax.get(`/topics/${topicId}/chapters/first`);
+  },
+
+  // 한 토픽과 해당 토픽의 한 챕터를 가져오는 API
+  getTopicWithChapter: (topicId: number, chapterId: number): Promise<AxiosResponse<TopicsWithOneChaptersDto>> => {
+    return ax.get(`/topics/${topicId}/chapters/${chapterId}`);
+  },
+
+  // 한 토픽과 해당 토픽의 한 챕터를 가져오는 API
+  getTopicWithChapterWithPost: (topicId: number, chapterId: number, postsId: number): Promise<AxiosResponse<TopicsWithOneChaptersWithOnePostsDto>> => {
+    return ax.get(`/topics/${topicId}/chapters/${chapterId}/posts/${postsId}`);
+  },
+  
   // 토픽을 추가하는 API
   createTopic: (topic: NewTopicsDto) => {
     return ax.post(`/topics`, topic);
@@ -148,10 +164,6 @@ export const apis = {
 
   getUpdateChapter: (chapterId: number): Promise<AxiosResponse<UpdateChaptersDto>> => {
     return ax.get(`/chapters/update/${chapterId}`);
-  },
-
-  getFirstInTopic: (topicId: number): Promise<AxiosResponse<ChaptersDto | null>> => {
-    return ax.get(`/chapters/topics/${topicId}`);
   },
 
   /**

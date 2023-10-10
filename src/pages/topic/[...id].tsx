@@ -60,36 +60,36 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   let post: PostsDto | ChaptersDto | null = null;
 
+  const notFoundPage = { notFound: true }
+
   // 1. 챕터가 지정되지 않았으면 토픽의 첫 챕터를 가져온다.
   if(chapterId === -1) {
-    const response = await apis.getFirstInTopic(topicId);
+    const response = await apis.getTopicWithFirstChapter(topicId);
     if(response.status < 300) {
       if(response.data) {
-        chapterId = response.data.id;
-        post = response.data;
+        chapterId = response.data.chapters?.id || -1;
+        post = response.data.chapters;
       }
+    } else if(response.status === 404) {
+      return notFoundPage;
     }
   // 2. 포스트가 지정되지 않았으면 해당 챕터를 가져온다.
   } else if(postId === -1) {
-    const response = await apis.getOneChapterById(chapterId);
+    const response = await apis.getTopicWithChapter(topicId, chapterId);
     if(response.status < 300) {
-      post = response.data;
+      post = response.data.chapters!;
+    } else if(response.status === 404) {
+      return notFoundPage;
     }
   // 3. 포스트가 지정되어 있으면 포스트를 가져온다.
   } else {
-    const response = await apis.getOnePostById(postId);
+    const response = await apis.getTopicWithChapterWithPost(topicId, chapterId, postId);
     if(response.status < 300) {
-      post = response.data;
+      post = response.data.posts;
+    } else if(response.status === 404) {
+      return notFoundPage;
     }
   }
-  
-  // TODO
-  // const hasNoData = !Boolean(topic);
-  // if(hasNoData) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
 
   return {
     props: {
