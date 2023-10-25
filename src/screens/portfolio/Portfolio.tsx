@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import styles from './Portfolio.module.css';
-import OldForm from './OldForm';
+import Resume from './MyProfile/Resume';
 import ProjectItem, { Project } from './ProjectItem';
+import MyProfile from './MyProfile/MyProfile';
 
 const projects: Project[] = [
   {
@@ -73,37 +74,8 @@ const projects: Project[] = [
 
 export default function PortfolioScreen() {
   return (
-    <div className={styles.container} >
-      <div className={styles['profile-box']} >
-        <div className={styles.deco} />
-        <div className={styles['background']}>
-          <div className={styles.resume} >
-            이 력 서
-          </div>
-          <div className={styles['sub-info']}>
-            <OldForm />
-          </div>
-        </div>
-        <div className={styles['main-info']}>
-          <div className={styles['image-container']}>
-            <Image src='/profile-img.png' alt='profile-image' fill={true} />
-          </div>
-          <div className={styles['profile-content']}>
-            <h1>박상연</h1>
-            <h2>많은 사람들에게 영향을 줄 수 있는 <br className={styles['new-line']} /><span>웹 개발자</span>가 되고 싶습니다.</h2>
-            <div className={styles['div-line']} />
-            <ul>
-              <li>
-                <span>☎️ 010-2879-5282</span>
-              </li>
-              <li>
-                <span>✉️ dhkdwk1041@gmail.com</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-      </div>
+    <main className={styles.container} >
+      <MyProfile />
       <div className={styles['project-box']}>
         <h1>프로젝트</h1>
         <div className={styles['project-list']} >
@@ -112,6 +84,6 @@ export default function PortfolioScreen() {
           ))}
         </div>
       </div>
-    </div>
+    </main>
   )
 };
