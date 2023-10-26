@@ -1,6 +1,7 @@
 import { TopicsWithCategoriesDto } from '@/types/topic';
 import styles from './CategoryItem.module.css';
 import TopicItem from './TopicItem';
+import { Http2ServerRequest } from 'http2';
 
 type CategoryItemProps = {
   name: string;
@@ -12,15 +13,15 @@ export default function CategoryItem({
   topics,
 }: CategoryItemProps) {
   return (
-    <div className={styles.container}>
-      <div className={styles['category-name']}>
+    <section className={styles.container}>
+      <h2 className={styles['category-name']}>
         {name}
-      </div>
+      </h2>
       <div className={styles.content}>
         {topics.map(t => (
           <TopicItem key={t.id} topic={t}/>
         ))}
       </div>
-    </div>
+    </section>
   )
 }

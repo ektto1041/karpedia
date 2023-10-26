@@ -9,6 +9,7 @@
   user-select: none;
   height: 32px;
   line-height: 32px;
+  margin: 0;
 }
 
 .content {

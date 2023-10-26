@@ -20,14 +20,14 @@ export default function TopicItem({
 
   return (
     <div className={styles.container} onClick={onClickTopicItem}>
-      <div className={styles.content}>
-        <div className={styles['topic-name']}>
+      <section className={styles.content}>
+        <h3 className={styles['topic-name']}>
           {name}
-        </div>
+        </h3>
         <div className={styles['topic-description']}>
           {description}
         </div>
-      </div>
+      </section>
     </div>
   );
 };

@@ -7,16 +7,16 @@ export default function TopicsScreen({
   categoriesWithTopics,
 }: TopicsProps) {
   return (
-    <div className={styles.container}>
-      <div className={styles.description}>
+    <main className={styles.container}>
+      <h1 className={styles.description}>
         원하시는 토픽을 선택해주세요.
-      </div>
+      </h1>
       <div className={styles.content}>
         {categoriesWithTopics.map(c => {
           if(c.topics.length === 0) return (<Fragment key={c.id}></Fragment>);
           else return (<CategoryItem key={c.id} name={c.name} topics={c.topics} />)
         })}
       </div>
-    </div>
+    </main>
   );
 };
