@@ -2,3 +2,5 @@
 User-agent: *
 Allow: /
 Disallow: /portfolio
+
+Sitemap: https://www.karpedia.site/sitemap.xml
