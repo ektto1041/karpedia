@@ -29,18 +29,19 @@
   box-shadow: 2.5px 2.5px 2px 2px var(--black-o80);
 }
 
-.title {
+.primary {
   display: flex;
   min-height: 64px;
-  line-height: 64px;
-  font-weight: bold;
-  font-size: 1.75rem;
   align-items: flex-start;
   justify-content: space-between;
 }
 
-.description {
-  font-size: 1rem;
+.primary > h1 {
+  width: auto;
+  text-indent: 0;
+  line-height: 64px;
+  font-weight: bold;
+  font-size: 1.75rem;
 }
 
 .date {
@@ -50,11 +51,19 @@
   color: var(--gray);
 }
 
+.description {
+  font-size: 1rem;
+}
+
+
 .histories {
   width: 100%;
+  margin-top: 16px;
+}
+
+.histories > h2 {
   font-weight: bold;
   font-size: 1.25rem;
-  margin-top: 16px;
 }
 
 .histories ul{

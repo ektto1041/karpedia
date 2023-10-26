@@ -1,12 +1,12 @@
-import Image from 'next/image';
 import styles from './Portfolio.module.css';
-import Resume from './MyProfile/Resume';
 import ProjectItem, { Project } from './ProjectItem';
 import MyProfile from './MyProfile/MyProfile';
+import React from 'react';
 
 const projects: Project[] = [
   {
     bgImg: '/karpedia.png',
+    figcaption: 'Karpedia 대표 이미지',
     href: 'https://github.com/ektto1041/karpedia',
     title: 'Karpedia',
     date: '2023.봄 ~ 진행중',
@@ -17,7 +17,12 @@ const projects: Project[] = [
         혼자 개발하였습니다.
       </>
     ),
-    icons: ["/next.svg", "/vercel.svg", "nest-logo.svg", "/aws-logo.svg"],
+    icons: [
+      { url: "/next.svg", caption: "Next.js" },
+      { url: "/vercel.svg", caption: "Vercel" },
+      { url: "nest-logo.svg", caption: "Nest.js" },
+      { url: "/aws-logo.svg", caption: "AWS" },
+    ],
     histories: [
       'Next.js를 활용하여 페이지마다 다른 렌더링 방식을 고민하고 적용',
       'Next.js를 활용하여 서버 구축',
@@ -28,6 +33,7 @@ const projects: Project[] = [
   },
   {
     bgImg: '/gigs.png',
+    figcaption: 'gigs 대표 이미지',
     href: 'https://github.com/signalman/gigs',
     title: 'gigs',
     date: "2022.겨울 ~ 2023.봄",
@@ -40,7 +46,12 @@ const projects: Project[] = [
         교내 공모전에 공모하여 장려상을 수상하였습니다.
       </>
     ),
-    icons: ["/react-logo.svg", "/spring-logo.svg", "/mysql-logo.svg", "/aws-logo.svg"],
+    icons: [
+      { url: "/react-logo.svg", caption: "React.js" },
+      { url: "/spring-logo.svg", caption: "Spring" },
+      { url: "/mysql-logo.svg", caption: "MySQL" },
+      { url: "/aws-logo.svg", caption: "AWS" },
+    ],
     histories: [
       'React.js를 활용하여 클라이언트 구축',
       'MUI를 활용하여 스타일링',
@@ -50,6 +61,7 @@ const projects: Project[] = [
   },
   {
     bgImg: '/chimtooview.png',
+    figcaption: '침투뷰 대표 이미지',
     href: 'https://github.com/ektto1041/Chimtooview',
     title: '침투뷰 CHIMTOOVIEW',
     date: "2020.겨울 ~ 2021.봄",
@@ -61,7 +73,12 @@ const projects: Project[] = [
         현재는 배포 중단되었습니다.
       </>
     ),
-    icons: ["/react-logo.svg", "/spring-logo.svg", "/mysql-logo.svg", "/aws-logo.svg"],
+    icons: [
+      { url: "/react-logo.svg", caption: "React.js" },
+      { url: "/spring-logo.svg", caption: "Spring" },
+      { url: "/mysql-logo.svg", caption: "MySQL" },
+      { url: "/aws-logo.svg", caption: "AWS" },
+    ],
     histories: [
       'React.js를 활용하여 클라이언트 구축',
       'Spring을 활용하여 서버 구축',
@@ -72,18 +89,20 @@ const projects: Project[] = [
   },
 ]
 
-export default function PortfolioScreen() {
+function PortfolioScreen() {
   return (
     <main className={styles.container} >
       <MyProfile />
-      <div className={styles['project-box']}>
+      <article className={styles['project-box']}>
         <h1>프로젝트</h1>
         <div className={styles['project-list']} >
           {projects.map(project => (
             <ProjectItem key={project.title} project={project} />
           ))}
         </div>
-      </div>
+      </article>
     </main>
   )
 };
+
+export default React.memo(PortfolioScreen);

@@ -59,7 +59,14 @@
   font-weight: bold;
 }
 
-.profile-content li {
+.div-line {
+  width: 64px;
+  height: 0px;
+  border: 1px solid var(--gray);
+  margin: 16px auto;
+}
+
+.info-item {
   position: relative;
   list-style: none;
   min-height: 32px;
@@ -67,15 +74,8 @@
   font-size: 1.25rem;
 }
 
-.profile-content li span {
+.info-item span {
   background-color: #ffff0080 ;
-}
-
-.div-line {
-  width: 64px;
-  height: 0px;
-  border: 1px solid var(--gray);
-  margin: 16px auto;
 }
 
 .new-line {
@@ -116,11 +116,7 @@
     font-size: 1rem;
   }
 
-  .profile-content ul {
-    margin-top: 32px;
-  }
-
-  .profile-content li {
+  .info-item {
     font-size: 1rem;
   }
 

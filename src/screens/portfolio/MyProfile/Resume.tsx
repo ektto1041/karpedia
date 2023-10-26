@@ -20,7 +20,7 @@ function Row({
   );
 }
 
-function Resume() {
+export default function Resume() {
   return (
     <section className={styles.container} >
       <h1>
@@ -40,5 +40,3 @@ function Resume() {
     </section>
   );
 };
-
-export default React.memo(Resume);

@@ -88,6 +88,11 @@ button {
   color: #111111
 }
 
+.invisible {
+  position: absolute;
+  left: -9999px;
+}
+
 /* PM */
 .ProseMirror {
   padding: 4px;
