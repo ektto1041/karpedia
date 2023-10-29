@@ -1,7 +1,6 @@
 import { TopicsWithCategoriesDto } from '@/types/topic';
 import styles from './TopicItem.module.css';
-import { apis } from '@/utils/api';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 type TopicItemProps = {
   topic: TopicsWithCategoriesDto;
@@ -10,24 +9,18 @@ type TopicItemProps = {
 export default function TopicItem({
   topic,
 }: TopicItemProps) {
-  const router = useRouter();
-
   const { id, name, description } = topic;
 
-  const onClickTopicItem = () => {
-    router.push(`/topic/${id}`);
-  };
-
   return (
-    <div className={styles.container} onClick={onClickTopicItem}>
-      <div className={styles.content}>
-        <div className={styles['topic-name']}>
+    <Link className={styles.container} href={`/topic/${id}`}>
+      <section className={styles.content}>
+        <h3 className={styles['topic-name']}>
           {name}
-        </div>
+        </h3>
         <div className={styles['topic-description']}>
           {description}
         </div>
-      </div>
-    </div>
+      </section>
+    </Link>
   );
 };

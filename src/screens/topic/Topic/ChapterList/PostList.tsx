@@ -3,21 +3,22 @@ import PostItem from './PostItem';
 import { PostsDto } from '@/types/post';
 
 type PostListProps = {
+  topicId: number;
+  chapterId: number;
   postList: PostsDto[];
   pathPostId: number;
-  onClickPost: (postId: number) => void;
 };
 
 export default function PostList({
+  topicId,
+  chapterId,
   postList,
   pathPostId,
-  onClickPost,
 }: PostListProps) {
-
   return (
     <div className={styles.container}>
       {postList?.map(post => (
-        <PostItem key={post.id} post={post} pathPostId={pathPostId} onClickPost={onClickPost} />
+        <PostItem key={post.id} topicId={topicId} chapterId={chapterId} post={post} pathPostId={pathPostId} />
       ))}
     </div>
   );

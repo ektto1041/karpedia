@@ -2,17 +2,20 @@ import Image from 'next/image';
 import styles from './TechItem.module.css';
 
 type TechItemProps = {
-  src: string;
+  url: string;
+  caption: string;
 };
 
 export default function TechItem({
-  src,
+  url,
+  caption,
 }: TechItemProps) {
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
-        <Image src={src} alt={src} fill />
-      </div>
+      <figure className={styles.content}>
+        <Image src={url} alt={caption} fill />
+        <figcaption className='invisible'>{caption}</figcaption>
+      </figure>
     </div>
   );
 };

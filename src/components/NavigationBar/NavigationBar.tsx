@@ -74,8 +74,8 @@ export default function NavigationBar() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles['nav-box']}>
+    <header className={styles.container}>
+      <nav className={styles['nav-box']}>
         <Link className={styles.logo} href='/'>
           Karpedia
         </Link>
@@ -120,7 +120,7 @@ export default function NavigationBar() {
             <MobileMenuList uid={uid} isAdmin={isAdmin} onClickProfile={onClickProfile} menuItems={menuItems} />
           </div>
         )}
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };

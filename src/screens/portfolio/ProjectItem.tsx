@@ -2,13 +2,19 @@ import Image from 'next/image';
 import styles from './ProjectItem.module.css';
 import TechItem from './TechItem';
 
+type TechIcon = {
+  url: string,
+  caption: string,
+}
+
 export type Project = {
   bgImg: string,
+  figcaption: string,
   href: string,
   title: string,
   date: string,
   description: JSX.Element,
-  icons: string[],
+  icons: TechIcon[],
   histories: string[],
 };
 
@@ -19,31 +25,34 @@ type ProjectItemProps = {
 export default function ProjectItem({
   project,
 }: ProjectItemProps) {
-  const {bgImg, href, title, date, icons, description, histories} = project;
+  const {bgImg, figcaption, href, title, date, icons, description, histories} = project;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.img}>
-        {/* <Image src={bgImg} alt='project-img' width={700} height={400}/> */}
+    <section className={styles.container}>
+      <figure className={styles.img}>
         <Image src={bgImg} alt='project-img' fill/>
-      </div>
+        <figcaption>{figcaption}</figcaption>
+      </figure>
       <div className={styles.info}>
-        <div className={styles.title} >
-          {title}
-          <div className={styles.date} >
+        <div className={styles.primary}>
+          <h1>{title}</h1>
+          <section className={styles.date} >
+            <h2 className='invisible'>프로젝트 수행 기간</h2>
             {date}
-          </div>
+          </section>
         </div>
-        <div className={styles['icon-row']} >
+        <section className={styles['icon-row']} >
+          <h2 className='invisible'>기술 스택</h2>
           {icons?.map(icon => (
-            <TechItem key={icon} src={`${icon}`} />
+            <TechItem key={icon.caption} url={icon.url} caption={icon.caption} />
           ))}
-        </div>
-        <div className={styles.description} >
+        </section>
+        <section className={styles.description} >
+          <h2 className='invisible'>프로젝트 설명</h2>
           {description}
-        </div>
-        <div className={styles.histories} >
-          진행내용:
+        </section>
+        <section className={styles.histories} >
+          <h2>프로젝트 진행 내용</h2>
           <ul>
             {histories?.map(history => (
               <li key={history} className={styles.history}>
@@ -51,8 +60,8 @@ export default function ProjectItem({
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       </div>
-    </div>
+    </section>
   );
 };

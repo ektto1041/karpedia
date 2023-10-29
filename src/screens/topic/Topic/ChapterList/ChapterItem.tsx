@@ -3,21 +3,20 @@ import styles from './ChapterItem.module.css';
 import PostList from './PostList';
 import css from '@/utils/css';
 import { useMemo } from 'react';
+import Link from 'next/link';
 
 type ChapterItemProps = {
+  topicId: number;
   chapter: ChaptersWithPostsDto;
   pathChapterId: number;
   pathPostId: number;
-  onClickChapter: (chapterId: number) => void;
-  onClickPost: (postId: number) => void;
 };
 
 export default function ChapterItem({
+  topicId,
   chapter,
   pathChapterId,
   pathPostId,
-  onClickChapter,
-  onClickPost,
 }: ChapterItemProps) {
   const {id, title, content, postsList} = chapter;
   const isCurrent = useMemo(() => {
@@ -26,10 +25,10 @@ export default function ChapterItem({
 
   return (
     <div className={styles.container}>
-      <div className={css(styles.title, isCurrent ? styles.current : '')} onClick={() => {onClickChapter(id)}}>
+      <Link className={css(styles.title, isCurrent ? styles.current : '')} href={`/topic/${topicId}/${id}`}>
         {title}
-      </div>
-      <PostList postList={postsList} pathPostId={pathPostId} onClickPost={onClickPost} />
+      </Link>
+      <PostList topicId={topicId} chapterId={id} postList={postsList} pathPostId={pathPostId} />
     </div>
   );
 };

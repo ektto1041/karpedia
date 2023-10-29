@@ -4,6 +4,8 @@ import { PostsDto } from "@/types/post";
 import { TopicsWithChaptersWithPostsDto } from "@/types/topic";
 import { apis } from "@/utils/api";
 import { GetStaticPropsContext } from "next";
+import Head from "next/head";
+import { useMemo } from "react";
 
 export type TopicProps = {
   post: PostsDto | ChaptersDto | null;
@@ -18,7 +20,20 @@ export default function Topic({
   chapterId,
   postId,
 }: TopicProps) {
-  return <TopicScreen post={post} topicId={topicId} chapterId={chapterId} postId={postId} />
+  const title = post ? (post.title) : ('빈 토픽');
+  const description = useMemo(() => {
+    return post ? post.content?.replace(/(<([^>]+)>)/ig, '').substring(0, 160) : '';
+  }, [post]);
+
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        {post ? (<meta name="description" content={description} />) : (<meta name="robots" content="noindex, nofollow" />)}
+      </Head>
+      <TopicScreen post={post} topicId={topicId} chapterId={chapterId} postId={postId} />
+    </>
+  );
 };
 
 type Path = {
@@ -67,6 +82,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     const response = await apis.getTopicWithFirstChapter(topicId);
     if(response.status < 300) {
       if(response.data) {
+        console.log(response.data);
         chapterId = response.data.chapters?.id || -1;
         post = response.data.chapters;
       }
@@ -93,7 +109,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: {
-      post,
+      post: chapterId === -1 ? null : post,
       topicId,
       chapterId,
       postId,

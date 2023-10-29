@@ -5,8 +5,6 @@ import { ChaptersWithPostsDto } from '@/types/chapter';
 
 export type ChapterListProps = {
   chapterList: ChaptersWithPostsDto[];
-  onClickChapter: (chapterId: number) => void;
-  onClickPost: (postId: number) => void;
   isOwner: boolean;
   topicId: number;
   chapterId: number;
@@ -16,8 +14,6 @@ export type ChapterListProps = {
 
 export default function ChapterList({
   chapterList,
-  onClickChapter,
-  onClickPost,
   isOwner,
   topicId,
   chapterId,
@@ -25,18 +21,17 @@ export default function ChapterList({
   updateHref,
 }: ChapterListProps) {
   return (
-    <div className={styles.container} >
+    <nav className={styles.container} >
       {chapterList?.map(chapter => (
         <ChapterItem
           key={chapter.id}
+          topicId={topicId}
           chapter={chapter}
           pathChapterId={chapterId}
           pathPostId={postId}
-          onClickChapter={onClickChapter}
-          onClickPost={onClickPost}
         />
       ))}
       {isOwner && (<ChapterOptions topicId={topicId} updateHref={updateHref} />)}
-    </div>
+    </nav>
   );
 };
