@@ -1,23 +1,26 @@
 import { PostsDto } from '@/types/post';
 import styles from './PostItem.module.css';
 import css from '@/utils/css';
+import Link from 'next/link';
 
 type PostItemProps = {
+  topicId: number;
+  chapterId: number;
   post: PostsDto;
   pathPostId: number;
-  onClickPost: (postId: number) => void;
 };
 
 export default function PostItem({
+  topicId,
+  chapterId,
   post,
   pathPostId,
-  onClickPost,
 }: PostItemProps) {
   const {id, title, content, status, viewCount, createdAt, modifiedAt,} = post;
   
   return (
-    <div className={css(styles.container, id === pathPostId ? styles.current : '')} onClick={() => onClickPost(id)}>
+    <Link className={css(styles.container, id === pathPostId ? styles.current : '')} href={`/topic/${topicId}/${chapterId}/${id}`}>
       {title}
-    </div>
+    </Link>
   );
 };

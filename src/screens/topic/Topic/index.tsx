@@ -16,16 +16,6 @@ import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
 import { ChaptersWithPostsDto } from '@/types/chapter';
 
-const findChapterIdByPostId = (topic: TopicsWithChaptersWithPostsDto, postId: number): number => {
-  for(const chapter of topic.chaptersList) {
-    for(const post of chapter.postsList) {
-      if(post.id === postId) return chapter.id;
-    }
-  }
-
-  return -1;
-}
-
 export default function TopicScreen({
   post,
   topicId,
@@ -65,15 +55,6 @@ export default function TopicScreen({
     document.body.classList.remove('mobile-chapter-list');
   }, [router])
 
-  // 아래 두 메소드는 topic 이 truthy 일 때만 호출되므로 타입을 확정해줌
-  const onClickChapter = (chapterId: number) => {
-    router.push(`/topic/${topic!.id}/${chapterId}`);
-  };
-
-  const onClickPost = (postId: number) => {
-    router.push(`/topic/${topic!.id}/${findChapterIdByPostId(topic!, postId)}/${postId}`);
-  };
-
   const updateHref = useMemo(() => {
     return postId === -1 ? `/chapter/update?cid=${chapterId}` : `/post/update?pid=${postId}`;
   }, [postId, chapterId]);
@@ -89,20 +70,18 @@ export default function TopicScreen({
   }, [isMobileMenuClicked]);
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <div className={styles['mobile-menu-button-container']}>
-        <div className={styles['mobile-menu-button']}  onClick={onClickMobileMenu}>
+        <button className={styles['mobile-menu-button']}  onClick={onClickMobileMenu}>
           <div className={styles['post-list-icon']}>
             <Icon path={mdiListBoxOutline} />
           </div>
           포스트 목록
-        </div>
+        </button>
         <div className={css(styles['mobile-chapter-list-wrapper'], isMobileMenuClicked ? styles['clicked'] : '')}>
           {topic && (
             <ChapterList
               chapterList={chapterList}
-              onClickChapter={onClickChapter}
-              onClickPost={onClickPost}
               isOwner={isOwner}
               topicId={topic.id}
               chapterId={chapterId}
@@ -116,21 +95,19 @@ export default function TopicScreen({
         { post ? (
           <>
             { topic && (
-              <div className={styles['chapter-list-wrapper']}>
+              <aside className={styles['chapter-list-wrapper']}>
                 <ChapterList
                   chapterList={chapterList}
-                  onClickChapter={onClickChapter}
-                  onClickPost={onClickPost}
                   isOwner={isOwner}
                   topicId={topic.id}
                   chapterId={chapterId}
                   postId={postId}
                   updateHref={updateHref}
                 />
-              </div>
+              </aside>
             )}
             
-            <div className={styles.post}>
+            <article className={styles.post}>
               <h3>{topic ? topic.name : ''}</h3>
               <Content post={post} />
               {postId != -1 && (
@@ -138,7 +115,7 @@ export default function TopicScreen({
                   postId={postId}
                 />
               )}
-            </div>
+            </article>
           </>
         ) : (
           <div className={styles.warning}>
@@ -150,6 +127,6 @@ export default function TopicScreen({
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };
