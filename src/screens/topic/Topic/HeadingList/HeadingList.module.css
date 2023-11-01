@@ -1,0 +1,39 @@
+.container {
+  width: 288px;
+  padding-bottom: 128px;
+}
+
+.container ul {
+  list-style: none;
+}
+
+.container li {
+  margin: 8px 0;
+}
+
+.container li.h2 {
+  margin-left: 4px;
+}
+
+.container li.h3 {
+  margin-left: 8px;
+}
+
+.container li.h1 a {
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.container li.h2 a {
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.container li.h3 a {
+  font-size: .9rem;
+  color: var(--gray);
+}
+
+.container li a:hover {
+  color: var(--black);
+}

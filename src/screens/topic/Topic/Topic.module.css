@@ -32,19 +32,36 @@
   font-size: 2rem;
 }
 
+.heading-list {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .heading-list-wrapper {
+    position: sticky;
+    top: 128px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .heading-list-wrapper {
+    display: none;
+  }
+}
+
 @media (min-width: 992px) {
   .content {
     width: 1280px;
     margin: 0 auto;
   }
-
-  .mobile-menu-button-container {
-    display: none;
-  }
-
+  
   .chapter-list-wrapper {
     position: sticky;
     top: 128px;
+  }
+  
+  .mobile-menu-button-container {
+    display: none;
   }
 }
 

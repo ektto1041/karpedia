@@ -99,6 +99,11 @@ export default function MyEditor({
       TableCell,
     ],
     onUpdate: (p) => onChangeContent(p.editor.getHTML()),
+    editorProps: {
+      attributes: {
+        class: 'post-editor'
+      },
+    },
     content: defaultContent,
     editable,
   }, [defaultContent]) as Editor;
