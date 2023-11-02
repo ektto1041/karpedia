@@ -1,3 +1,3 @@
-type IdDto = {
+export type IdDto = {
   id: number;
 }
