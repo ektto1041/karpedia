@@ -6,11 +6,15 @@ import { Http2ServerRequest } from 'http2';
 type CategoryItemProps = {
   name: string;
   topics: TopicsWithCategoriesDto[];
+  subscribedTopics?: number[];
+  onClickSubscribe: (topicId: number) => void;
 }
 
 export default function CategoryItem({
   name,
   topics,
+  subscribedTopics,
+  onClickSubscribe,
 }: CategoryItemProps) {
   return (
     <section className={styles.container}>
@@ -19,7 +23,7 @@ export default function CategoryItem({
       </h2>
       <div className={styles.content}>
         {topics.map(t => (
-          <TopicItem key={t.id} topic={t}/>
+          <TopicItem key={t.id} topic={t} subscribed={subscribedTopics ? subscribedTopics.indexOf(t.id) !== -1 : undefined} onClickSubscribe={onClickSubscribe}/>
         ))}
       </div>
     </section>

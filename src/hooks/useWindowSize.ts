@@ -4,7 +4,6 @@ export default function useWindowSize() {
   const [width, setWidth] = useState(0);
 
   const resizeWindow = useCallback(() => {
-    console.log('resize');
     setWidth(window.innerWidth);
   }, []);
 

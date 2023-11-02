@@ -1,3 +1,7 @@
+.container {
+  position: relative;
+}
+
 .content {
   border-radius: 20px;
   height: 100%;
@@ -15,6 +19,10 @@
   width: 100%;
   font-size: 1.375rem;
   color: var(--gray);
+}
+
+.subscribe {
+  position: absolute;
 }
 
 @media (min-width: 800px) {
@@ -43,6 +51,24 @@
   .topic-description {
     display: block;
   }
+
+  .subscribe {
+    top: 32px;
+    right: 32px;
+    width: 32px;
+    height: 32px;
+
+    background-color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--main-red);
+    transition: .25s all ease;
+  }
+
+  .subscribe:hover {
+    background-color: var(--main-red-o40);
+  }
 }
 
 @media (max-width: 799px) {
@@ -68,5 +94,16 @@
 
   .topic-description {
     display: none;
+  }
+
+  .subscribe {
+    top: 20px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+
+    background-color: var(--white);
+    border: none;
+    color: var(--main-red);
   }
 }
