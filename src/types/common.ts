@@ -1,0 +1,3 @@
+type IdDto = {
+  id: number;
+}

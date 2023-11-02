@@ -26,7 +26,6 @@ export async function getStaticProps() {
   const { categories, topics } = response.data;
 
   const categoriesWithTopics: TopicsByCategory[] = categories.map(c => ({ ...c, topics: topics.filter(t => t.categoriesId === c.id), }));
-
   
   return {
     props: {

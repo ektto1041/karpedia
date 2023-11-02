@@ -69,3 +69,7 @@ export type TopicsWithOneChaptersWithOnePostsDto = {
   chapters: ChaptersDto;
   posts: PostsDto;
 }
+
+export type SubscribeTopicsResultDto = {
+  subscribed: boolean;
+}

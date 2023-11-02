@@ -1,15 +1,21 @@
 import { TopicsWithCategoriesDto } from '@/types/topic';
 import styles from './TopicItem.module.css';
 import Link from 'next/link';
+import Icon from '@mdi/react';
+import { mdiBookmark, mdiBookmarkOutline } from '@mdi/js';
 
 type TopicItemProps = {
   topic: TopicsWithCategoriesDto;
+  subscribed?: boolean;
+  onClickSubscribe: (topicId: number) => void;
 };
 
 export default function TopicItem({
   topic,
+  subscribed,
+  onClickSubscribe,
 }: TopicItemProps) {
-  const { id, name, description } = topic;
+  const { id, name, description, categoriesId } = topic;
 
   return (
     <Link className={styles.container} href={`/topic/${id}`}>
@@ -21,6 +27,11 @@ export default function TopicItem({
           {description}
         </div>
       </section>
+      {subscribed !== undefined && (
+        <button className={styles.subscribe} onClick={(e) => {e.preventDefault(); onClickSubscribe(id);}}>
+          <Icon path={subscribed ? mdiBookmark : mdiBookmarkOutline} />
+        </button>
+      )}
     </Link>
   );
 };

@@ -2,7 +2,7 @@ import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
 import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
-import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto } from "@/types/topic";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto } from "@/types/topic";
 import { PublicUsersDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
@@ -37,6 +37,11 @@ export const apis = {
     return ax.get(`/users/self`);
   },
 
+  // 현재 로그인한 유저의 구독 토픽을 가져오는 API
+  getSubscribedTopics: (): Promise<AxiosResponse<IdDto[]>> => {
+    return ax.get(`/users/subscribed/topics`);
+  },
+
   /**
    * 페이지를 revalidate 해주는 api
    */
@@ -53,7 +58,6 @@ export const apis = {
   /**
    * Topics
    */
-
   // 모든 토픽들을 가져오는 API
   getAllTopics: (): Promise<AxiosResponse<TopicsDto[]>> => {
     return ax.get('/topics');
@@ -112,6 +116,11 @@ export const apis = {
   // 두 토픽의 순서를 바꾸는 API
   swapTopicOrder: (from: number, to: number) => {
     return ax.patch(`/topics/${from}/${to}`);
+  },
+
+  // 토픽을 구독하는 API
+  subscribeTopic: (topicId: number): Promise<AxiosResponse<SubscribeTopicsResultDto>> => {
+    return ax.patch(`/topics/subscribe/${topicId}`);
   },
 
   // 토픽을 삭제하는 API
