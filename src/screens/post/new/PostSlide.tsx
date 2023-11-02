@@ -43,9 +43,10 @@ export default function PostSlide({
         router.push('/');
       }
     }
-  }, [topicId, selectedType]);
+  }, [router, chapters, chapterIdx, topicId, selectedType]);
 
   const onChangeChapterIdx = useCallback((value: number) => {
+    console.log(value);
     setChapterIdx(value);
   }, []);
 
