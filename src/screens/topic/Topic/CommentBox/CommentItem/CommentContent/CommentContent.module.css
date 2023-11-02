@@ -25,19 +25,23 @@
   border-radius: 0 0 24px 0; 
 }
 
+.reply-info {
+  margin: 8px;
+  padding: 8px;
+  background-color: var(--white-gray);
+} 
+
 .reply-to {
   position: relative;
-  margin: 8px;
   height: 40px;
   font-size: .9rem;
   text-indent: 16px;
-  padding: 8px;
   color: var(--gray);
-  background-color: var(--white-gray);
   user-select: none;
   cursor: pointer;
   transition: all ease .25s;
 }
+
 
 .scroll-icon {
   position: absolute;
@@ -50,6 +54,11 @@
   justify-content: center;
   align-items: center;
   transition: all ease .25s;
+}
+
+.reply-content {
+  width: 100%;
+  color: var(--gray);
 }
 
 .content {
@@ -99,7 +108,7 @@
 
 @media (min-width: 480px) {
   .reply-to {
-    line-height: 24px;
+    line-height: 40px;
   }
   
   .reply-to:hover {

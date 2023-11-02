@@ -82,7 +82,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     const response = await apis.getTopicWithFirstChapter(topicId);
     if(response.status < 300) {
       if(response.data) {
-        console.log(response.data);
         chapterId = response.data.chapters?.id || -1;
         post = response.data.chapters;
       }
@@ -105,6 +104,20 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     } else if(response.status === 404) {
       return notFoundPage;
     }
+  }
+
+  if(chapterId !== -1) {
+    const content = post!.content;
+
+    const regex = /<(h1|h2|h3)>(.*?)<\/\1>/g;
+    const modifiedContent = content.replace(regex, (match, p1, p2) => {
+      if (!/<\/?[a-z][\s\S]*>/i.test(p2)) {
+          return `<${p1} id="${encodeURIComponent(p2.replace(/\s/g, '-'))}">${p2}</${p1}>`;
+      } else {
+          return match;
+      }
+    });
+    post!.content = modifiedContent;
   }
 
   return {

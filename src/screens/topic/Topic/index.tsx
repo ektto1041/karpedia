@@ -15,6 +15,7 @@ import { RootState } from '@/redux/store';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
 import { ChaptersWithPostsDto } from '@/types/chapter';
+import HeadingList, { Heading } from './HeadingList/HeadingList';
 
 export default function TopicScreen({
   post,
@@ -31,6 +32,8 @@ export default function TopicScreen({
   }, [topic]);
 
   const [isMobileMenuClicked, setMoblieMenuClicked] = useState(false);
+
+  const [headingArch, setHeadingArch] = useState<Heading[]>([]);
 
   const selfUser = useSelector((state: RootState) => selectSelfUser(state));
   const router = useRouter();
@@ -51,9 +54,47 @@ export default function TopicScreen({
   }, []);
 
   useEffect(() => {
+    if(post) {
+      const htmlContent = document.querySelector('div.post-editor');
+      if(htmlContent) {
+        const children = htmlContent.children;
+
+        const newHeadingArch: Heading[] = [];
+
+        for(let i=0; i<children.length; i++) {
+          const child = children[i];
+          const tagName = child.tagName;
+
+          // id 속성이 없으면 제외
+          if(child.getAttribute('id')) {
+            if(tagName === 'H1') {
+              newHeadingArch.push({
+                level: 1,
+                text: child.textContent || '',
+              });
+            } else if(tagName === 'H2') {
+              newHeadingArch.push({
+                level: 2,
+                text: child.textContent || '',
+              });
+            } else if(tagName === 'H3') {
+              newHeadingArch.push({
+                level: 3,
+                text: child.textContent || '',
+              });
+            }
+          }
+        }
+
+        setHeadingArch(newHeadingArch);
+      }
+    }
+  }, [post]);
+
+  useEffect(() => {
     setMoblieMenuClicked(false);
     document.body.classList.remove('mobile-chapter-list');
-  }, [router])
+  }, [router]);
 
   const updateHref = useMemo(() => {
     return postId === -1 ? `/chapter/update?cid=${chapterId}` : `/post/update?pid=${postId}`;
@@ -116,6 +157,10 @@ export default function TopicScreen({
                 />
               )}
             </article>
+
+            <aside className={styles['heading-list-wrapper']}>
+              <HeadingList headingList={headingArch} />
+            </aside>
           </>
         ) : (
           <div className={styles.warning}>

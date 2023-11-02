@@ -34,15 +34,20 @@ export default function CommentContent({
         </div>
       </div>
       {replyTo && (
-        <div className={styles['reply-to']} onClick={() => onClickScrollToReplyFrom(replyTo.id)}>
-          {replyTo.users.name} 님의 댓글에 대한 답변입니다.
-          <div className={styles['scroll-icon']}>
-            <Icon path={mdiArrowUpCircleOutline} size='24px' />
+        <div className={styles['reply-info']}>
+          <div className={styles['reply-to']} onClick={() => onClickScrollToReplyFrom(replyTo.id)}>
+            {replyTo.users.name} 님의 댓글에 대한 답변입니다.
+            <div className={styles['scroll-icon']}>
+              <Icon path={mdiArrowUpCircleOutline} size='24px' />
+            </div>
+          </div>
+          <div className={styles['reply-content']}>
+            <div className={'ProseMirror comment-editor'} dangerouslySetInnerHTML={{ __html: replyTo.content }} />
           </div>
         </div>
       )}
       <div className={styles.content}>
-        <CommentEditor onChangeContent={() => {}} defaultContent={content} editable={false} />
+        <div className={'ProseMirror comment-editor'} dangerouslySetInnerHTML={{ __html: content }} /> 
       </div>
       <div className={styles.footer}>
         <div className={styles['modified-at']}>
