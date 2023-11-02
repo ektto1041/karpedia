@@ -32,6 +32,10 @@ export default function CommentBox({
   }, [postId]);
 
   useEffect(() => {
+    setReplyTo(null);
+  }, [router]);
+
+  useEffect(() => {
     getCommentList();
   }, [getCommentList]);
 
