@@ -4,7 +4,7 @@ import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, New
 import { IdDto } from "@/types/common";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto } from "@/types/topic";
-import { PublicUsersDto } from "@/types/user";
+import { PublicUsersDto, UpdateProfileImageDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -41,6 +41,11 @@ export const apis = {
   // 현재 로그인한 유저의 구독 토픽을 가져오는 API
   getSubscribedTopics: (): Promise<AxiosResponse<IdDto[]>> => {
     return ax.get(`/users/subscribed/topics`);
+  },
+
+  // 프로필 이미지를 업데이트하는 API
+  updateProfileImage: (newProfileImage: UpdateProfileImageDto): Promise<AxiosResponse<UpdateProfileImageDto>> => {
+    return ax.patch(`/users/image`, newProfileImage);
   },
 
   /**
