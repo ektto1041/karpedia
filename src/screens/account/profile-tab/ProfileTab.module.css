@@ -1,0 +1,32 @@
+.profile-image-box {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  gap: 16px;
+  cursor: pointer;
+  background-color: var(--white);
+  transition: all ease .25s;
+}
+
+.profile-image-box:hover {
+  background-color: var(--white-gray);
+}
+
+.profile-image-box>div {
+  position: relative;
+  overflow: hidden;
+}
+
+.comment-size-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.nav-bar-size-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}

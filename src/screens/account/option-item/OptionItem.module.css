@@ -46,3 +46,7 @@
   cursor: pointer;
   user-select: none;
 }
+
+.button-box button:disabled {
+  background-color: var(--gray);
+}
