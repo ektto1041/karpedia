@@ -3,3 +3,7 @@ export type PublicUsersDto = {
   name: string;
   profileImage: string;
 };
+
+export type UpdateProfileImageDto = {
+  profileImage: string;
+};
