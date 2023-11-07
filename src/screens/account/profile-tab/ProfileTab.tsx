@@ -13,6 +13,7 @@ export default function ProfileTab() {
   
   const [oldProfileImage, setOldProfileImage] = useState<string>();
   const [newProfileImage, setNewProfileImage] = useState<string>();
+  const [isProfileImageLoading, setProfileImageLoading] = useState(false);
   const isTabReady = Boolean(newProfileImage);
 
   useEffect(() => {
@@ -26,6 +27,9 @@ export default function ProfileTab() {
   }, [selfUser]);
 
   const onClickSetImage = useCallback(() => {
+    if(isProfileImageLoading) return;
+    setProfileImageLoading(true);
+
     const imageInput = document.createElement('input');
     imageInput.type = 'file';
     imageInput.setAttribute('style', 'display: none;');
@@ -47,11 +51,15 @@ export default function ProfileTab() {
           } else if(response.status === 500) {
             alert('서버 오류로 인해 이미지 업로드에 실패했습니다.');
           }
+
+          setProfileImageLoading(false);
         } else {
           alert('이미지 파일의 용량은 1MB 를 초과할 수 없습니다.');
+          setProfileImageLoading(false);
         }
       } else {
         alert('이미지 파일을 선택하지 않았습니다.');
+        setProfileImageLoading(false);
       }
 
       document.body.removeChild(imageInput);
@@ -64,14 +72,17 @@ export default function ProfileTab() {
 
     document.body.appendChild(imageInput);
     imageInput.click();
-  }, []);
+  }, [isProfileImageLoading]);
 
   const onClickSaveProfileImage = useCallback(async () => {
+    if(isProfileImageLoading) return;
+
     const response = await apis.updateProfileImage({profileImage: newProfileImage!});
     if(response.status < 300) {
       dispatch(updateProfileImage(newProfileImage))
+      alert('프로필 이미지가 변경되었습니다.');
     }
-  }, [newProfileImage]);
+  }, [isProfileImageLoading, newProfileImage]);
 
   return (
     <div className={styles.container} >
@@ -83,6 +94,7 @@ export default function ProfileTab() {
             buttons={[{ label: '저장', disabled: oldProfileImage === newProfileImage, onClick: onClickSaveProfileImage }]}
           >
             <div className={styles['profile-image-box']} onClick={onClickSetImage}>
+              {isProfileImageLoading && <div className={styles.disabled} />}
               <div className={styles['comment-size-image']}>
                 <Image src={newProfileImage!} alt='댓글 프로필 이미지' fill />
               </div>
