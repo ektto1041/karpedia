@@ -3,11 +3,13 @@ import OptionItem from '../option-item/OptionItem';
 import styles from './ProfileTab.module.css';
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
-import { selectSelfUser } from '@/redux/slices/AuthSlice';
+import { selectSelfUser, updateProfileImage } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 export default function ProfileTab() {
   const selfUser = useAppSelector(selectSelfUser);
+  const dispatch = useAppDispatch();
   
   const [oldProfileImage, setOldProfileImage] = useState<string>();
   const [newProfileImage, setNewProfileImage] = useState<string>();
@@ -64,9 +66,12 @@ export default function ProfileTab() {
     imageInput.click();
   }, []);
 
-  const onClickSaveProfileImage = useCallback(() => {
-
-  }, []);
+  const onClickSaveProfileImage = useCallback(async () => {
+    const response = await apis.updateProfileImage({profileImage: newProfileImage!});
+    if(response.status < 300) {
+      dispatch(updateProfileImage(newProfileImage))
+    }
+  }, [newProfileImage]);
 
   return (
     <div className={styles.container} >
@@ -75,7 +80,7 @@ export default function ProfileTab() {
           <OptionItem
             name='프로필 이미지 수정'
             description={['사용자들에게 보여질 프로필 이미지를 수정합니다.', '1MB 이하의 이미지 파일만 가능합니다.']}
-            buttons={[{ label: '저장', disabled: oldProfileImage === newProfileImage, onClick: () => {} }]}
+            buttons={[{ label: '저장', disabled: oldProfileImage === newProfileImage, onClick: onClickSaveProfileImage }]}
           >
             <div className={styles['profile-image-box']} onClick={onClickSetImage}>
               <div className={styles['comment-size-image']}>
