@@ -1,0 +1,27 @@
+.container {
+  width: 1280px;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 64px;
+  display: flex;
+}
+
+.tab-list {
+  width: 240px;
+  height: auto;
+}
+
+.tab-list a {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  display: block;
+  color: var(--gray);
+  font-size: 1rem;
+  transition: all ease .25s;
+}
+
+.tab-list a:hover {
+  color: var(--black);
+}
+
