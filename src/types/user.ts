@@ -1,6 +1,7 @@
 export type PublicUsersDto = {
   id: number;
   name: string;
+  email: string;
   profileImage: string;
 };
 
