@@ -32,6 +32,7 @@
   padding: 0 16px;
   background-color: var(--background-white);
   border-top: 1px solid var(--white-gray);
+  gap: 8px;
 }
 
 .button-box button {
@@ -45,6 +46,7 @@
   font-size: 1rem;
   cursor: pointer;
   user-select: none;
+  transition: all ease .25s;
 }
 
 .button-box button:disabled {

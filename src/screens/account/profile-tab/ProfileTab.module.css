@@ -40,3 +40,25 @@
   background-color: var(--black-o80);
   z-index: 10;
 }
+
+.username-box {
+  padding: 16px;
+}
+
+.username-box input {
+  width: 256px;
+  height: 32px;
+  border: 1px solid var(--gray);
+  text-indent: 1rem;
+  font-size: 1rem;
+}
+
+.username-box input:focus {
+  outline: none;
+  border: 1px solid var(--main-red);
+}
+
+.username-warning {
+  font-size: .9rem;
+  color: var(--warning);
+}

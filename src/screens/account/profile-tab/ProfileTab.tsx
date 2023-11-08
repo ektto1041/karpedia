@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEventHandler, EventHandler, useCallback, useEffect, useState } from 'react';
 import OptionItem from '../option-item/OptionItem';
 import styles from './ProfileTab.module.css';
 import Image from 'next/image';
@@ -7,6 +7,24 @@ import { selectSelfUser, updateProfileImage } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
 import useAppDispatch from '@/hooks/useAppDispatch';
 
+const checkUsername = (username: string): boolean => {
+  let len = 0;
+    for (let i=0; i<username.length; i++) {
+        const char = username[i];
+        if(i === 0 && !(/[가-힣a-zA-Z]/.test(char))) return false;
+
+        if (/[가-힣]/.test(char)) {
+            len += 2;
+        } else if (/[a-zA-Z0-9_]/.test(char)) {
+            len += 1;
+        } else {
+            return false; // 특수문자 또는 공백이 포함되어 있음
+        }
+    }
+
+    return len >= 6 && len <= 16;
+}
+
 export default function ProfileTab() {
   const selfUser = useAppSelector(selectSelfUser);
   const dispatch = useAppDispatch();
@@ -14,15 +32,24 @@ export default function ProfileTab() {
   const [oldProfileImage, setOldProfileImage] = useState<string>();
   const [newProfileImage, setNewProfileImage] = useState<string>();
   const [isProfileImageLoading, setProfileImageLoading] = useState(false);
-  const isTabReady = Boolean(newProfileImage);
+
+  const [oldUsername, setOldUsername] = useState<string>();
+  const [newUsername, setNewUsername] = useState<string>();
+  const [isUsernameValid, setUsernameValid] = useState(true);
+  
+  const isTabReady = Boolean(oldProfileImage && oldUsername);
 
   useEffect(() => {
     if(selfUser) {
-      setOldProfileImage(selfUser.profileImage);
       setNewProfileImage(selfUser.profileImage);
+      setOldProfileImage(selfUser.profileImage);
+      setNewUsername(selfUser.name);
+      setOldUsername(selfUser.name);
     } else {
-      setOldProfileImage(undefined);
       setNewProfileImage(undefined);
+      setOldProfileImage(undefined);
+      setNewUsername(undefined);
+      setOldUsername(undefined);
     }
   }, [selfUser]);
 
@@ -84,6 +111,14 @@ export default function ProfileTab() {
     }
   }, [isProfileImageLoading, newProfileImage]);
 
+  const onChangeUsername: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const username = e.target.value;
+    const isValid = checkUsername(username);
+
+    setUsernameValid(isValid);
+    setNewUsername(username);
+  };
+
   return (
     <div className={styles.container} >
       {isTabReady ? (
@@ -103,8 +138,18 @@ export default function ProfileTab() {
               </div>
             </div>
           </OptionItem>
-          <OptionItem name='프로필 정보 수정' description={['닉네임을 수정합니다.']} buttons={[{ label: '저장', disabled: true, onClick: () => {} }]}>
-            <input type='text' placeholder={''} />
+          <OptionItem
+            name='프로필 정보 수정'
+            description={['사용자들에게 보여질 이름을 수정합니다.', '한글 2byte, 영어/숫자/_ 1byte 기준 16byte 까지 작성이 가능합니다.', '이름은 한글 혹은 영어로 시작해야합니다.']}
+            buttons={[
+              { label: '이메일을 이름으로 사용', disabled: (selfUser!.email === oldUsername), onClick: () => {} },
+              { label: '저장', disabled: !(isUsernameValid && (oldUsername !== newUsername)), onClick: () => {} }
+            ]}
+          >
+            <div className={styles['username-box']}>
+              <input type='text' placeholder={''} value={newUsername} onChange={onChangeUsername} />
+              {!isUsernameValid && <div className={styles['username-warning']}>사용할 수 없는 이름입니다.</div>}
+            </div>
           </OptionItem>
         </>
       ) : (<></>)}
