@@ -10,7 +10,7 @@ type OptionItemButton = {
 export type OptionItemProps = {
   name: string;
   description: string[];
-  children: JSX.Element;
+  children?: JSX.Element;
   buttons: OptionItemButton[];
 }
 

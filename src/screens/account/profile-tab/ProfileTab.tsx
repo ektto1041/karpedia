@@ -1,11 +1,12 @@
-import { ChangeEventHandler, EventHandler, useCallback, useEffect, useState } from 'react';
+import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import OptionItem from '../option-item/OptionItem';
 import styles from './ProfileTab.module.css';
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
-import { selectSelfUser, updateName, updateProfileImage } from '@/redux/slices/AuthSlice';
+import { resetSelfUser, selectSelfUser, updateName, updateProfileImage } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import { useRouter } from 'next/router';
 
 const checkUsername = (username: string): boolean => {
   let len = 0;
@@ -26,6 +27,7 @@ const checkUsername = (username: string): boolean => {
 }
 
 export default function ProfileTab() {
+  const router = useRouter();
   const selfUser = useAppSelector(selectSelfUser);
   const dispatch = useAppDispatch();
   
@@ -36,6 +38,8 @@ export default function ProfileTab() {
   const [oldUsername, setOldUsername] = useState<string>();
   const [newUsername, setNewUsername] = useState<string>();
   const [isUsernameValid, setUsernameValid] = useState(true);
+
+  const [isLogoutWaiting, setLogoutWaiting] = useState(false);
   
   const isTabReady = Boolean(oldProfileImage && oldUsername);
 
@@ -125,7 +129,7 @@ export default function ProfileTab() {
       dispatch(updateName(newUsername));
       alert('이름이 변경되었습니다.');
     }
-  }, [newUsername]);
+  }, [dispatch, newUsername]);
 
   const onClickSaveUsernameByEmail = useCallback(async () => {
     const email = selfUser!.email;
@@ -134,7 +138,19 @@ export default function ProfileTab() {
       dispatch(updateName(email));
       alert('이름이 변경되었습니다.');
     }
-  }, [selfUser]);
+  }, [dispatch, selfUser]);
+
+  const onClickLogout = useCallback(async () => {
+    setLogoutWaiting(true);
+    const response = await apis.logout();
+    if(response.status < 300) {
+      dispatch(resetSelfUser());
+      router.push('/');
+    } else {
+      alert('로그아웃에 실패했습니다. 관리자에게 문의해주세요.');
+    }
+    setLogoutWaiting(false);
+  }, [dispatch, router,]);
 
   return (
     <div className={styles.container} >
@@ -168,6 +184,13 @@ export default function ProfileTab() {
               {!isUsernameValid && <div className={styles['username-warning']}>사용할 수 없는 이름입니다.</div>}
             </div>
           </OptionItem>
+          <OptionItem
+            name='로그아웃'
+            description={['Karpedia에서 로그아웃하고 메인 페이지로 돌아갑니다.']}
+            buttons={[
+              { label: '로그아웃', disabled: isLogoutWaiting, onClick: onClickLogout },
+            ]}
+          />
         </>
       ) : (<></>)}
     </div>

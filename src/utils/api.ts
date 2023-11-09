@@ -30,6 +30,10 @@ export const apis = {
     return ax.get(`/auths/google`, { headers: {"Cache-control": "no-cache"}});
   },
 
+  logout: () => {
+    return ax.get(`/auths/logout`);
+  },
+
   /**
    * Users
    */
