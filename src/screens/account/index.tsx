@@ -3,6 +3,8 @@ import styles from './Account.module.css';
 import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import ProfileTab from './profile-tab/ProfileTab';
+import useAppSelector from '@/hooks/useAppSelector';
+import { selectSelfUser } from '@/redux/slices/AuthSlice';
 
 type Tab = 'profile' | 'comments' | 'topics';
 
@@ -32,16 +34,24 @@ export default function AccountScreen() {
     ) ? query : 'profile';
   }, [router]);
 
+  const selfUser = useAppSelector(selectSelfUser);
+
   return (
     <main className={styles.container}>
-      <aside className={styles['tab-list']}>
-        {tabList.map(tab => (
-          <Link key={tab.url} href={`?tab=${tab.url}`} >{tab.name}</Link>
-        ))}
-      </aside>
-      <article className={styles['option-list']}>
-        {componentByTab[tab]}
-      </article>
+      {selfUser ? (
+        <>
+          <aside className={styles['tab-list']}>
+            {tabList.map(tab => (
+              <Link key={tab.url} href={`?tab=${tab.url}`} >{tab.name}</Link>
+            ))}
+          </aside>
+          <article className={styles['option-list']}>
+            {componentByTab[tab]}
+          </article>
+        </>
+      ) : (
+        <div className={styles.warning}>로그인 후 이용해주세요</div>
+      )}
     </main>
   );
 }
