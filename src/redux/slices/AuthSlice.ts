@@ -28,6 +28,11 @@ export const authSlice = createSlice({
         state.user.profileImage = action.payload;
       }
     },
+    updateName: (state, action) => {
+      if(state.user) {
+        state.user.name = action.payload;
+      }
+    },
     // change: (state, action: PayloadAction<string>) => {
     //   state.name = action.payload;
     // },
@@ -47,7 +52,7 @@ export const authSlice = createSlice({
   }
 });
 
-export const { resetSelfUser, updateProfileImage } = authSlice.actions
+export const { resetSelfUser, updateProfileImage, updateName, } = authSlice.actions
 
 export const fetchSelfUser = createAsyncThunk('auth/fetchSelfUser', async () => {
   const response = await apis.getSelfUsers();

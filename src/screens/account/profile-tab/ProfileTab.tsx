@@ -3,7 +3,7 @@ import OptionItem from '../option-item/OptionItem';
 import styles from './ProfileTab.module.css';
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
-import { selectSelfUser, updateProfileImage } from '@/redux/slices/AuthSlice';
+import { selectSelfUser, updateName, updateProfileImage } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
 import useAppDispatch from '@/hooks/useAppDispatch';
 
@@ -106,7 +106,7 @@ export default function ProfileTab() {
 
     const response = await apis.updateProfileImage({profileImage: newProfileImage!});
     if(response.status < 300) {
-      dispatch(updateProfileImage(newProfileImage))
+      dispatch(updateProfileImage(newProfileImage));
       alert('프로필 이미지가 변경되었습니다.');
     }
   }, [isProfileImageLoading, newProfileImage]);
@@ -118,6 +118,23 @@ export default function ProfileTab() {
     setUsernameValid(isValid);
     setNewUsername(username);
   };
+
+  const onClickSaveUsername = useCallback(async () => {
+    const response = await apis.updateName({name: newUsername!});
+    if(response.status < 300) {
+      dispatch(updateName(newUsername));
+      alert('이름이 변경되었습니다.');
+    }
+  }, [newUsername]);
+
+  const onClickSaveUsernameByEmail = useCallback(async () => {
+    const email = selfUser!.email;
+    const response = await apis.updateName({name: email});
+    if(response.status < 300) {
+      dispatch(updateName(email));
+      alert('이름이 변경되었습니다.');
+    }
+  }, [selfUser]);
 
   return (
     <div className={styles.container} >
@@ -142,8 +159,8 @@ export default function ProfileTab() {
             name='프로필 정보 수정'
             description={['사용자들에게 보여질 이름을 수정합니다.', '한글 2byte, 영어/숫자/_ 1byte 기준 16byte 까지 작성이 가능합니다.', '이름은 한글 혹은 영어로 시작해야합니다.']}
             buttons={[
-              { label: '이메일을 이름으로 사용', disabled: (selfUser!.email === oldUsername), onClick: () => {} },
-              { label: '저장', disabled: !(isUsernameValid && (oldUsername !== newUsername)), onClick: () => {} }
+              { label: '이메일을 이름으로 사용', disabled: (selfUser!.email === oldUsername), onClick: onClickSaveUsernameByEmail },
+              { label: '저장', disabled: !(isUsernameValid && (oldUsername !== newUsername)), onClick: onClickSaveUsername }
             ]}
           >
             <div className={styles['username-box']}>

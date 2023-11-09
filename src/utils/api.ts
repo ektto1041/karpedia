@@ -4,7 +4,7 @@ import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, New
 import { IdDto } from "@/types/common";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto } from "@/types/topic";
-import { PublicUsersDto, UpdateProfileImageDto } from "@/types/user";
+import { PublicUsersDto, UpdateNameDto, UpdateProfileImageDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -46,6 +46,11 @@ export const apis = {
   // 프로필 이미지를 업데이트하는 API
   updateProfileImage: (newProfileImage: UpdateProfileImageDto): Promise<AxiosResponse<UpdateProfileImageDto>> => {
     return ax.patch(`/users/image`, newProfileImage);
+  },
+
+  // 이름을 업데이트하는 API
+  updateName: (newName: UpdateNameDto): Promise<AxiosResponse<UpdateNameDto>> => {
+    return ax.patch(`/users/name`, newName);
   },
 
   /**
