@@ -59,10 +59,6 @@ export default function NavigationBar() {
     onClickMenu(false);
   }, [router]);
 
-  const onClickProfile = () => {
-    apis.testat();
-  };
-
   const onClickMenu = useCallback((clicked: boolean) => {
     setMenuClicked(clicked);
 
@@ -94,9 +90,9 @@ export default function NavigationBar() {
               </Link>
             ) : (
               <>
-                <div className={styles.profile} onClick={onClickProfile}>
+                <Link className={styles.profile} href={'/account'}>
                   <Image src={selfUser.profileImage} alt='profile-image' fill />
-                </div>
+                </Link>
                 {isAdmin && (
                   <Link href={'/topic/setting'} className={styles.button}>
                     토픽 관리
@@ -117,7 +113,7 @@ export default function NavigationBar() {
 
         {isMenuClicked && (
           <div className={styles['menu-list']}>
-            <MobileMenuList uid={uid} isAdmin={isAdmin} onClickProfile={onClickProfile} menuItems={menuItems} />
+            <MobileMenuList uid={uid} isAdmin={isAdmin} menuItems={menuItems} />
           </div>
         )}
       </nav>
