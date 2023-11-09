@@ -22,6 +22,10 @@
   margin-top: 64px;
 }
 
+.current {
+  color: var(--black) !important;
+}
+
 @media (min-width: 1280px) {
   .container {
     width: 1280px;

@@ -41,8 +41,8 @@ export default function AccountScreen() {
       {selfUser ? (
         <>
           <aside className={styles['tab-list']}>
-            {tabList.map(tab => (
-              <Link key={tab.url} href={`?tab=${tab.url}`} >{tab.name}</Link>
+            {tabList.map(tabItem => (
+              <Link key={tabItem.url} href={`?tab=${tabItem.url}`} className={tab === tabItem.url ? styles.current : ''} >{tabItem.name}</Link>
             ))}
           </aside>
           <article className={styles['option-list']}>
