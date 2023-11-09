@@ -97,6 +97,7 @@ export default function ProfileTab() {
     });
     imageInput.addEventListener('cancel', () => {
       alert('이미지 파일을 선택하지 않았습니다.');
+      setProfileImageLoading(false);
 
       document.body.removeChild(imageInput);
     })

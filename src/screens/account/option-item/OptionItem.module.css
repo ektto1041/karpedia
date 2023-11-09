@@ -1,5 +1,4 @@
 .container {
-  width: 1040px;
   background-color: var(--white);
   border: 1px solid var(--white-gray);
   border-radius: 16px;
@@ -51,4 +50,26 @@
 
 .button-box button:disabled {
   background-color: var(--gray);
+}
+
+@media (min-width: 1280px) {
+  .container {
+    width: 1040px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 1040px) and (max-width: 1279px) {
+  .container {
+    width: 1040px;
+    margin: 0 auto;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 1039px) {
+  .container {
+    width: 100%;
+    margin-bottom: 16px;
+  }
 }

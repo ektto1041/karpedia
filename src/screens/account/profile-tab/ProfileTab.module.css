@@ -9,6 +9,7 @@
   cursor: pointer;
   background-color: var(--white);
   transition: all ease .25s;
+  z-index: 0;
 }
 
 .profile-image-box:hover {
