@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import ProfileTab from './profile-tab/ProfileTab';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
+import CommentTab from './comment-tab/CommentTab';
 
 type Tab = 'profile' | 'comments' | 'topics';
 
@@ -20,7 +21,8 @@ const tabList: TabItem[] = [
 ];
 
 const componentByTab: {[key: string]: JSX.Element} = {
-  profile: (<ProfileTab />)
+  profile: (<ProfileTab />),
+  comments: (<CommentTab />),
 }
 
 export default function AccountScreen() {

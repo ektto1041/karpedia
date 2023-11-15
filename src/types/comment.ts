@@ -34,3 +34,11 @@ export type CommentsWithPublicUsersDto = {
   modifiedAt: Date;
   users: PublicUsersDto;
 }
+
+export type CommentsByUsersDto = {
+  id: number;
+  content: string;
+  modifiedAt: Date;
+  postTitle: string;
+  replyTo: number | null;
+}
