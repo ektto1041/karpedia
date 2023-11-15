@@ -32,9 +32,13 @@
     margin: 0 auto;
     margin-top: 64px;
     display: flex;
+    align-items: flex-start;
+    position: relative;
   }
 
   .tab-list {
+    position: sticky;
+    top: 128px;
     width: 240px;
     height: auto;
   }
