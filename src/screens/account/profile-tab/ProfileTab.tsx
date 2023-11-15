@@ -7,6 +7,7 @@ import { resetSelfUser, selectSelfUser, updateName, updateProfileImage } from '@
 import { apis } from '@/utils/api';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { useRouter } from 'next/router';
+import { Error } from '@/types/common';
 
 const checkUsername = (username: string): boolean => {
   let len = 0;
@@ -23,7 +24,7 @@ const checkUsername = (username: string): boolean => {
         }
     }
 
-    return len >= 6 && len <= 16;
+    return len >= 5 && len <= 16;
 }
 
 export default function ProfileTab() {
@@ -129,6 +130,8 @@ export default function ProfileTab() {
     if(response.status < 300) {
       dispatch(updateName(newUsername));
       alert('이름이 변경되었습니다.');
+    } else {
+      alert((response.data as Error).message);
     }
   }, [dispatch, newUsername]);
 
@@ -174,7 +177,7 @@ export default function ProfileTab() {
           </OptionItem>
           <OptionItem
             name='프로필 정보 수정'
-            description={['사용자들에게 보여질 이름을 수정합니다.', '한글 2byte, 영어/숫자/_ 1byte 기준 16byte 까지 작성이 가능합니다.', '이름은 한글 혹은 영어로 시작해야합니다.']}
+            description={['사용자들에게 보여질 이름을 수정합니다.', '한글 2byte, 영어/숫자/_ 1byte 기준 5~16byte 까지 작성이 가능합니다.', '이름은 한글 혹은 영어로 시작해야합니다.']}
             buttons={[
               { label: '이메일을 이름으로 사용', disabled: (selfUser!.email === oldUsername), onClick: onClickSaveUsernameByEmail },
               { label: '저장', disabled: !(isUsernameValid && (oldUsername !== newUsername)), onClick: onClickSaveUsername }

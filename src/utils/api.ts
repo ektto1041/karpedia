@@ -1,7 +1,7 @@
 import { CategoriesDto, NewCategoriesDto } from "@/types/category";
 import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } from "@/types/chapter";
 import { CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
-import { IdDto } from "@/types/common";
+import { Error, IdDto } from "@/types/common";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
 import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto } from "@/types/topic";
 import { PublicUsersDto, UpdateNameDto, UpdateProfileImageDto } from "@/types/user";
@@ -53,7 +53,7 @@ export const apis = {
   },
 
   // 이름을 업데이트하는 API
-  updateName: (newName: UpdateNameDto): Promise<AxiosResponse<UpdateNameDto>> => {
+  updateName: (newName: UpdateNameDto): Promise<AxiosResponse<UpdateNameDto | Error>> => {
     return ax.patch(`/users/name`, newName);
   },
 

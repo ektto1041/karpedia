@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './Account.module.css';
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import ProfileTab from './profile-tab/ProfileTab';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
@@ -10,7 +10,7 @@ type Tab = 'profile' | 'comments' | 'topics';
 
 type TabItem = {
   name: string;
-  url: string;
+  url: Tab;
 }
 
 const tabList: TabItem[] = [
