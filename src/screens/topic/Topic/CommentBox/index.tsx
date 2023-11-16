@@ -70,7 +70,7 @@ export default function CommentBox({
   }, [postId, router, replyTo]);
 
   return (
-    <div className={styles.container}>
+    <div id='comments' className={styles.container}>
       <div className={styles['comment-list']}>
         {commentList?.map((comment, i) => (
           <CommentItem

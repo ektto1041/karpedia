@@ -14,7 +14,7 @@ export default function CommentTabItem({
 }: CommentTabItemProps) {
   const {id, content, modifiedAt, postTitle, postId, chapterId, topicId, replyTo} = comment;
 
-  const href = `/topic/${topicId}/${chapterId}/${postId}`;
+  const href = `/topic/${topicId}/${chapterId}/${postId}#comments`;
 
   return (
     <div className={styles.container}>
