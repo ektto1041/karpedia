@@ -47,10 +47,11 @@
 }
 
 .username-box input {
-  width: 256px;
+  width: 160px;
   height: 32px;
   border: 1px solid var(--gray);
-  text-indent: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   font-size: 1rem;
 }
 
