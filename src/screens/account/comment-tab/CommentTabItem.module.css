@@ -10,9 +10,11 @@
 .content {
   width: 100%;
   padding: 12px;
+  border-radius: 4px;
   background-color: var(--main-red-o22);
   transition: all ease .25s;
   cursor: pointer;
+  color: var(--black);
 }
 
 .content:hover {
@@ -33,6 +35,12 @@
   height: 24px;
   padding: 2px;
   color: var(--black);
+  transition: all ease .25s;
+  cursor: pointer;
+}
+
+.floating button:hover {
+  color: var(--main-red);
 }
 
 .info {
@@ -46,6 +54,7 @@
   margin-right: 8px;
   padding-left: 4px;
   padding-right: 4px;
+  font-size: .9rem;
 }
 
 .post-title {

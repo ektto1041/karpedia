@@ -3,6 +3,7 @@ import styles from './CommentTabItem.module.css';
 import time from '@/utils/time';
 import Icon from '@mdi/react';
 import { mdiDeleteOutline } from '@mdi/js';
+import Link from 'next/link';
 
 type CommentTabItemProps = {
   comment: CommentsByUsersDto;
@@ -11,11 +12,13 @@ type CommentTabItemProps = {
 export default function CommentTabItem({
   comment,
 }: CommentTabItemProps) {
-  const {id, content, modifiedAt, postTitle, replyTo} = comment;
+  const {id, content, modifiedAt, postTitle, postId, chapterId, topicId, replyTo} = comment;
+
+  const href = `/topic/${topicId}/${chapterId}/${postId}`;
 
   return (
     <div className={styles.container}>
-      <div className={styles.content} dangerouslySetInnerHTML={{ __html: content}} />
+      <Link href={href} className={styles.content} dangerouslySetInnerHTML={{ __html: content}} />
       <div className={styles.floating}>
         <button>
           <Icon path={mdiDeleteOutline} />
@@ -23,7 +26,7 @@ export default function CommentTabItem({
       </div>
       <div className={styles.info}>
         <div className={styles['post-title']}>
-          "{postTitle}" 에서 작성한 댓글입니다.
+          "{postTitle}" 에서 작성한 {replyTo ? '답변' : '댓글'}입니다.
         </div>
         <div className={styles.date}>
           {time.toFormat(time.toString(modifiedAt))}
