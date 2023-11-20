@@ -42,10 +42,7 @@ export const apis = {
     return ax.get(`/users/self`);
   },
 
-  // 현재 로그인한 유저의 구독 토픽을 가져오는 API
-  getSubscribedTopics: (): Promise<AxiosResponse<IdDto[]>> => {
-    return ax.get(`/users/subscribed/topics`);
-  },
+  
 
   // 프로필 이미지를 업데이트하는 API
   updateProfileImage: (newProfileImage: UpdateProfileImageDto): Promise<AxiosResponse<UpdateProfileImageDto>> => {
@@ -116,6 +113,16 @@ export const apis = {
   // 한 토픽과 해당 토픽의 한 챕터를 가져오는 API
   getTopicWithChapterWithPost: (topicId: number, chapterId: number, postsId: number): Promise<AxiosResponse<TopicsWithOneChaptersWithOnePostsDto>> => {
     return ax.get(`/topics/${topicId}/chapters/${chapterId}/posts/${postsId}`);
+  },
+
+  // 현재 로그인한 유저의 구독 토픽의 아이디를 가져오는 API
+  getSubscribedTopicIds: (): Promise<AxiosResponse<IdDto[]>> => {
+    return ax.get(`/users/subscribed/topics`);
+  },
+
+  // 로그인한 사용자가 구독한 모든 토픽을 가져오는 API
+  getSubscribedTopics: (): Promise<AxiosResponse<TopicsDto[]>> => {
+    return ax.get(`/topics/subscribed`);
   },
   
   // 토픽을 추가하는 API
