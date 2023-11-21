@@ -1,4 +1,5 @@
 .container {
+  display: block;
   position: relative;
   transition: all ease .25s;
   cursor: pointer;
