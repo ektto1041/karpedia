@@ -55,6 +55,15 @@ export default function TopicTab() {
     }
   }, [isAlarmAllowed]);
 
+  const onClickCancelSubscribe = useCallback(async (topicId: number) => {
+    const response = await apis.subscribeTopic(topicId);
+    if(response.status < 300) {
+      setSubscribedTopics(subscribedTopics.filter(topic => topic.id !== topicId));
+    } else {
+      alert('구독 해제 실패');
+    }
+  }, [subscribedTopics]);
+
   return (
     <div className={styles.container}>
       {isReady ? (<>
@@ -75,7 +84,7 @@ export default function TopicTab() {
         >
           <div>
             {subscribedTopics.map(topic => (
-              <SubscribedTopicItem key={topic.id} topic={topic} />
+              <SubscribedTopicItem key={topic.id} topic={topic} onClickCancelSubscribe={onClickCancelSubscribe} />
             ))}
           </div>
         </OptionItem>
