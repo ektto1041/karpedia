@@ -22,7 +22,7 @@ export type TopicsNameDto = {
   orders: number;
 };
 
-export type TopicsWithCategoriesDto = {
+export type TopicsWithCategoriesIdDto = {
   id: number;
   name: string;
   description: string;
@@ -30,9 +30,17 @@ export type TopicsWithCategoriesDto = {
   categoriesId: number;
 };
 
+export type TopicsWithCategoriesNameDto = {
+  id: number;
+  name: string;
+  description: string;
+  orders: number;
+  categoriesName: string;
+};
+
 export type TopicsWithCategoriesResDto = {
   categories: CategoriesDto[],
-  topics: TopicsWithCategoriesDto[],
+  topics: TopicsWithCategoriesIdDto[],
 }
 
 export type TopicsWithChaptersDto = {

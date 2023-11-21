@@ -3,7 +3,7 @@ import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } 
 import { CommentsByUsersDto, CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
 import { Error, IdDto } from "@/types/common";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
-import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto } from "@/types/topic";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto, TopicsWithCategoriesNameDto } from "@/types/topic";
 import { PublicUsersDto, UpdateNameDto, UpdateProfileImageDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
@@ -121,7 +121,7 @@ export const apis = {
   },
 
   // 로그인한 사용자가 구독한 모든 토픽을 가져오는 API
-  getSubscribedTopics: (): Promise<AxiosResponse<TopicsDto[]>> => {
+  getSubscribedTopics: (): Promise<AxiosResponse<TopicsWithCategoriesNameDto[]>> => {
     return ax.get(`/topics/subscribed`);
   },
   

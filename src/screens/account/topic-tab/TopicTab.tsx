@@ -4,12 +4,13 @@ import styles from './TopicTab.module.css';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { apis } from '@/utils/api';
-import { TopicsDto } from '@/types/topic';
+import { TopicsWithCategoriesNameDto } from '@/types/topic';
+import SubscribedTopicItem from './SubscribedTopicItem';
 
 export default function TopicTab() {
   const [isAlarmAllowed, setAlarmAllowed] = useState(false);
 
-  const [subscribedTopics, setSubscribedTopics] = useState<TopicsDto[]>([]);
+  const [subscribedTopics, setSubscribedTopics] = useState<TopicsWithCategoriesNameDto[]>([]);
 
   const selfUser = useAppSelector(selectSelfUser);
 
@@ -53,9 +54,7 @@ export default function TopicTab() {
       >
         <div>
           {subscribedTopics.map(topic => (
-            <div key={topic.id}>
-              {topic.name}
-            </div>
+            <SubscribedTopicItem key={topic.id} topic={topic} />
           ))}
         </div>
       </OptionItem>

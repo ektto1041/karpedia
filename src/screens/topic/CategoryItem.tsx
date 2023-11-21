@@ -1,11 +1,11 @@
-import { TopicsWithCategoriesDto } from '@/types/topic';
+import { TopicsWithCategoriesIdDto } from '@/types/topic';
 import styles from './CategoryItem.module.css';
 import TopicItem from './TopicItem';
 import { Http2ServerRequest } from 'http2';
 
 type CategoryItemProps = {
   name: string;
-  topics: TopicsWithCategoriesDto[];
+  topics: TopicsWithCategoriesIdDto[];
   subscribedTopics?: number[];
   onClickSubscribe: (topicId: number) => void;
 }

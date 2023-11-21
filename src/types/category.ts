@@ -1,4 +1,4 @@
-import { TopicsWithCategoriesDto } from "./topic";
+import { TopicsWithCategoriesIdDto } from "./topic";
 
 export type CategoriesDto = {
   id: number;
@@ -11,7 +11,7 @@ export type NewCategoriesDto = {
 };
 
 export type TopicsByCategory = {
-  topics: TopicsWithCategoriesDto[];
+  topics: TopicsWithCategoriesIdDto[];
   id: number;
   name: string;
   orders: number;

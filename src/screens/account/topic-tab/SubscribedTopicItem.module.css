@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  transition: all ease .25s;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px;
+}
+
+.container:hover {
+  background-color: var(--white-gray);
+}
+
+.container+.container {
+  border-top: 1px solid var(--light-gray);
+}
+
+.category {
+  font-size: .9rem;
+  color: var(--main-red-of0);
+}
+
+.topic {
+  font-size: 1.1rem;
+  color: var(--black);
+  font-weight: bold;
+  padding: 0 8px;
+}
+
+.floating {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 24px;
+}
+
+.floating button {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  background-color: transparent;
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+}
+
+.floating button:hover {
+  color: var(--main-red);
+}
