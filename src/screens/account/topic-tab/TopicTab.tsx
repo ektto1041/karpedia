@@ -7,6 +7,7 @@ import { apis } from '@/utils/api';
 import { TopicsWithCategoriesNameDto } from '@/types/topic';
 import SubscribedTopicItem from './SubscribedTopicItem';
 import { Error } from '@/types/common';
+import NoContentOption from '../no-content-option/NoContentOption';
 
 export default function TopicTab() {
   const [isAlarmAllowedOld, setAlarmAllowedOld] = useState<boolean | undefined>();
@@ -79,14 +80,16 @@ export default function TopicTab() {
         </OptionItem>
         <OptionItem
           name='구독한 토픽'
-          description={['구독한 토픽 리스트가 보여집니다.']}
+          description={[]}
           buttons={[]}
         >
-          <div>
-            {subscribedTopics.map(topic => (
-              <SubscribedTopicItem key={topic.id} topic={topic} onClickCancelSubscribe={onClickCancelSubscribe} />
-            ))}
-          </div>
+          {subscribedTopics.length > 0 ? (
+            <div>
+              {subscribedTopics.map(topic => (
+                <SubscribedTopicItem key={topic.id} topic={topic} onClickCancelSubscribe={onClickCancelSubscribe} />
+              ))}
+            </div>
+          ) : (<NoContentOption text='구독한 토픽이 없습니다.' />)}
         </OptionItem>
       </>) : (<></>)}
     </div>

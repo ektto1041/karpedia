@@ -6,6 +6,7 @@ import { selectSelfUser } from '@/redux/slices/AuthSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { CommentsByUsersDto } from '@/types/comment';
 import CommentTabItem from './CommentTabItem';
+import NoContentOption from '../no-content-option/NoContentOption';
 
 export default function CommentTab() {
   const selfUser = useAppSelector(selectSelfUser);
@@ -34,11 +35,13 @@ export default function CommentTab() {
         description={[]}
         buttons={[]}
       >
-        <div>
-          {comments.map(comment => (
-            <CommentTabItem key={comment.id} comment={comment} />
-          ))}
-        </div>
+        {comments.length > 0 ? (
+          <div>
+            {comments.map(comment => (
+              <CommentTabItem key={comment.id} comment={comment} />
+            ))}
+          </div>
+        ) : (<NoContentOption text='작성한 댓글이 없습니다.' />)}
       </OptionItem>
     </div>
   );
