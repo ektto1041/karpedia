@@ -3,8 +3,8 @@ import { ChaptersDto, NewChaptersDto, NewChaptersUpdateDto, UpdateChaptersDto } 
 import { CommentsByUsersDto, CommentsDto, CommentsWithPublicUsersWithReplyToDto, NewCommentsDto, NewCommentsUpdateDto } from "@/types/comment";
 import { Error, IdDto } from "@/types/common";
 import { NewPostsUpdateDto, PostsDto, UpdatePostsDto, NewPostsDto } from "@/types/post";
-import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto, TopicsWithCategoriesNameDto } from "@/types/topic";
-import { PublicUsersDto, UpdateNameDto, UpdateProfileImageDto } from "@/types/user";
+import { NewTopicsDto, TopicsDto, TopicsWithCategoriesResDto, TopicsWithChaptersDto, TopicsWithChaptersWithPostsDto, TopicsWithOneChaptersDto, TopicsWithOneChaptersWithOnePostsDto, SubscribeTopicsResultDto, TopicsWithCategoriesNameDto, SubscribedTopicsResultDto } from "@/types/topic";
+import { PublicUsersDto, UpdateIsSubscribedTopicsAlarmAllowedDto, UpdateNameDto, UpdateProfileImageDto } from "@/types/user";
 import axios, { Axios, AxiosResponse } from "axios";
 
 const ax = axios.create({
@@ -40,9 +40,7 @@ export const apis = {
   // 현재 로그인한 유저가 유저 정보를 가져오는 API
   getSelfUsers: (): Promise<AxiosResponse<PublicUsersDto>> => {
     return ax.get(`/users/self`);
-  },
-
-  
+  },  
 
   // 프로필 이미지를 업데이트하는 API
   updateProfileImage: (newProfileImage: UpdateProfileImageDto): Promise<AxiosResponse<UpdateProfileImageDto>> => {
@@ -52,6 +50,11 @@ export const apis = {
   // 이름을 업데이트하는 API
   updateName: (newName: UpdateNameDto): Promise<AxiosResponse<UpdateNameDto | Error>> => {
     return ax.patch(`/users/name`, newName);
+  },
+
+  // 구독 토픽 알림 설정을 업데이트하는 API
+  updateIsSubscribedTopicsAlarmAllowed: (newIsSubscribedTopicsAlarmAllowed: UpdateIsSubscribedTopicsAlarmAllowedDto): Promise<AxiosResponse<UpdateIsSubscribedTopicsAlarmAllowedDto | Error>> => {
+    return ax.patch(`/users/is-subscribed-topics-alarm-allowed`, newIsSubscribedTopicsAlarmAllowed);
   },
 
   /**
@@ -121,7 +124,7 @@ export const apis = {
   },
 
   // 로그인한 사용자가 구독한 모든 토픽을 가져오는 API
-  getSubscribedTopics: (): Promise<AxiosResponse<TopicsWithCategoriesNameDto[]>> => {
+  getSubscribedTopics: (): Promise<AxiosResponse<SubscribedTopicsResultDto>> => {
     return ax.get(`/topics/subscribed`);
   },
   

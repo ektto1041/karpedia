@@ -81,3 +81,8 @@ export type TopicsWithOneChaptersWithOnePostsDto = {
 export type SubscribeTopicsResultDto = {
   subscribed: boolean;
 }
+
+export type SubscribedTopicsResultDto = {
+  isSubscribedTopicsAlarmAllowed: boolean;
+  topics: TopicsWithCategoriesNameDto[];
+}

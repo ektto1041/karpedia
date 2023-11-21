@@ -12,3 +12,7 @@ export type UpdateProfileImageDto = {
 export type UpdateNameDto = {
   name: string;
 };
+
+export type UpdateIsSubscribedTopicsAlarmAllowedDto = {
+  isSubscribedTopicsAlarmAllowed: number;
+}
