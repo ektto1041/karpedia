@@ -6,6 +6,8 @@ export default function Account() {
     <>
       <Head>
         <title>계정 관리</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content="계정 관리 페이지입니다." />
       </Head>
       <AccountScreen />
     </>
