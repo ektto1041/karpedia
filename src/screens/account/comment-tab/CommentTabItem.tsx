@@ -37,7 +37,7 @@ export default function CommentTabItem({
       </div>
       <div className={styles.info}>
         <div className={styles['post-title']}>
-          "{postTitle}" 에서 작성한 {replyTo ? '답변' : '댓글'}입니다.
+          {`"${postTitle}" 에서 작성한 ${replyTo ? '답변' : '댓글'}입니다.`}
         </div>
         <div className={styles.date}>
           {time.toFormat(time.toString(modifiedAt))}
