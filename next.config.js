@@ -5,7 +5,13 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: 'lh3.googleusercontent.com',
-      }
+      },
+      {
+        hostname: 'karpedia.s3.amazonaws.com',
+      },
+      {
+        hostname: 'karpedia.s3.ap-northeast-2.amazonaws.com',
+      },
     ]
   }
 }

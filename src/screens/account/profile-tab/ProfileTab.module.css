@@ -1,0 +1,66 @@
+.profile-image-box {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  gap: 16px;
+  cursor: pointer;
+  background-color: var(--white);
+  transition: all ease .25s;
+  z-index: 0;
+}
+
+.profile-image-box:hover {
+  background-color: var(--white-gray);
+}
+
+.profile-image-box>div {
+  position: relative;
+  overflow: hidden;
+}
+
+.comment-size-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.nav-bar-size-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.profile-image-box .disabled {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black-o80);
+  z-index: 10;
+}
+
+.username-box {
+  padding: 16px;
+}
+
+.username-box input {
+  width: 160px;
+  height: 32px;
+  border: 1px solid var(--gray);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+}
+
+.username-box input:focus {
+  outline: none;
+  border: 1px solid var(--main-red);
+}
+
+.username-warning {
+  font-size: .9rem;
+  color: var(--warning);
+}

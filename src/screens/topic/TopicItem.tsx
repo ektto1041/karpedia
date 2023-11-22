@@ -1,11 +1,11 @@
-import { TopicsWithCategoriesDto } from '@/types/topic';
+import { TopicsWithCategoriesIdDto } from '@/types/topic';
 import styles from './TopicItem.module.css';
 import Link from 'next/link';
 import Icon from '@mdi/react';
 import { mdiBookmark, mdiBookmarkOutline } from '@mdi/js';
 
 type TopicItemProps = {
-  topic: TopicsWithCategoriesDto;
+  topic: TopicsWithCategoriesIdDto;
   subscribed?: boolean;
   onClickSubscribe: (topicId: number) => void;
 };

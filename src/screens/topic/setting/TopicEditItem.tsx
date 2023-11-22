@@ -1,10 +1,10 @@
-import { TopicsDto, TopicsWithCategoriesDto } from '@/types/topic';
+import { TopicsDto, TopicsWithCategoriesIdDto } from '@/types/topic';
 import styles from './TopicEditItem.module.css';
 import EditBox from './EditBox';
 import { ChangeEventHandler, useCallback, useMemo, useState } from 'react';
 
 type TopicEditItemProps = {
-  topic: TopicsWithCategoriesDto;
+  topic: TopicsWithCategoriesIdDto;
   topicIdx: number;
   isLast: boolean;
   onClickUpdateTopic: (data: TopicsDto) => void;

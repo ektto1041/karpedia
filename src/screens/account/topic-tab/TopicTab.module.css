@@ -1,0 +1,13 @@
+.radio-item {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  accent-color: var(--main-red);
+  user-select: none;
+  cursor: pointer;
+}
+
+.radio-item span {
+  margin-left: 4px;
+  font-size: .9rem;
+}

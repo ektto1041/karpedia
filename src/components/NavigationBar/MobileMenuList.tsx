@@ -5,14 +5,12 @@ import { MenuItem } from './NavigationBar';
 type MobileMenuListProps = {
   uid: string;
   isAdmin: boolean;
-  onClickProfile: () => void;
   menuItems: MenuItem[];
 };
 
 export default function MobileMenuList({
   uid,
   isAdmin,
-  onClickProfile,
   menuItems,
 }: MobileMenuListProps) {
   return (
@@ -22,7 +20,7 @@ export default function MobileMenuList({
           <MobileMenuItem text='로그인' href={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}auths/google`} />
         ) : (
           <>
-            <MobileMenuItem text='프로필' onClick={onClickProfile} />
+            <MobileMenuItem text='프로필' href='/account' />
             {isAdmin && (
               <MobileMenuItem text='토픽 관리' href='/topic/setting' />
             )}

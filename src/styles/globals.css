@@ -37,6 +37,7 @@
   --main-red: #f31560;
   --main-red-o22: #f3156022;
   --main-red-o40: #f3156040;
+  --main-red-o80: #f3156080;
   --main-red-of0: #f31560f0;
   --black: #111111;
   --black-o80: #11111180; 
@@ -55,6 +56,7 @@
   --sub-shadow: #F7A877;
   --third: #FFECAF;
   --third-o80: #FFECAF80;
+  --warning: #f00f0f;
 }
 
 body {

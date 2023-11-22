@@ -13,8 +13,8 @@ export default function TopicsScreen({
 
   const [subscribedTopics, setSubscribedTopics] = useState<number[] | undefined>(undefined);
 
-  const getSubscribedTopics = useCallback(async () => {
-    const response = await apis.getSubscribedTopics();
+  const getSubscribedTopicIds = useCallback(async () => {
+    const response = await apis.getSubscribedTopicIds();
     if(response.status < 300) {
       setSubscribedTopics(response.data.map(topic => topic.id));
     }
@@ -22,7 +22,7 @@ export default function TopicsScreen({
 
   useEffect(() => {
     if(selfUser) {
-      getSubscribedTopics();
+      getSubscribedTopicIds();
     } else {
       setSubscribedTopics(undefined);
     }
