@@ -1,7 +1,12 @@
 import styles from './Portfolio.module.css';
 import ProjectItem, { Project } from './ProjectItem';
 import MyProfile from './MyProfile/MyProfile';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import css from '@/utils/css';
+import Icon from '@mdi/react';
+import { mdiChevronDown, mdiChevronRight, mdiCodeBraces, mdiUnfoldMoreVertical } from '@mdi/js';
+import LineNumList from './LineNumList';
+import AboutMeContent from './AboutMeContent';
 
 const projects: Project[] = [
   {
@@ -89,18 +94,122 @@ const projects: Project[] = [
   },
 ]
 
+export type FileName = 'about_me.html' | 'w_planner.html' | 'karpedia.html' | 'gigs.html' | 'chimtooview.html'
+
 function PortfolioScreen() {
+  const [currentFile, setCurrentFile] = useState<FileName>('about_me.html');
+  const [isSrcOpen, setSrcOpen] = useState(true);
+
+  const handleSrcClick = useCallback(() => {
+    setSrcOpen(!isSrcOpen);
+  }, [isSrcOpen]);
+
+  const handleFileClick = useCallback((file: FileName) => {
+    setCurrentFile(file);
+  }, []);
+
   return (
     <main className={styles.container} >
-      <MyProfile />
-      <article className={styles['project-box']}>
-        <h1>프로젝트</h1>
-        <div className={styles['project-list']} >
-          {projects.map(project => (
-            <ProjectItem key={project.title} project={project} />
-          ))}
+      <div className={styles.explorer}>
+        <div className={styles.title}>EXPLORER</div>
+        <div className={css(styles['file-line'], styles['list-title']) }>KARPEDIA</div>
+        <div className={css(styles['file-line'], styles.ignored)} style={{ paddingLeft: '19px'}}>
+          <div className={styles.icon}>
+            <Icon path={mdiChevronRight} />
+          </div>
+          .next
         </div>
-      </article>
+        <div className={css(styles['file-line'], styles.ignored)} style={{ paddingLeft: '19px'}}>
+          <div className={styles.icon}>
+            <Icon path={mdiChevronRight} />
+          </div>
+          node_modules
+        </div>
+        <div className={styles['file-line']} style={{ paddingLeft: '19px'}} onClick={handleSrcClick}>
+          <div className={styles.icon}>
+            <Icon path={isSrcOpen ? mdiChevronDown : mdiChevronRight} />
+          </div>
+          src
+        </div>
+        {isSrcOpen && (
+          <>
+            <div className={styles['file-line']} style={{ paddingLeft: '28.5px'}}>
+              <div className={styles.icon}>
+                <Icon path={mdiChevronDown} />
+              </div>
+              portfolio
+            </div>
+            <div
+              className={css(styles['file-line'], currentFile === 'about_me.html' ? styles.opened : '')}
+              style={{ paddingLeft: '38px'}}
+              onClick={() => handleFileClick('about_me.html')}
+            >
+              <div className={styles.icon}>
+                <Icon path={mdiUnfoldMoreVertical} />
+              </div>
+              about_me.html
+            </div>
+            <div
+              className={css(styles['file-line'], currentFile === 'w_planner.html' ? styles.opened : '')}
+              style={{ paddingLeft: '38px'}}
+              onClick={() => handleFileClick('w_planner.html')}
+            >
+              <div className={styles.icon}>
+                <Icon path={mdiUnfoldMoreVertical} />
+              </div>
+              w_planner.html
+            </div>
+          </>  
+        )}
+      </div>
+      <div className={styles['content']}>
+        <div className={styles['file-tab-list']}>
+          <div className={styles['file-tab']}>
+            <div className={styles.icon}>
+              <Icon path={mdiUnfoldMoreVertical} />
+            </div>
+            about_me.html
+          </div>
+        </div>
+        <div className={styles.path}>
+          {`src > portfolio >`}
+          &nbsp;
+          <div className={styles.icon}>
+            <Icon path={mdiUnfoldMoreVertical} />
+          </div>
+          {currentFile}
+        </div>
+        <div key={`pf-${currentFile}`} className={styles.editor}>
+          <LineNumList maxNum={currentFile === 'about_me.html' ? 28 : 0} />
+          <div className={styles.code}>
+            <div className={styles.line}>
+              {'<!DOCTYPE html>'}
+            </div>
+            <div className={styles.line}>
+              {'<html lang="ko">'}
+            </div>
+            <div className={styles.line}>
+              {'<head>'}
+            </div>
+            <div className={styles.line}>
+              &nbsp;&nbsp;{'<title>About Me</title>'}
+            </div>
+            <div className={styles.line}>
+              {'</head>'}
+            </div>
+            <div className={styles.line}>
+              {'<body>'}
+            </div>
+            {currentFile === 'about_me.html' ? <AboutMeContent onFileClick={handleFileClick} /> : <></>}
+            <div className={styles.line}>
+              {'</body>'}
+            </div>
+            <div className={styles.line}>
+              {'</html>'}
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   )
 };

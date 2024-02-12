@@ -1,0 +1,13 @@
+.typing {
+  animation: typing 10s ease;
+}
+
+@keyframes typing {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: auto;
+  }
+}
