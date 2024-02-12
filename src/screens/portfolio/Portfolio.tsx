@@ -7,6 +7,7 @@ import Icon from '@mdi/react';
 import { mdiChevronDown, mdiChevronRight, mdiCodeBraces, mdiUnfoldMoreVertical } from '@mdi/js';
 import LineNumList from './LineNumList';
 import AboutMeContent from './AboutMeContent';
+import WPlannerContent from './WPlannerContent';
 
 const projects: Project[] = [
   {
@@ -180,7 +181,7 @@ function PortfolioScreen() {
           {currentFile}
         </div>
         <div key={`pf-${currentFile}`} className={styles.editor}>
-          <LineNumList maxNum={currentFile === 'about_me.html' ? 28 : 0} />
+          <LineNumList maxNum={currentFile === 'about_me.html' ? 28 : (currentFile === 'w_planner.html' ? 50 : 0)} />
           <div className={styles.code}>
             <div className={styles.line}>
               {'<!DOCTYPE html>'}
@@ -200,7 +201,8 @@ function PortfolioScreen() {
             <div className={styles.line}>
               {'<body>'}
             </div>
-            {currentFile === 'about_me.html' ? <AboutMeContent onFileClick={handleFileClick} /> : <></>}
+            {currentFile === 'about_me.html' ? <AboutMeContent onFileClick={handleFileClick} /> :
+              (currentFile === 'w_planner.html' ? <WPlannerContent /> : <></>)}
             <div className={styles.line}>
               {'</body>'}
             </div>

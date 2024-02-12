@@ -122,9 +122,11 @@
 .code {
   flex-grow: 1;
   font-size: .75rem;
+  overflow-x: hidden;
 }
 
 .line {
+  width: 100%;
   height: var(--line-h);
   line-height: var(--line-h);
   font-family: "Roboto Mono", monospace;
@@ -132,7 +134,7 @@
   font-weight: normal;
   font-style: normal;
   color: var(--pf-background-font-color);
-  animation: typing 10s ease;
+  animation: typing 5s ease;
   overflow: hidden;
   white-space: nowrap;
 }

@@ -1,0 +1,35 @@
+.container {
+  --profile-h: calc(var(--line-h) * 12);
+
+  position: relative;
+  height: var(--profile-h);
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  margin-left: var(--line-h);
+  transform: translateY(-10%);
+  animation: down 1s .5s ease forwards;
+}
+
+.image {
+  width: calc(var(--line-h) * 24);
+  height: var(--profile-h);
+  position: absolute;
+  left: 4.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px 1px gray;
+  cursor: pointer;
+}
+
+@keyframes down {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
