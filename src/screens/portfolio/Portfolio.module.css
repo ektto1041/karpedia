@@ -38,6 +38,10 @@
   height: 100%;
   color: var(--pf-gray);
   font-size: .75rem;
+
+  @media (max-width: 1279px) {
+    display: none;
+  }
 }
 
 .title {
@@ -87,6 +91,10 @@
 .content {
   flex-grow: 1;
   overflow-x: hidden;
+
+  @media (max-width: 899px) {
+    display: none;
+  }
 }
 
 .file-tab-list {

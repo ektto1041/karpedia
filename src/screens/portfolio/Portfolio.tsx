@@ -7,6 +7,7 @@ import { mdiChevronDown, mdiChevronRight, mdiUnfoldMoreVertical } from '@mdi/js'
 import LineNumList from './LineNumList';
 import AboutMeContent from './AboutMeContent';
 import WPlannerContent from './WPlannerContent';
+import NotReady from './NotReady';
 
 const projects: Project[] = [
   {
@@ -117,7 +118,7 @@ function PortfolioScreen() {
   }, []);
 
   return (
-    <main className={styles.container} >
+    <main className={styles.container}>
       <div className={styles.explorer}>
         <div className={styles.title}>EXPLORER</div>
         <div className={css(styles['file-line'], styles['list-title']) }>KARPEDIA</div>
@@ -273,6 +274,7 @@ function PortfolioScreen() {
           </div>
         </div>
       </div>
+      <NotReady />
     </main>
   )
 };
