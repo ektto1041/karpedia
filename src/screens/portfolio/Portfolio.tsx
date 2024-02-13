@@ -1,10 +1,9 @@
 import styles from './Portfolio.module.css';
-import ProjectItem, { Project } from './ProjectItem';
-import MyProfile from './MyProfile/MyProfile';
+import { Project } from './ProjectItem';
 import React, { useCallback, useState } from 'react';
 import css from '@/utils/css';
 import Icon from '@mdi/react';
-import { mdiChevronDown, mdiChevronRight, mdiCodeBraces, mdiUnfoldMoreVertical } from '@mdi/js';
+import { mdiChevronDown, mdiChevronRight, mdiUnfoldMoreVertical } from '@mdi/js';
 import LineNumList from './LineNumList';
 import AboutMeContent from './AboutMeContent';
 import WPlannerContent from './WPlannerContent';
@@ -97,6 +96,14 @@ const projects: Project[] = [
 
 export type FileName = 'about_me.html' | 'w_planner.html' | 'karpedia.html' | 'gigs.html' | 'chimtooview.html'
 
+const lineNums: Record<FileName, number> = {
+  'about_me.html': 28,
+  'w_planner.html': 50,
+  'karpedia.html': 50,
+  'gigs.html': 50,
+  'chimtooview.html': 50,
+};
+
 function PortfolioScreen() {
   const [currentFile, setCurrentFile] = useState<FileName>('about_me.html');
   const [isSrcOpen, setSrcOpen] = useState(true);
@@ -160,6 +167,36 @@ function PortfolioScreen() {
               </div>
               w_planner.html
             </div>
+            <div
+              className={css(styles['file-line'], currentFile === 'karpedia.html' ? styles.opened : '')}
+              style={{ paddingLeft: '38px'}}
+              onClick={() => handleFileClick('karpedia.html')}
+            >
+              <div className={styles.icon}>
+                <Icon path={mdiUnfoldMoreVertical} />
+              </div>
+              karpedia.html
+            </div>
+            <div
+              className={css(styles['file-line'], currentFile === 'gigs.html' ? styles.opened : '')}
+              style={{ paddingLeft: '38px'}}
+              onClick={() => handleFileClick('gigs.html')}
+            >
+              <div className={styles.icon}>
+                <Icon path={mdiUnfoldMoreVertical} />
+              </div>
+              gigs.html
+            </div>
+            <div
+              className={css(styles['file-line'], currentFile === 'chimtooview.html' ? styles.opened : '')}
+              style={{ paddingLeft: '38px'}}
+              onClick={() => handleFileClick('chimtooview.html')}
+            >
+              <div className={styles.icon}>
+                <Icon path={mdiUnfoldMoreVertical} />
+              </div>
+              chimtooview.html
+            </div>
           </>  
         )}
       </div>
@@ -169,7 +206,7 @@ function PortfolioScreen() {
             <div className={styles.icon}>
               <Icon path={mdiUnfoldMoreVertical} />
             </div>
-            about_me.html
+            {currentFile}
           </div>
         </div>
         <div className={styles.path}>
@@ -181,7 +218,7 @@ function PortfolioScreen() {
           {currentFile}
         </div>
         <div key={`pf-${currentFile}`} className={styles.editor}>
-          <LineNumList maxNum={currentFile === 'about_me.html' ? 28 : (currentFile === 'w_planner.html' ? 50 : 0)} />
+          <LineNumList maxNum={lineNums[currentFile]} />
           <div className={styles.code}>
             <div className={styles.line}>
               {'<!DOCTYPE html>'}
@@ -201,8 +238,8 @@ function PortfolioScreen() {
             <div className={styles.line}>
               {'<body>'}
             </div>
-            {currentFile === 'about_me.html' ? <AboutMeContent onFileClick={handleFileClick} /> :
-              (currentFile === 'w_planner.html' ? <WPlannerContent /> : <></>)}
+            {currentFile === 'about_me.html' && <AboutMeContent onFileClick={handleFileClick} />}
+            {currentFile === 'w_planner.html' && <WPlannerContent />}
             <div className={styles.line}>
               {'</body>'}
             </div>
