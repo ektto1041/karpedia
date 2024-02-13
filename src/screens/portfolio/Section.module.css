@@ -12,7 +12,6 @@
 
 .bg-code {
   display: inline;
-  width: auto;
   line-height: var(--line-h);
   color: var(--pf-background-font-color);
   opacity: 1;

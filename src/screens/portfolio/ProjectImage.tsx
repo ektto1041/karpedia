@@ -20,7 +20,7 @@ export default function ProjectImage({
         <div className={styles['image']}>
           <Image src={src} alt={alt} fill style={{ objectFit: 'contain' }} />
         </div>
-        <div className={sectionStyles['bg-code']} style={{ marginLeft: 'calc(var(--line-h) * 24)'}}>
+        <div className={sectionStyles['bg-code']} style={{ marginLeft: 'calc(var(--line-h) * 24.5)'}}>
           {'“ alt=”profile_image” />'}
         </div>
       </div>
