@@ -202,11 +202,35 @@ function PortfolioScreen() {
       </div>
       <div className={styles['content']}>
         <div className={styles['file-tab-list']}>
-          <div className={styles['file-tab']}>
+          <div className={css(styles['file-tab'], currentFile === 'about_me.html' ? styles.selected : '')} onClick={() => handleFileClick('about_me.html')}>
             <div className={styles.icon}>
               <Icon path={mdiUnfoldMoreVertical} />
             </div>
-            {currentFile}
+            about_me.html
+          </div>
+          <div className={css(styles['file-tab'], currentFile === 'w_planner.html' ? styles.selected : '')} onClick={() => handleFileClick('w_planner.html')}>
+            <div className={styles.icon}>
+              <Icon path={mdiUnfoldMoreVertical} />
+            </div>
+            w_planner.html
+          </div>
+          <div className={css(styles['file-tab'], currentFile === 'karpedia.html' ? styles.selected : '')} onClick={() => handleFileClick('karpedia.html')}>
+            <div className={styles.icon}>
+              <Icon path={mdiUnfoldMoreVertical} />
+            </div>
+            karpedia.html
+          </div>
+          <div className={css(styles['file-tab'], currentFile === 'gigs.html' ? styles.selected : '')} onClick={() => handleFileClick('gigs.html')}>
+            <div className={styles.icon}>
+              <Icon path={mdiUnfoldMoreVertical} />
+            </div>
+            gigs.html
+          </div>
+          <div className={css(styles['file-tab'], currentFile === 'chimtooview.html' ? styles.selected : '')} onClick={() => handleFileClick('chimtooview.html')}>
+            <div className={styles.icon}>
+              <Icon path={mdiUnfoldMoreVertical} />
+            </div>
+            chimtooview.html
           </div>
         </div>
         <div className={styles.path}>

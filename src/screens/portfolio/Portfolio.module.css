@@ -100,9 +100,14 @@
   height: var(--line-h);
   line-height: var(--line-h);
   font-size: .75rem;
-  background-color: var(--white);
   padding: 0 8px;
+  padding-right: 32px;
   align-items: center;
+  cursor: pointer;
+}
+
+.file-tab.selected {
+  background-color: var(--white);
 }
 
 .path {
