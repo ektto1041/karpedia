@@ -98,11 +98,11 @@ const projects: Project[] = [
 export type FileName = 'about_me.html' | 'w_planner.html' | 'karpedia.html' | 'gigs.html' | 'chimtooview.html'
 
 const lineNums: Record<FileName, number> = {
-  'about_me.html': 28,
-  'w_planner.html': 50,
-  'karpedia.html': 50,
-  'gigs.html': 50,
-  'chimtooview.html': 50,
+  'about_me.html': 100,
+  'w_planner.html': 80,
+  'karpedia.html': 100,
+  'gigs.html': 100,
+  'chimtooview.html': 100,
 };
 
 function PortfolioScreen() {
