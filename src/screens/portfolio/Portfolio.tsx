@@ -8,6 +8,7 @@ import LineNumList from './LineNumList';
 import AboutMeContent from './AboutMeContent';
 import WPlannerContent from './WPlannerContent';
 import NotReady from './NotReady';
+import KarpediaContent from './KarpediaContent';
 
 const projects: Project[] = [
   {
@@ -100,7 +101,7 @@ export type FileName = 'about_me.html' | 'w_planner.html' | 'karpedia.html' | 'g
 const lineNums: Record<FileName, number> = {
   'about_me.html': 30,
   'w_planner.html': 80,
-  'karpedia.html': 100,
+  'karpedia.html': 85,
   'gigs.html': 100,
   'chimtooview.html': 100,
 };
@@ -274,6 +275,7 @@ function PortfolioScreen() {
               </div>
               {currentFile === 'about_me.html' && <AboutMeContent onFileClick={handleFileClick} />}
               {currentFile === 'w_planner.html' && <WPlannerContent />}
+              {currentFile === 'karpedia.html' && <KarpediaContent />}
               <div className={styles.line}>
                 {'</body>'}
               </div>

@@ -8,9 +8,13 @@ export default function WPlannerContent() {
       <ProjectImage src='/w-planner-img.png' alt='w-planner image' />
       <Section sectionKey={'wp-1'} content={[
         { tag: 'h2', content: 'W Planner' },
-        { tag: 'p', content: 'W Planner는 2024.01 부터, 총 4인의 팀원(PM 1, FE 1, BE 1, Design 1)과 함께 진행 중인 프로젝트입니다. 일정을 더 체계적으로 관리할 수 있게 카테고리, 우선순위 등의 기능을 추가한 캘린더 웹 서비스로, 현재 배포되어 운영되고 있습니다.' },
+        { tag: 'p', content: 'W Planner는 2024.01 부터 진행중인 프로젝트로, 일정을 더 체계적으로 관리할 수 있게 카테고리, 우선순위 등의 기능을 추가한 캘린더 웹 서비스로, 현재 배포되어 운영되고 있습니다.' },
       ]} />
       <Section sectionKey={'wp-2'} content={[
+        { tag: 'h2', content: '팀원' },
+        { tag: 'p', content: '총 4인 (1 PM, 1 FE, 1 BE, 1 Design)으로, 저는 FE 담당으로 참여하였습니다.' },
+      ]} />
+      <Section sectionKey={'wp-3'} content={[
         { tag: 'h2', content: '사용한 기술' },
         { tag: 'li', content: 'Next.js' },
         { tag: 'li', content: 'typescript' },
@@ -20,7 +24,7 @@ export default function WPlannerContent() {
         { tag: 'li', content: 'SWR' },
         { tag: 'li', content: 'vercel' },
       ]} />
-      <Section sectionKey={'wp-3'} content={[
+      <Section sectionKey={'wp-4'} content={[
         { tag: 'h2', content: '개발한 기능' },
         { tag: 'h3', content: 'Google Login 구현', children: [
           { tag: 'p', content: 'Google Login API 를 이용하여 소셜 로그인 구현하였습니다. JWT Token을 Local Storage에 저장하여 보관하고, 인증이 필요한 요청마다 헤더에 포함하여 전송하는 방식을 선택했습니다.' },
@@ -38,7 +42,7 @@ export default function WPlannerContent() {
           { tag: 'p', content: 'Modal이 열고 닫힐 때를 비롯한 많은 경우에 애니메이션을 추가하였습니다.' }
         ] },
       ]} />
-      <Section sectionKey={'wp-4'} content={[
+      <Section sectionKey={'wp-5'} content={[
         { tag: 'h2', content: '협업 방식' },
         { tag: 'h3', content: 'Github', children: [
           { tag: 'p', content: 'main, dev, feature, hotfix 브랜치로 나누어 작업했고, merge는 반드시 Pull Request를 작성하여 진행하였습니다.' },
@@ -53,7 +57,7 @@ export default function WPlannerContent() {
           { tag: 'p', content: 'Figma를 통해 디자인된 UI를 확인하고, 이를 구현하였습니다.' },
         ] },
       ]} />
-      <Section sectionKey={'wp-5'} content={[
+      <Section sectionKey={'wp-6'} content={[
         { tag: 'h2', content: '이슈들' },
         { tag: 'h3', content: '왜 Next.js 14 를 사용하였나', children: [
           { tag: 'p', content: '캘린더 자체는 사용자와의 상호작용이 많고, 변화도 잦기 때문에 CSR에 적합하지만, 기획 초기에는 SSR에 적합한 페이지 또한 기획되어 있었기에, 이러한 점에 유리한 Next.js 14 를 사용하여 개발을 시작하였습니다. 하지만 개발을 진행하며 기획이 다소 변경되어 현재는 모든 페이지가 CSR 방식으로 렌더링되고 있습니다.' },
