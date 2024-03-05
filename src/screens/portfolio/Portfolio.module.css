@@ -3,7 +3,6 @@
   height: calc(100vh - 64px);
   background-color: var(--white);
   display: flex;
-  user-select: none;
 
   --line-h: 29px;
   --big-line-h: 49px;

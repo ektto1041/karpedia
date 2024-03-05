@@ -27,7 +27,7 @@
 
 .container h2 {
   display: inline;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: var(--pf-selected-blue);
   margin: 0;
   font-family: "Roboto Mono", monospace;
@@ -38,7 +38,7 @@
 
 .container h3 {
   display: inline;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: var(--pf-selected-blue);
   margin: 0;
   font-family: "Roboto Mono", monospace;
@@ -74,6 +74,6 @@
   }
 
   100% {
-    opacity: .2;
+    opacity: .1;
   }
 }
