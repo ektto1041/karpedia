@@ -9,7 +9,7 @@ interface H2Content {
 }
 
 interface ParagraphContent {
-  tag: 'p';
+  tag: 'p' | 'li';
   content: string;
 }
 
@@ -37,7 +37,9 @@ export default function Section({
             <div className={styles['bg-code']}>{`<${c.tag}>`}</div>
             {c.tag === 'h2' ? (<h2>{c.content}</h2>) : (
               c.tag === 'p' ? (<p>{c.content}</p>) : (
-                c.tag === 'h3' ? (<h3>{c.content}</h3>) : (<></>)
+                c.tag === 'h3' ? (<h3>{c.content}</h3>) : (
+                  c.tag === 'li' ? (<p style={{ marginLeft: '0' }}>- {c.content}</p>) : (<></>)
+                )
               )
             )}
             <div className={styles['bg-code']}>{`</${c.tag}>`}</div>
