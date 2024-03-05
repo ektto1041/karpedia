@@ -127,6 +127,11 @@
   align-items: center;
 }
 
+.editor-wrapper {
+  height: calc(100% - (var(--line-h) * 2));
+  overflow-y: auto;
+}
+
 .editor {
   display: flex;
 }

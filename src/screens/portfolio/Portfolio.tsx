@@ -1,6 +1,6 @@
 import styles from './Portfolio.module.css';
 import { Project } from './ProjectItem';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import css from '@/utils/css';
 import Icon from '@mdi/react';
 import { mdiChevronDown, mdiChevronRight, mdiUnfoldMoreVertical } from '@mdi/js';
@@ -98,7 +98,7 @@ const projects: Project[] = [
 export type FileName = 'about_me.html' | 'w_planner.html' | 'karpedia.html' | 'gigs.html' | 'chimtooview.html'
 
 const lineNums: Record<FileName, number> = {
-  'about_me.html': 100,
+  'about_me.html': 30,
   'w_planner.html': 80,
   'karpedia.html': 100,
   'gigs.html': 100,
@@ -108,6 +108,14 @@ const lineNums: Record<FileName, number> = {
 function PortfolioScreen() {
   const [currentFile, setCurrentFile] = useState<FileName>('about_me.html');
   const [isSrcOpen, setSrcOpen] = useState(true);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   const handleSrcClick = useCallback(() => {
     setSrcOpen(!isSrcOpen);
@@ -242,34 +250,36 @@ function PortfolioScreen() {
           </div>
           {currentFile}
         </div>
-        <div key={`pf-${currentFile}`} className={styles.editor}>
-          <LineNumList maxNum={lineNums[currentFile]} />
-          <div className={styles.code}>
-            <div className={styles.line}>
-              {'<!DOCTYPE html>'}
-            </div>
-            <div className={styles.line}>
-              {'<html lang="ko">'}
-            </div>
-            <div className={styles.line}>
-              {'<head>'}
-            </div>
-            <div className={styles.line}>
-              &nbsp;&nbsp;{'<title>About Me</title>'}
-            </div>
-            <div className={styles.line}>
-              {'</head>'}
-            </div>
-            <div className={styles.line}>
-              {'<body>'}
-            </div>
-            {currentFile === 'about_me.html' && <AboutMeContent onFileClick={handleFileClick} />}
-            {currentFile === 'w_planner.html' && <WPlannerContent />}
-            <div className={styles.line}>
-              {'</body>'}
-            </div>
-            <div className={styles.line}>
-              {'</html>'}
+        <div className={styles['editor-wrapper']}>
+          <div key={`pf-${currentFile}`} className={styles.editor}>
+            <LineNumList maxNum={lineNums[currentFile]} />
+            <div className={styles.code}>
+              <div className={styles.line}>
+                {'<!DOCTYPE html>'}
+              </div>
+              <div className={styles.line}>
+                {'<html lang="ko">'}
+              </div>
+              <div className={styles.line}>
+                {'<head>'}
+              </div>
+              <div className={styles.line}>
+                &nbsp;&nbsp;{'<title>About Me</title>'}
+              </div>
+              <div className={styles.line}>
+                {'</head>'}
+              </div>
+              <div className={styles.line}>
+                {'<body>'}
+              </div>
+              {currentFile === 'about_me.html' && <AboutMeContent onFileClick={handleFileClick} />}
+              {currentFile === 'w_planner.html' && <WPlannerContent />}
+              <div className={styles.line}>
+                {'</body>'}
+              </div>
+              <div className={styles.line}>
+                {'</html>'}
+              </div>
             </div>
           </div>
         </div>
