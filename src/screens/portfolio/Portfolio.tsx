@@ -9,6 +9,7 @@ import AboutMeContent from './AboutMeContent';
 import WPlannerContent from './WPlannerContent';
 import NotReady from './NotReady';
 import KarpediaContent from './KarpediaContent';
+import GigsContent from './GigsContent';
 
 const projects: Project[] = [
   {
@@ -276,6 +277,7 @@ function PortfolioScreen() {
               {currentFile === 'about_me.html' && <AboutMeContent onFileClick={handleFileClick} />}
               {currentFile === 'w_planner.html' && <WPlannerContent />}
               {currentFile === 'karpedia.html' && <KarpediaContent />}
+              {currentFile === 'gigs.html' && <GigsContent />}
               <div className={styles.line}>
                 {'</body>'}
               </div>
