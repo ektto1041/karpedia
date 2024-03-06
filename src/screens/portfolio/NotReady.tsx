@@ -14,7 +14,7 @@ export default function NotReady() {
         <p>
           아직 지원되지 않습니다.
         </p>
-        <Link href='' target='_blank'>노션 포트폴리오 확인하기</Link>
+        <Link href='https://picturesque-astronomy-4f6.notion.site/ddaf9fcfbdbc46979b38cca4a52aa210?pvs=4' target='_blank'>노션 포트폴리오 확인하기</Link>
       </div>
     </div>
   )
