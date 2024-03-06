@@ -10,6 +10,7 @@ import WPlannerContent from './WPlannerContent';
 import NotReady from './NotReady';
 import KarpediaContent from './KarpediaContent';
 import GigsContent from './GigsContent';
+import ChimtooviewContent from './ChimtooviewContent';
 
 const projects: Project[] = [
   {
@@ -103,8 +104,8 @@ const lineNums: Record<FileName, number> = {
   'about_me.html': 30,
   'w_planner.html': 80,
   'karpedia.html': 85,
-  'gigs.html': 100,
-  'chimtooview.html': 100,
+  'gigs.html': 60,
+  'chimtooview.html': 50,
 };
 
 function PortfolioScreen() {
@@ -278,6 +279,7 @@ function PortfolioScreen() {
               {currentFile === 'w_planner.html' && <WPlannerContent />}
               {currentFile === 'karpedia.html' && <KarpediaContent />}
               {currentFile === 'gigs.html' && <GigsContent />}
+              {currentFile === 'chimtooview.html' && <ChimtooviewContent />}
               <div className={styles.line}>
                 {'</body>'}
               </div>

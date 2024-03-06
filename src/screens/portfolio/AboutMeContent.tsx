@@ -86,17 +86,17 @@ export default function AboutMeContent({
         </div>
         <div className={styles['div-line']} style={{ marginLeft: '3rem' }}>
           <div className={styles.line}>{`<li>`}</div>
-          <p className={styles['file-link']}>Karpedia</p>
+          <p className={styles['file-link']} onClick={() => onFileClick('karpedia.html')} >Karpedia</p>
           <div className={styles.line}>{`</li>`}</div>
         </div>
         <div className={styles['div-line']} style={{ marginLeft: '3rem' }}>
           <div className={styles.line}>{`<li>`}</div>
-          <p className={styles['file-link']}>gigs</p>
+          <p className={styles['file-link']} onClick={() => onFileClick('gigs.html')} >gigs</p>
           <div className={styles.line}>{`</li>`}</div>
         </div>
         <div className={styles['div-line']} style={{ marginLeft: '3rem' }}>
           <div className={styles.line}>{`<li>`}</div>
-          <p className={styles['file-link']}>Chimtooview</p>
+          <p className={styles['file-link']} onClick={() => onFileClick('chimtooview.html')} >Chimtooview</p>
           <div className={styles.line}>{`</li></ul>`}</div>
         </div>
       </div>
