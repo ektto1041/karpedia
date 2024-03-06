@@ -12,6 +12,8 @@
   font-style: normal;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 @font-face {
   font-family: 'SUIT-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
@@ -238,4 +240,14 @@ button {
 .ProseMirror .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

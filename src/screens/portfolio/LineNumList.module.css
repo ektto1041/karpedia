@@ -1,0 +1,18 @@
+.container {
+  flex: 80px 0 0;
+  flex-shrink: 0;
+  height: auto; 
+}
+
+.num {
+  width: 60px;
+  height: var(--line-h);
+  font-size: .75rem;
+  color: #237993;
+  line-height: var(--line-h);
+  text-align: right;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
